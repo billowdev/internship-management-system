@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { createTokens } = require("../middlewares/AuthMiddleware");
+const { createTokens } = require("../middlewares/auth.middleware");
 const { sign, verify } = require("jsonwebtoken");
 const { Users } = require("../models");
 

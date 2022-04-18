@@ -4,6 +4,9 @@ import Signup from "./components/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./home";
+import InternshipForm from "./internship-form";
+import StudentList from "./student-list";
+import Resume from "./resume";
 
 
 
@@ -15,6 +18,12 @@ const App = () =>
       <Route index path="/" element={<Home />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/internship-form" element={<InternshipForm />} />
+      <Route path="/student-list" element={<StudentList />} />
+      <Route path="/resume" element={<Resume />} />
+
+      
+
     </Routes>
   </>
 </Router>

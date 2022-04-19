@@ -29,7 +29,7 @@ const App = () => (
 
       <Routes>
         <Route index path="/" element={<Signin />} />
-        <Route index path="/home" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/internship-form" element={<InternshipForm />} />
           <Route path="/student-list" element={<StudentList />} />

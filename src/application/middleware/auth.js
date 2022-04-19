@@ -23,9 +23,9 @@ const loadAuthFlow =
               dispatch(uiActions.setLoading(true));
               const data = await api.auth.signin(action.payload);
               dispatch(authActions.loadSigninSuccess(data));
-              const { id, username, permission, token } = data
+              const { id, username, permission, authenticated , token } = data
               Cookies.set("access-token", token, { expires: 7 });
-              saveState('auth-state', { id, username, permission })
+              saveState('auth-state', { id, username, permission, authenticated})
               dispatch(uiActions.setLoading(false));
             } catch (error) {
               dispatch(authActions.loadSigninFailure(error));

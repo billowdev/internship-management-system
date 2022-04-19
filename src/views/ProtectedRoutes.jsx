@@ -6,8 +6,10 @@ import { getAuth } from "../application/selectors/auth";
 import { loadState } from "../helpers/Persist";
 const useAuth = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(getAuth);
-
+  let isAuth = useSelector(getAuth);
+  useEffect(()=>{
+    isAuth = loadState('auth-state')
+  }, [])
   useEffect(() => {
     dispatch(loadAuth);
   }, [dispatch]);

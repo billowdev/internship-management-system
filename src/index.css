@@ -36,10 +36,24 @@
     @apply bg-red-700;
   }
 
+  .btn-cancel {
+    @apply  bg-white text-sky-400;
+  }
+   
+  .btn-cancel:hover {
+    @apply border-sky-400;
+  }
+
   .bg-link {
     @apply  text-white;
   }
   .bg-link:hover {
     @apply text-gray-300
+  }
+ 
+  .wrapper {
+    /* display:; */
+    height:100vh;
+    place-items:center
   }
 }

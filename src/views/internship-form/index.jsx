@@ -1,189 +1,482 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 const InternshipForm = () => {
+  const [name, setName] = useState("Akkarapon Phikulsri");
+  const [studentId, setStudentId] = useState("63102105112");
+  const [program, setProgram] = useState("วิทยาการคอมพิวเตอร์");
+  const [phone, setPhone] = useState("0983213212");
+
+  const [internCompanyName, setInternCompanyName] = useState(
+    "บริษัท โค้ดทูแพนด้า จำกัด"
+  );
+  const [internBranch, setInternBranch] = useState("ctp branch");
+  const [internWork, setInternWork] = useState("developer");
+  const [internContactWith, setInternContactWith] = useState("lacakp");
+  const [internContactWithPosition, setInternContactWithPosition] =
+    useState("HR");
+  const [internPhone, setInternPhone] = useState("0983271232");
+  const [internNumber, setInternNumber] = useState("111");
+  const [internRoad, setInternRoad] = useState("12");
+  const [internSubDistrict, setInternSubDistrict] = useState("ธาตุเชิงชุม");
+  const [internDistrict, setInternDistrict] = useState("เมือง");
+  const [internProvince, setInternProvince] = useState("สกลนคร");
+  const [internPostCode, setInternPostCode] = useState("47000");
+
+  const showDropDownMenu = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+  const swaptext = (el) => {
+    const targetText = el.target.innerText;
+    console.log(targetText);
+    document.getElementById("drop-down-content-setter").innerText = targetText;
+    document.getElementById("drop-down-div").classList.toggle("hidden");
+  };
+ 
+  // const showDropDownMenuOne = (el) => {
+  //   el.target.parentElement.children[1].classList.toggle("hidden");
+  // };
+  // function swaptextone(el) {
+  //   const targetText = el.target.innerText;
+  //   document.getElementById("drop-down-content-setter-one").innerText =
+  //     targetText;
+  //   document.getElementById("drop-down-div-one").classList.toggle("hidden");
+  // }
+
   return (
     <Layout>
-      <div className="p-5">
-        <div className="mx-4 p-4">
-          <div className="flex items-center">
-            <div className="flex items-center text-teal-600 relative">
-              <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-teal-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-bookmark "
-                >
-                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-              <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-teal-600">
-                ข้อมูลผู้เสนอ
-              </div>
-            </div>
-            <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-teal-600" />
-            <div className="flex items-center text-white relative">
-              <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 bg-teal-600 border-teal-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-user-plus "
-                >
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                  <circle cx="8.5" cy={7} r={4} />
-                  <line x1={20} y1={8} x2={20} y2={14} />
-                  <line x1={23} y1={11} x2={17} y2={11} />
-                </svg>
-              </div>
-              <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-teal-600">
-                ข้อมูลสถานที่ฝึกงาน
-              </div>
-            </div>
-            <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300" />
-            <div className="flex items-center text-gray-200 relative">
-              <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-mail "
-                >
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-              </div>
-              <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500">
-                พร้อมด้วยนักศึกษา
-              </div>
-            </div>
-            <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300" />
-            <div className="flex items-center text-gray-500 relative">
-              <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-database "
-                >
-                  <ellipse cx={12} cy={5} rx={9} ry={3} />
-                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                </svg>
-              </div>
-              <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-gray-500">
-                Confirm
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mt-8 p-4">
-          <div>
-            <div className="font-bold text-gray-600 text-xs leading-8 uppercase h-6 mx-2 mt-3">
-              Full Name
-            </div>
-            <div className="flex flex-col md:flex-row">
-              <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                  <input
-                    placeholder="First Name"
-                    className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                  />{" "}
+      <div>
+        <div className="flex flex-no-wrap items-center">
+          <div className="w-full ">
+            <div className="py-4 px-2">
+              <div className="bg-white rounded shadow mt-7 py-7">
+                {/* end */}
+
+                {/* =========================== sender intern splace information  =========================== */}
+                <div className="mt-10 px-7">
+                  <p className="text-xl font-semibold leading-tight text-gray-800">
+                    ข้อมูลผู้เสนอ
+                  </p>
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        ข้าพเจ้า
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ชื่อ-นามสุกล"
+                        defaultValue={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        รหัสนักศึกษา
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="รหัสนักศึกษา"
+                        defaultValue={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        เบอร์โทรศัพท์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="เบอร์โทรศัพท์"
+                        defaultValue={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        สาขาวิชา
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="สาขาวิชา"
+                        defaultValue={program}
+                        onChange={(e) => setProgram(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* =========================== intern splace information  =========================== */}
+                <div className="mt-10 px-7">
+                  <p className="text-xl font-semibold leading-tight text-gray-800">
+                    ข้อมูลสถานที่ฝึกงาน
+                  </p>
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        ชื่อหน่วยงาน
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+                        defaultValue={internCompanyName}
+                        onChange={(e) => setInternCompanyName(e.target.value)}
+                      />
+                      <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        สังกัดภาค
+                      </p>
+                      {/*-Dropdown*/}
+                      <div className="relative top-1 ">
+                        <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+                          <button
+                            onClick={showDropDownMenu}
+                            className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+                          >
+                            <span
+                              className="pr-4 text-sm font-medium text-gray-600"
+                              id="drop-down-content-setter"
+                            >
+                              Beginner
+                            </span>
+                            <svg
+                              id="rotate"
+                              className="absolute z-10 cursor-pointer right-5"
+                              width={10}
+                              height={6}
+                              viewBox="0 0 10 6"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0.5 0.75L5 5.25L9.5 0.75"
+                                stroke="#4B5563"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+                          <div
+                            className="absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                            id="drop-down-div"
+                          >
+                            <p
+                              className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                              onClick={swaptext}
+                            >
+                              ตะวันออกเฉียงเหนือ
+                            </p>
+
+                            <p
+                              className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                              onClick={swaptext}
+                            >
+                              ภาคกลาง
+                            </p>
+
+                            <p
+                              className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                              onClick={swaptext}
+                            >
+                              ภาคเหนือ
+                            </p>
+                          </div>
+                        </div>
+                        {/* end */}
+                      </div>
+                      {/* end */}
+                    </div>
+                  </div>
+
+                  <div className="grid w-full grid-cols-4 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        งานที่เกี่ยวข้อง
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="งานที่เกี่ยวข้อง"
+                        defaultValue={internWork}
+                        onChange={(e) => setInternWork(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        ติดต่อสถานที่ฝึกงานกับ
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ผู้ติดต่อ"
+                        defaultValue={internContactWith}
+                        onChange={(e) => setInternContactWith(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        ตำแหน่ง
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ตำแหน่ง"
+                        defaultValue={internContactWithPosition}
+                        onChange={(e) =>
+                          setInternContactWithPosition(e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        โทรศัพท์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="โทรศัพท์"
+                        defaultValue={internPhone}
+                        onChange={(e) => setInternPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid w-full grid-cols-4 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        เลขที่
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="เลขที่"
+                        defaultValue={internNumber}
+                        onChange={(e) => setInternNumber(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        ถนน
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ตำแหน่ง"
+                        defaultValue={internRoad}
+                        onChange={(e) => setInternRoad(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        ตำบล
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ตำบล"
+                        defaultValue={internSubDistrict}
+                        onChange={(e) => setInternSubDistrict(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        อำเภอ
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="อำเภอ"
+                        defaultValue={internDistrict}
+                        onChange={(e) => setInternDistrict(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid w-full grid-cols-4 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        จังหวัด
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="จังหวัด"
+                        defaultValue={internProvince}
+                        onChange={(e) => setInternProvince(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        รหัสไปรษณีย์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="รหัสไปรษณีย์"
+                        defaultValue={internPostCode}
+                        onChange={(e) => internPostCode(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* =========================== intern with other student information  =========================== */}
+                <div className="mt-10 px-7">
+                  <p className="text-xl font-semibold leading-tight text-gray-800">
+                    พร้อมด้วยนักศึกษา
+                  </p>
+                  {/* =========================== 1 Person  =========================== */}
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        1.ชื่อ-นามสกุล
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ชื่อ-นามสุกล"
+                        defaultValue={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        รหัสนักศึกษา
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="รหัสนักศึกษา"
+                        defaultValue={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        เบอร์โทรศัพท์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="เบอร์โทรศัพท์"
+                        defaultValue={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {/* =========================== 2 erson  =========================== */}
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        2.ชื่อ-นามสกุล
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ชื่อ-นามสุกล"
+                        defaultValue={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        รหัสนักศึกษา
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="รหัสนักศึกษา"
+                        defaultValue={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        เบอร์โทรศัพท์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="เบอร์โทรศัพท์"
+                        defaultValue={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {/* =========================== 3 Person  =========================== */}
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        3.ชื่อ-นามสกุล
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ชื่อ-นามสุกล"
+                        defaultValue={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        รหัสนักศึกษา
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="รหัสนักศึกษา"
+                        defaultValue={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        เบอร์โทรศัพท์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="เบอร์โทรศัพท์"
+                        defaultValue={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {/* =========================== 4 Person  =========================== */}
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        4.ชื่อ-นามสกุล
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="ชื่อ-นามสุกล"
+                        defaultValue={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        รหัสนักศึกษา
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="รหัสนักศึกษา"
+                        defaultValue={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        เบอร์โทรศัพท์
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="เบอร์โทรศัพท์"
+                        defaultValue={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <hr className="h-[1px] bg-gray-100 my-14" />
+                <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
+                  <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
+                    Cancel
+                  </button>
+                  <button className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
+                    Save Changes
+                  </button>
                 </div>
               </div>
-              <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                  <input
-                    placeholder="Last Name"
-                    className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                  />{" "}
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row">
-              <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                  {" "}
-                  Username
-                </div>
-                <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                  <input
-                    placeholder="Just a hint.."
-                    className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                  />{" "}
-                </div>
-              </div>
-              <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                  {" "}
-                  Your Email
-                </div>
-                <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                  <input
-                    placeholder="jhon@doe.com"
-                    className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                  />{" "}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex p-2 mt-4">
-            <button
-              className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-  hover:bg-gray-200  
-  bg-gray-100 
-  text-gray-700 
-  border duration-200 ease-in-out 
-  border-gray-600 transition"
-            >
-              Previous
-            </button>
-            <div className="flex-auto flex flex-row-reverse">
-              <button
-                className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-  hover:bg-teal-600  
-  bg-teal-600 
-  text-teal-100 
-  border duration-200 ease-in-out 
-  border-teal-600 transition"
-              >
-                Next
-              </button>
-              <button
-                className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-  hover:bg-teal-200  
-  bg-teal-100 
-  text-teal-700 
-  border duration-200 ease-in-out 
-  border-teal-600 transition"
-              >
-                Skip
-              </button>
             </div>
           </div>
         </div>

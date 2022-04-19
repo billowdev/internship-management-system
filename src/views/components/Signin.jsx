@@ -13,13 +13,11 @@ const Signin = () => {
   let navigate = useNavigate();
   const handleLogin = (e) => {
     dispatch(loadSignin({ username, password }));
-    window.location.reload();
+    
     window.location = "/home"
   };
 
-  useEffect(()=>{
-    if(loadState('auth-state')) navigate("/home")
-  }, [])
+
   return (
     <Layout>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">

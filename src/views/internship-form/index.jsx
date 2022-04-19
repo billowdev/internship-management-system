@@ -11,7 +11,7 @@ const InternshipForm = () => {
   const [internCompanyName, setInternCompanyName] = useState(
     "บริษัท โค้ดทูแพนด้า จำกัด"
   );
-  const [internBranch, setInternBranch] = useState("ctp branch");
+  const [internBranch, setInternBranch] = useState("ตะวันออกเฉียงเหนือ");
   const [internWork, setInternWork] = useState("developer");
   const [internContactWith, setInternContactWith] = useState("lacakp");
   const [internContactWithPosition, setInternContactWithPosition] =
@@ -29,11 +29,11 @@ const InternshipForm = () => {
   };
   const swaptext = (el) => {
     const targetText = el.target.innerText;
-    console.log(targetText);
+    setInternBranch(targetText);
     document.getElementById("drop-down-content-setter").innerText = targetText;
     document.getElementById("drop-down-div").classList.toggle("hidden");
   };
- 
+
   // const showDropDownMenuOne = (el) => {
   //   el.target.parentElement.children[1].classList.toggle("hidden");
   // };
@@ -44,6 +44,23 @@ const InternshipForm = () => {
   //   document.getElementById("drop-down-div-one").classList.toggle("hidden");
   // }
 
+  const handleSave = () => {
+    const senderData = { name, studentId, program, phone };
+    const internData = {
+      internBranch,
+      internWork,
+      internContactWith,
+      internContactWithPosition,
+      internPhone,
+      internNumber,
+      internRoad,
+      internSubDistrict,
+      internDistrict,
+      internProvince,
+      internPostCode,
+    };
+    console.log(internData, senderData);
+  };
   return (
     <Layout>
       <div className="2xl:px-56 xl:px-48 lg:px-36">
@@ -307,7 +324,7 @@ const InternshipForm = () => {
                         className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                         placeholder="รหัสไปรษณีย์"
                         defaultValue={internPostCode}
-                        onChange={(e) => internPostCode(e.target.value)}
+                        onChange={(e) => setInternPostCode(e.target.value)}
                       />
                     </div>
                   </div>
@@ -472,7 +489,12 @@ const InternshipForm = () => {
                   <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
                     Cancel
                   </button>
-                  <button className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
+                  <button
+                    onClick={(e) => {
+                      handleSave();
+                    }}
+                    className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                  >
                     Save Changes
                   </button>
                 </div>

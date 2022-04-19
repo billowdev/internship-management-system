@@ -9,10 +9,27 @@ import { getLoading } from "../../application/selectors/ui";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
+import { loadState, removeState } from "../../helpers/Persist";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const dispatch = useDispatch();
   const userData = useSelector(getUsers);
+  useEffect(()=>{
+    const islogin = loadState('login');
+    if(islogin){
+      toast.success('🦄 ลงชื่อเข้าใช้สำเร็จ... ยินดีต้อนรับ !', {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
+      removeState('login')
+    }
+  },[])
   useEffect(() => {
     dispatch(loadUsers);
     dispatch(pageLoaded);

@@ -1,14 +1,14 @@
 const { sign, verify } = require("jsonwebtoken");
 
 const createTokens = (user) => {
-  const { id, stdId, permission } = user;
-  const accessToken = sign({ id, stdId, permission }, process.env.JWT_SECRET);
+  const { id, username, permission } = user;
+  const accessToken = sign({ id, username, permission }, process.env.JWT_SECRET);
   return accessToken;
 };
 
 const validateToken = (req, res, next) => {
   const accessToken =
-    req.header("Authentication") || req.cookies["access-token"];
+    req.header("Authorization") || req.cookies["access-token"];
   if (!accessToken) {
     return res
       .status(403)

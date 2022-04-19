@@ -1,10 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Transition } from "@headlessui/react";
+import { useDispatch } from "react-redux";
+import { loadSignout } from "../../application/actions/auth";
+import { loadState } from "../../helpers/Persist";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(loadSignout);
+    navigate("/");
+  };
+  const [isAuth, setIsAuth] = useState({});
+  useEffect(() => {
+    setIsAuth(loadState("auth-state"));
+  }, []);
   const [isOpen, setIsOpen] = useState(false);
-  const component = React.createRef()
+  const component = React.createRef();
   return (
     <nav className="bg-sky-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,51 +31,62 @@ const Navbar = () => {
               />
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link
-                  to="/home"
-                  className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  หน้าหลัก
-                </Link>
-
-                <Link
-                  to="/internship-form"
-                  className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  สถานที่ฝึกงาน
-                </Link>
-
-                <Link
-                  to="/resume"
-                  className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  ประวัติส่วนตัว
-                </Link>
-
-                <Link
-                  to="/student-list"
-                  className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  รายชื่อนักศึกษา
-                </Link>
-
-            
+              {isAuth && (
+                <div className="ml-10 flex items-baseline space-x-4">
                   <Link
-                    to="/"
-                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
+                    to="/home"
+                    className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    เข้าสู่ระบบ
+                    หน้าหลัก
                   </Link>
 
                   <Link
-                    to="/logout"
-                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
+                    to="/internship-form"
+                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    สถานที่ฝึกงาน
+                  </Link>
+
+                  <Link
+                    to="/resume"
+                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    ประวัติส่วนตัว
+                  </Link>
+
+                  {isAuth?.permission === "student" ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Link
+                        to="/student-list"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        รายชื่อนักศึกษา
+                      </Link>
+                    </>
+                  )}
+
+                  {!isAuth && (
+                    <Link
+                      to="/"
+                      className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
+                    >
+                      เข้าสู่ระบบ
+                    </Link>
+                  )}
+
+                  <Link
+                    to="/"
+                    onClick={(e) => {
+                      handleLogout();
+                    }}
+                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
                   >
                     ออกจากระบบ
                   </Link>
-             
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -159,7 +183,7 @@ const Navbar = () => {
               >
                 เข้าสู่ระบบ
               </Link>
-               <Link
+              <Link
                 to="/logout"
                 className="text-white hover:bg-sky-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >

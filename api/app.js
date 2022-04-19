@@ -15,11 +15,14 @@ if (process.env.NODE_ENV === 'development') {
 	}))
 	// Morgan give information about each requrest
 	app.use(morgan('dev'))
-	console.log('process.env.CLIENT_URL', process.env.CLIENT_URL)
 }
 
 const usersRoute = require("./routes/users.route");
+const authRoute = require("./routes/auth.route");
+
 app.use("/api/users", usersRoute);
+
+app.use("/api/auth", authRoute);
 
 
 

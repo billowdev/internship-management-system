@@ -27,7 +27,7 @@ const authFlow =
           if (action.type === authActions.LOAD_SIGNIN_SUCCESS) {
             log("signin success");
             saveState('login', true);
-            window.location.reload();
+            window.location = "/home"
           }
 
           if (action.type === authActions.LOAD_SIGNOUT_SUCCESS) {

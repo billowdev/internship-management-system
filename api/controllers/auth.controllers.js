@@ -83,6 +83,7 @@ exports.signinController = async (req, res) => {
 				id: user.id,
 				token: accessToken,
 				username: user.username,
+				authenticated: true,
 				permission: user.permission,
 			});
 		} else {

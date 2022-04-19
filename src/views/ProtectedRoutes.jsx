@@ -11,7 +11,8 @@ const useAuth = () => {
   useEffect(() => {
     dispatch(loadAuth);
   }, [dispatch]);
-  console.log()
+
+
   const user = { loggedIn: isAuth?.authenticated };
   return user && user.loggedIn;
 };

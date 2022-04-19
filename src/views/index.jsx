@@ -1,6 +1,5 @@
 import React from "react";
 import Signin from "./components/Signin";
-import Signup from "./components/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./home";
 import InternshipForm from "./internship-form";
@@ -29,11 +28,9 @@ const App = () => (
       <ToastContainer />
 
       <Routes>
-        <Route path="/" element={<Signin />} />
-
+        <Route index path="/" element={<Signin />} />
         <Route element={<ProtectedRoutes />}>
           <Route index path="/home" element={<Home />} />
-          <Route path="/register" element={<Signup />} />
           <Route path="/internship-form" element={<InternshipForm />} />
           <Route path="/student-list" element={<StudentList />} />
           <Route path="/resume" element={<Resume />} />

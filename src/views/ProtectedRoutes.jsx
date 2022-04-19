@@ -7,9 +7,10 @@ import { loadState } from "../helpers/Persist";
 const useAuth = () => {
   const dispatch = useDispatch();
   let isAuth = useSelector(getAuth);
-  useEffect(()=>{
-    isAuth = loadState('auth-state')
-  }, [])
+  // useEffect(()=>{
+  //   isAuth = loadState('auth-state')
+  // }, [])
+
   useEffect(() => {
     dispatch(loadAuth);
   }, [dispatch]);

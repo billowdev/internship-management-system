@@ -10,16 +10,16 @@ const Signin = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  useEffect(()=>{
-    const isAuth = loadState('auth-state')
-    if(isAuth!=undefined || isAuth!=null){
-      window.location = "/home"
-    }
-  }, [])
+  let navigate = useNavigate();
   const handleLogin = (e) => {
     dispatch(loadSignin({ username, password }));
+    window.location.reload();
+    window.location = "/home"
   };
+
+  useEffect(()=>{
+    if(loadState('auth-state')) navigate("/home")
+  }, [])
   return (
     <Layout>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">

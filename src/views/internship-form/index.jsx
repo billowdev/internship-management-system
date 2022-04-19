@@ -46,7 +46,7 @@ const InternshipForm = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="2xl:px-56 xl:px-48 lg:px-36">
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
             <div className="py-4 px-2">
@@ -140,7 +140,7 @@ const InternshipForm = () => {
                               className="pr-4 text-sm font-medium text-gray-600"
                               id="drop-down-content-setter"
                             >
-                              Beginner
+                              ตะวันออกเฉียงเหนือ
                             </span>
                             <svg
                               id="rotate"
@@ -191,7 +191,7 @@ const InternshipForm = () => {
                     </div>
                   </div>
 
-                  <div className="grid w-full grid-cols-4 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+                  <div className="grid w-full grid-cols-1 sm2:grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-7 ">
                     <div>
                       <p className="text-base font-medium leading-none text-gray-800">
                         งานที่เกี่ยวข้อง
@@ -240,7 +240,7 @@ const InternshipForm = () => {
                     </div>
                   </div>
 
-                  <div className="grid w-full grid-cols-4 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
                     <div>
                       <p className="text-base font-medium leading-none text-gray-800">
                         เลขที่
@@ -287,7 +287,7 @@ const InternshipForm = () => {
                     </div>
                   </div>
 
-                  <div className="grid w-full grid-cols-4 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+                  <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
                     <div>
                       <p className="text-base font-medium leading-none text-gray-800">
                         จังหวัด

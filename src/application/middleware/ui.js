@@ -30,8 +30,7 @@ const authFlow =
               'signin!',
               'You clicked the button!',
               'success'
-            )
-            window.location.reload()
+            ).then(()=>window.location.reload())
           }
 
           if (action.type === authActions.LOAD_SIGNOUT_SUCCESS) {
@@ -43,7 +42,6 @@ const authFlow =
               'success'
             ).then(()=>window.location.reload())
             dispatch(authActions.loadAuth)
-            
           }
 
           if (action.type === authActions.LOAD_SIGNIN_FAILURE) {

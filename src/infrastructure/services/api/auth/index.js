@@ -19,7 +19,7 @@ export default {
             Cookies.set("access-token", token, { expires: 7 });
             saveState('auth-state', { id, username, permission, authenticated})
         }
-       
         return resp.data
     }
+   
 }

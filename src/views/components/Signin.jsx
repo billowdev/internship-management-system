@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { loadAuth, loadSignin } from "../../application/actions/auth";
-
-import { loadState, saveState } from "../../helpers/Persist";
+import { loadState } from "../../helpers/Persist";
 import Layout from "./Layout";
 
 const Signin = () => {
@@ -11,16 +10,10 @@ const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
-  const handleLogin = (e) => {
+
+  const handleLogin = async (e) => {
     dispatch(loadSignin({ username, password }));
-
   };
-
-  useEffect(() => {
-    const auth = loadState("auth-state");
-    auth?.authenticated ? navigate("/home"):<></> 
-    console.log(auth)
-  },[]);
 
   return (
     <Layout>

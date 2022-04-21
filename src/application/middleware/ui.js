@@ -2,7 +2,8 @@ import { PAGE_LOADED } from "../actions/ui";
 import * as authActions from "../actions/auth";
 import { toast } from "react-toastify";
 import { saveState } from "../../helpers/Persist";
-
+import Swal from "sweetalert2";
+import { Navigate } from "react-router-dom";
 
 const pageLoadedFlow =
   ({ log }) =>
@@ -25,23 +26,21 @@ const authFlow =
         (action) => {
           next(action);
           if (action.type === authActions.LOAD_SIGNIN_SUCCESS) {
-            log("signin success");
-            saveState('login', true);
-            window.location = "/home"
+            Swal.fire(
+              'signin!',
+              'You clicked the button!',
+              'success'
+            ).then(()=>window.location.reload())
           }
 
           if (action.type === authActions.LOAD_SIGNOUT_SUCCESS) {
             dispatch(authActions.loadAuth)
-            log("signin success");
-            toast.success('ออกจากระบบ', {
-              position: "top-right",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            log("signout success");
+            Swal.fire(
+              'ออกจากระบบ!',
+              'You clicked the button!',
+              'success'
+            ).then(()=>window.location.reload())
             dispatch(authActions.loadAuth)
           }
 

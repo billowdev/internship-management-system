@@ -1,10 +1,21 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Layout from "../components/Layout";
+
 const StudentList = () => {
+    const [name, setName] = useState("Akkarapon Phikulsri");
+    const [studentId, setStudentId] = useState("63102105112");
+    const [program, setProgram] = useState("วิทยาการคอมพิวเตอร์");
+    const [phone, setPhone] = useState("0983213212");
+    
+  
+
+    useEffect(()=>{
+        
+    }, [])
     return (
-       <Layout>
-   
-       </Layout>
+       <>
+           <div>Hello student list</div>
+       </>
     );
 };
 export default StudentList;

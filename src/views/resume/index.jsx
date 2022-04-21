@@ -1,6 +1,4 @@
 import {useEffect} from "react";
-import Layout from "../components/Layout";
-
 
 function Resume() {
   useEffect(() => {
@@ -40,10 +38,10 @@ function Resume() {
 
 
   return (
-    <Layout>
+    <>
 
 
-    </Layout>
+    </>
   );
 }
 

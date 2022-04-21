@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadAuth } from "../application/actions/auth";
 import { getAuth } from "../application/selectors/auth";
 import { loadState } from "../helpers/Persist";
+
 const useAuth = () => {
   const dispatch = useDispatch();
   let isAuth = useSelector(getAuth);
-  // useEffect(()=>{
-  //   isAuth = loadState('auth-state')
-  // }, [])
+  
+  useEffect(()=>{
+    isAuth = loadState('auth-state')
+  }, [])
 
   useEffect(() => {
     dispatch(loadAuth);

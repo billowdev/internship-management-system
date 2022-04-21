@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Layout from "../components/Layout";
 
 const InternshipForm = () => {
   const [name, setName] = useState("Akkarapon Phikulsri");
@@ -62,7 +60,7 @@ const InternshipForm = () => {
     console.log(internData, senderData);
   };
   return (
-    <Layout>
+    <>
       <div className="2xl:px-56 xl:px-48 lg:px-36">
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
@@ -503,7 +501,7 @@ const InternshipForm = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

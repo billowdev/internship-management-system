@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
-import { loadSignout } from "../../application/actions/auth";
 import { loadState } from "../../helpers/Persist";
+import { loadSignout } from "../../application/actions/auth";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -33,31 +33,41 @@ const Navbar = () => {
             <div className="hidden md:block">
               {isAuth && (
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <Link
-                    to="/home"
-                    className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    หน้าหลัก
-                  </Link>
-
-                  <Link
-                    to="/internship-form"
-                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    สถานที่ฝึกงาน
-                  </Link>
-
-                  <Link
-                    to="/resume"
-                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    ประวัติส่วนตัว
-                  </Link>
-
                   {isAuth?.permission === "student" ? (
-                    <></>
-                  ) : (
                     <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
+
+                      <Link
+                        to="/internship-form"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        สถานที่ฝึกงาน
+                      </Link>
+
+                      <Link
+                        to="/resume"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        ประวัติส่วนตัว
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {!isAuth?.permission === "director" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
                       <Link
                         to="/student-list"
                         className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -65,6 +75,34 @@ const Navbar = () => {
                         รายชื่อนักศึกษา
                       </Link>
                     </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {isAuth?.permission === "admin" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
+                      <Link
+                        to="/student-list"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        รายชื่อนักศึกษา
+                      </Link>
+
+                      <Link
+                        to="/admin"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        admin
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
                   )}
 
                   {!isAuth && (
@@ -149,46 +187,100 @@ const Navbar = () => {
         {(ref) => (
           <div className="md:hidden" id="mobile-menu">
             <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link
-                to="/home"
-                className="hover:bg-sky-700 text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                หน้าหลัก
-              </Link>
+            {isAuth && (
+                <div className="ml-10 flex items-baseline space-x-4">
+                  {isAuth?.permission === "student" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
 
-              <Link
-                to="/internship-form"
-                className="text-white hover:bg-sky-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                สถานที่ฝึกงาน
-              </Link>
+                      <Link
+                        to="/internship-form"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        สถานที่ฝึกงาน
+                      </Link>
 
-              <Link
-                to="/resume"
-                className="text-white hover:bg-sky-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                ประวัติส่วนตัว
-              </Link>
+                      <Link
+                        to="/resume"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        ประวัติส่วนตัว
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
-              <Link
-                to="/student-list"
-                className="text-white hover:bg-sky-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                รายชื่อนักศึกษา
-              </Link>
+                  {!isAuth?.permission === "director" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
+                      <Link
+                        to="/student-list"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        รายชื่อนักศึกษา
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
-              <Link
-                to="/"
-                className="text-white hover:bg-sky-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                เข้าสู่ระบบ
-              </Link>
-              <Link
-                to="/logout"
-                className="text-white hover:bg-sky-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                ออกจากระบบ
-              </Link>
+                  {isAuth?.permission === "admin" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
+                      <Link
+                        to="/student-list"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        รายชื่อนักศึกษา
+                      </Link>
+
+                      <Link
+                        to="/admin"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        admin
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {!isAuth && (
+                    <Link
+                      to="/"
+                      className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
+                    >
+                      เข้าสู่ระบบ
+                    </Link>
+                  )}
+
+                  <Link
+                    to="/"
+                    onClick={(e) => {
+                      handleLogout();
+                    }}
+                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
+                  >
+                    ออกจากระบบ
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

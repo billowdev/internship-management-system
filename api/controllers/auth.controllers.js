@@ -53,10 +53,12 @@ const { Op } = require("sequelize");
 
 exports.signinController = async (req, res) => {
 	try {
+		
 		const { username, password } = req.body;
+		if(username==''||password=='') return res.status(400).json({success:false,msg:"all input is required"});
 		// validate user input
-		if (!(username && password) || username==undefined || password == undefined) {
-			res.status(400).send("All input is required");
+		if (!(username && password)) {
+			res.status(400).json({success:false,msg:"all input is required"});
 		}
 		const user = await Users.findOne({ where: { [Op.and]: { username, password } } });
 		if (user != null) {

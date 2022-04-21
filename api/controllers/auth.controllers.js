@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { createTokens } = require("../middlewares/auth.middleware");
 const { sign, verify } = require("jsonwebtoken");
-const { Users } = require("../models");
+const { Login } = require("../models");
 const { Op } = require("sequelize");
 
 // exports.signinController = async (req, res) => {
@@ -12,7 +12,7 @@ const { Op } = require("sequelize");
 // 		res.status(400).send("All input is required");
 // 	  }
 
-// 	  const user = await Users.findOne({ where: { username } });
+// 	  const user = await Login.findOne({ where: { username } });
 
 // 	  if (user && (await bcrypt.compare(password, user.password))) {
 // 		// create token
@@ -60,7 +60,7 @@ exports.signinController = async (req, res) => {
 		if (!(username && password)) {
 			res.status(400).json({success:false,msg:"all input is required"});
 		}
-		const user = await Users.findOne({ where: { [Op.and]: { username, password } } });
+		const user = await Login.findOne({ where: { [Op.and]: { username, password } } });
 		if (user != null) {
 			// create token
 			const accessToken = sign(
@@ -100,12 +100,12 @@ exports.signinController = async (req, res) => {
 
 exports.signupController = async (req, res) => {
 	const { username, password } = req.body;
-	const response = await Users.findOne({ where: { username: username } });
+	const response = await Login.findOne({ where: { username: username } });
 	if (response != null) {
 		res.status(400).json({ success: false, msg: "username has already exists" });
 	} else {
 		bcrypt.hash(password, 10).then((hash) => {
-			Users.create({
+			Login.create({
 				username: username,
 				password: hash,
 			})

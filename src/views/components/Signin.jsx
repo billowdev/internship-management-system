@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { loadSignin } from "../../application/actions/auth";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { loadAuth, loadSignin } from "../../application/actions/auth";
 
 import { loadState, saveState } from "../../helpers/Persist";
 import Layout from "./Layout";
@@ -13,10 +13,14 @@ const Signin = () => {
   let navigate = useNavigate();
   const handleLogin = (e) => {
     dispatch(loadSignin({ username, password }));
-    
-    window.location = "/home"
+
   };
 
+  useEffect(() => {
+    const auth = loadState("auth-state");
+    auth?.authenticated ? navigate("/home"):<></> 
+    console.log(auth)
+  },[]);
 
   return (
     <Layout>

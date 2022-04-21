@@ -7946,6 +7946,11 @@ svgo@^2.7.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
+sweetalert2@^11.4.8:
+  version "11.4.8"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.8.tgz#f436eb34107c5637a0278fa7330edc722090ebbb"
+  integrity sha512-BDS/+E8RwaekGSxCPUbPnsRAyQ439gtXkTF/s98vY2l9DaVEOMjGj1FaQSorfGREKsbbxGSP7UXboibL5vgTMA==
+
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz"

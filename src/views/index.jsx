@@ -28,7 +28,7 @@ const App = () => (
       <ToastContainer />
 
       <Routes>
-        <Route index path="/" element={<Signin />} />
+        <Route path="/" element={<Signin />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/internship-form" element={<InternshipForm />} />

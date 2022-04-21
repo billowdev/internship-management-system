@@ -14,7 +14,6 @@ import Layout from "./components/Layout";
 import Missing from "./components/Missing";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./components/Unauthorized";
-import Welcome from "./components/Welcome";
 
 const ROLES = {
   User: "student",
@@ -49,6 +48,9 @@ const App = () => (
           }
         >
           <Route path="/" element={<Home />} />
+        </Route>
+
+        <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
           <Route path="internship-form" element={<InternshipForm />} />
           <Route path="resume" element={<Resume />} />
         </Route>
@@ -56,7 +58,6 @@ const App = () => (
         <Route
           element={<RequireAuth allowedRoles={[ROLES.Director, ROLES.Admin]} />}
         >
-          <Route path="/" element={<Welcome />} />
           <Route path="student-list" element={<StudentList />} />
         </Route>
 

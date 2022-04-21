@@ -33,32 +33,41 @@ const Navbar = () => {
             <div className="hidden md:block">
               {isAuth && (
                 <div className="ml-10 flex items-baseline space-x-4">
-
-                  <Link
-                    to="/home"
-                    className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    หน้าหลัก
-                  </Link>
-
-                  <Link
-                    to="/internship-form"
-                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    สถานที่ฝึกงาน
-                  </Link>
-
-                  <Link
-                    to="/resume"
-                    className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    ประวัติส่วนตัว
-                  </Link>
-
                   {isAuth?.permission === "student" ? (
-                    <></>
-                  ) : (
                     <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
+
+                      <Link
+                        to="/internship-form"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        สถานที่ฝึกงาน
+                      </Link>
+
+                      <Link
+                        to="/resume"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        ประวัติส่วนตัว
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {!isAuth?.permission === "director" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
                       <Link
                         to="/student-list"
                         className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -66,6 +75,34 @@ const Navbar = () => {
                         รายชื่อนักศึกษา
                       </Link>
                     </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {isAuth?.permission === "admin" ? (
+                    <>
+                      <Link
+                        to="/"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        หน้าหลัก
+                      </Link>
+                      <Link
+                        to="/student-list"
+                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        รายชื่อนักศึกษา
+                      </Link>
+
+                      <Link
+                        to="/admin"
+                        className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        admin
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
                   )}
 
                   {!isAuth && (
@@ -86,14 +123,6 @@ const Navbar = () => {
                   >
                     ออกจากระบบ
                   </Link>
-
-                  <Link
-                    to="/admin"
-                    className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    admin
-                  </Link>
-
                 </div>
               )}
             </div>

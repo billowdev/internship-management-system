@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Layout from "../components/Layout";
 import { useDispatch, useSelector, useState } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +8,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   return (
-    <Layout>
+    <>
       <div className="wrapper bg-gray-200 antialiased ">
         <div className="flex md:flex-row sm0:flex-col sm1:flex-col sm3:flex-row sm3:space-x-10 md:space-x-5 lg:flex-row lg:space-x-16 items-center justify-center min-h-screen">
           <div className="w-64 px-8 py-6 mt-4 text-left bg-white shadow-2xl rounded-3xl">
@@ -58,7 +57,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

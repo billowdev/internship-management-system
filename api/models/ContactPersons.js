@@ -22,31 +22,11 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.ENUM(["บิดา", "มารดา", "ผู้ปกครอง"]),
 			defaultValue: "ผู้ปกครอง",
 		},
-		houseNumber: {
-			type: DataTypes.STRING(10),
-		},
-		road: {
-			type: DataTypes.STRING(50),
-		},
-		village: {
-			type: DataTypes.STRING(50),
-		},
-		subDistrict: {
-			type: DataTypes.STRING(50),
-		},
-		district: {
-			type: DataTypes.STRING(50),
-		},
-		province: {
-			type: DataTypes.STRING(50),
-		},
-		postCode: {
-			type: DataTypes.STRING(8),
-		},
 	});
 
 	ContactPersons.associate = (models) => {
 		ContactPersons.belongsTo(models.Resumes);
+		ContactPersons.belongsTo(models.Addresses)
 	};
 
 	return ContactPersons;

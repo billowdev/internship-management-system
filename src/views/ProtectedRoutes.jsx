@@ -5,8 +5,6 @@ import { loadAuth } from "../application/actions/auth";
 import { getAuth } from "../application/selectors/auth";
 import { loadState } from "../helpers/Persist";
 
-
-
 const useAuth = () => {
   const dispatch = useDispatch();
   let isAuth = useSelector(getAuth);

@@ -52,8 +52,7 @@
   }
  
   .wrapper {
-    /* display:; */
     height:100vh;
-    place-items:center
+    /* place-items:center */
   }
 }

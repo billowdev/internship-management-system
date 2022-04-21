@@ -1,12 +1,12 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
 import { saveState } from "../../../../helpers/Persist.js";
-const { BASE_URL, accessToken, authHeader } = require("../../config");
+const { BASE_URL, accessToken, accessHeader } = require("../../config");
 
 export default {
     getAuth: async () => {
         if (accessToken != null) {
-            const resp = await axios.get((BASE_URL + '/auth/is-auth'), authHeader);
+            const resp = await axios.get((BASE_URL + '/auth/is-auth'), accessHeader);
             return resp.data;
         } else {
             return { success: false };

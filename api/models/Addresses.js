@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const Address = sequelize.define("Address", {
+	const Addresses = sequelize.define("Addresses", {
 		id: {
 			type: DataTypes.UUID,
 			primaryKey: true,
@@ -26,17 +26,17 @@ module.exports = (sequelize, DataTypes) => {
 		postCode: {
 			type: DataTypes.STRING(8),
 		},
-		addressType: {
-			type: DataTypes.ENUM(["hometown", "present"]),
+		AddressesType: {
+			type: DataTypes.ENUM(["hometown", "present", "company", "contactPerson"]),
 			defaultValue: "present",
 		}
 	});
 
-	Address.associate = (models) => {
-		Address.belongsTo(models.Resumes, {
-			foreignKey: "ResumeId"
-		})
+	Addresses.associate = (models) => {
+		Addresses.hasMany(models.Companies);
+		Addresses.hasMany(models.Resumes);
+		Addresses.hasMany(models.ContactPersons);
 	};
 
-	return Address;
+	return Addresses;
 };

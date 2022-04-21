@@ -42,8 +42,14 @@ module.exports = (sequelize, DataTypes) => {
 		fatherName: {
 			type: DataTypes.STRING(100),
 		},
+		fatherJob: {
+			type: DataTypes.STRING(50),
+		},
 		motherName: {
 			type: DataTypes.STRING(100),
+		},
+		motherJob: {
+			type: DataTypes.STRING(50),
 		},
 
 	});
@@ -56,7 +62,9 @@ module.exports = (sequelize, DataTypes) => {
 
 		Resumes.hasOne(models.Educations, {
 			onDelete: "cascade",
-		}); 
+		});
+
+		Resumes.belongsTo(models.Addresses)
 	};
 
 	return Resumes;

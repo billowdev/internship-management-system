@@ -16,7 +16,7 @@ const runningServe = async (log) => {
   const msg = `INTERNSHIP MANAGEMENT SYSTEM \n ---  ${log} ---`
   console.log(cowsay.say({
     text : gradient.pastel.multiline(msg),
-    e : 'o 0',
+    e : 'o O',
     T : "U"
 }));
 };

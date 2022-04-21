@@ -33,6 +33,7 @@ const Navbar = () => {
             <div className="hidden md:block">
               {isAuth && (
                 <div className="ml-10 flex items-baseline space-x-4">
+
                   <Link
                     to="/home"
                     className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -85,6 +86,14 @@ const Navbar = () => {
                   >
                     ออกจากระบบ
                   </Link>
+
+                  <Link
+                    to="/admin"
+                    className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    admin
+                  </Link>
+
                 </div>
               )}
             </div>

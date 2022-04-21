@@ -1,0 +1,1 @@
+export const getLogin = state => state.adminLogin.loginData;

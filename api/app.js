@@ -19,10 +19,19 @@ if (process.env.NODE_ENV === 'development') {
 
 const usersRoute = require("./routes/users.route");
 const authRoute = require("./routes/auth.route");
+const studentsRoute = require("./routes/students.route");
+const loginRoute = require("./routes/admin/login.route");
 
 app.use("/api/users", usersRoute);
-
+// authentications
 app.use("/api/auth", authRoute);
+// admin
+app.use("/api/admin/login", loginRoute);
+// app.use("/api/admin/login", loginRoute);
+
+//student
+app.use("/api/students", studentsRoute);
+
 
 
 

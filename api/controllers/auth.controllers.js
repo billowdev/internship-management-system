@@ -93,7 +93,7 @@ exports.signinController = async (req, res) => {
 		}
 	} catch (err) {
 		console.log(`Error auth.controllers - ERROR: ${err}`);
-		return res.status(400).json({ success: false, msg: "Something went wrong!" });
+		return res.status(500).json({ success: false, msg: "Something went wrong!" });
 	}
 };
 
@@ -115,7 +115,7 @@ exports.signupController = async (req, res) => {
 				.catch((err) => {
 					if (err) {
 						console.log("Error in signup while account activation", err);
-						return res.status(400).json({ success: false, msg: "something went wrong!" });
+						return res.status(500).json({ success: false, msg: "something went wrong!" });
 					}
 				});
 		});

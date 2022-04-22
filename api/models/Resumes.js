@@ -51,6 +51,10 @@ module.exports = (sequelize, DataTypes) => {
 		motherJob: {
 			type: DataTypes.STRING(50),
 		},
+		status: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		}
 
 	});
 

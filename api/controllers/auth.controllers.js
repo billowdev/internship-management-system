@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { createTokens } = require("../middlewares/auth.middleware");
 const { sign, verify } = require("jsonwebtoken");
-const { Login } = require("../models");
+const { Login } = require("../models/internship");
 const { Op } = require("sequelize");
 
 // exports.signinController = async (req, res) => {

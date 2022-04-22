@@ -1,4 +1,4 @@
-const { Login } = require("../../models");
+const { Login } = require("../../models/internship");
 const { Op } = require('sequelize')
 exports.createLogin = async (req, res) => {
 	try {

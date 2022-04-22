@@ -9,11 +9,13 @@ const InternshipForm = () => {
   const [internCompanyName, setInternCompanyName] = useState(
     "บริษัท โค้ดทูแพนด้า จำกัด"
   );
-  const [internBranch, setInternBranch] = useState("ตะวันออกเฉียงเหนือ");
+  const [intermType, setintermType] = useState("ตะวันออกเฉียงเหนือ");
   const [internWork, setInternWork] = useState("developer");
   const [internContactWith, setInternContactWith] = useState("lacakp");
   const [internContactWithPosition, setInternContactWithPosition] =
     useState("HR");
+  const [internContactWithPhone, setInternContactWithPhone] = useState("0983271231");
+  const [internProposeTo, setInternProposeTo] = useState("หัวหน้างานฝ่ายบุคคล");
   const [internPhone, setInternPhone] = useState("0983271232");
   const [internNumber, setInternNumber] = useState("111");
   const [internRoad, setInternRoad] = useState("12");
@@ -22,15 +24,30 @@ const InternshipForm = () => {
   const [internProvince, setInternProvince] = useState("สกลนคร");
   const [internPostCode, setInternPostCode] = useState("47000");
 
+  // ---- Drop Down Meny for company branch or region ---
   const showDropDownMenu = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
   };
   const swaptext = (el) => {
     const targetText = el.target.innerText;
-    setInternBranch(targetText);
+    setintermType(targetText);
     document.getElementById("drop-down-content-setter").innerText = targetText;
     document.getElementById("drop-down-div").classList.toggle("hidden");
   };
+  // ---- Drop Down Meny for company branch or region ---
+
+  // ---- Drop Down Meny for fild of study ---
+  const showDropDownMenuProgram = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+  
+  const swaptextProgram = (el) => {
+    const targetText = el.target.innerText;
+    setProgram(targetText);
+    document.getElementById("drop-down-content-setter-program").innerText = targetText;
+    document.getElementById("drop-down-div-program").classList.toggle("hidden");
+  };
+  // ---- end  Drop Down Meny for fild of study ----
 
   // const showDropDownMenuOne = (el) => {
   //   el.target.parentElement.children[1].classList.toggle("hidden");
@@ -42,13 +59,16 @@ const InternshipForm = () => {
   //   document.getElementById("drop-down-div-one").classList.toggle("hidden");
   // }
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault()
     const senderData = { name, studentId, program, phone };
     const internData = {
-      internBranch,
+      intermType,
       internWork,
       internContactWith,
       internContactWithPosition,
+      internContactWithPhone,
+      internProposeTo,
       internPhone,
       internNumber,
       internRoad,
@@ -59,12 +79,14 @@ const InternshipForm = () => {
     };
     console.log(internData, senderData);
   };
+  // console.log()
   return (
     <>
       <div className="2xl:px-56 xl:px-48 lg:px-36">
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
             <div className="py-4 px-2">
+              <form onSubmit={(e)=>handleSave(e)}>
               <div className="bg-white rounded shadow mt-7 py-7">
                 {/* end */}
 
@@ -76,13 +98,14 @@ const InternshipForm = () => {
                   <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
                     <div>
                       <p className="text-base font-medium leading-none text-gray-800">
-                        ข้าพเจ้า
+                        ชื่อ - นามสุกล
                       </p>
                       <input
                         className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                         placeholder="ชื่อ-นามสุกล"
                         defaultValue={name}
                         onChange={(e) => setName(e.target.value)}
+                        required
                       />
                       <p className="mt-3 text-xs leading-3 text-gray-600"></p>
                     </div>
@@ -112,12 +135,59 @@ const InternshipForm = () => {
                       <p className="text-base font-medium leading-none text-gray-800">
                         สาขาวิชา
                       </p>
-                      <input
-                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        placeholder="สาขาวิชา"
-                        defaultValue={program}
-                        onChange={(e) => setProgram(e.target.value)}
-                      />
+                      {/*-Dropdown*/}
+                      <div className="relative top-1 ">
+                        <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+                          <button
+                            onClick={showDropDownMenuProgram}
+                            className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+                          >
+                            <span
+                              className="pr-4 text-sm font-medium text-gray-600"
+                              id="drop-down-content-setter-program"
+                            >
+                              วิทยาการคอมพิวเตอร์
+                            </span>
+                            <svg
+                              id="rotate"
+                              className="absolute z-10 cursor-pointer right-5"
+                              width={10}
+                              height={6}
+                              viewBox="0 0 10 6"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0.5 0.75L5 5.25L9.5 0.75"
+                                stroke="#4B5563"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+
+                          <div
+                            className="absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                            id="drop-down-div-program"
+                          >
+                            <p
+                              className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                              onClick={swaptextProgram}
+                            >
+                              วิทยาการคอมพิวเตอร์
+                            </p>
+
+                            <p
+                              className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                              onClick={swaptextProgram}
+                            >
+                              เทคโนโลยีสารสนเทศ
+                            </p>
+                          </div>
+                        </div>
+                        {/* end */}
+                      </div>
+                      {/* end */}
                     </div>
                   </div>
                 </div>
@@ -155,7 +225,7 @@ const InternshipForm = () => {
                               className="pr-4 text-sm font-medium text-gray-600"
                               id="drop-down-content-setter"
                             >
-                              ตะวันออกเฉียงเหนือ
+                              รัฐบาล
                             </span>
                             <svg
                               id="rotate"
@@ -182,22 +252,16 @@ const InternshipForm = () => {
                               className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
                               onClick={swaptext}
                             >
-                              ตะวันออกเฉียงเหนือ
+                              เอกชน
                             </p>
 
                             <p
                               className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
                               onClick={swaptext}
                             >
-                              ภาคกลาง
+                              รัฐวิสาหกิจ
                             </p>
-
-                            <p
-                              className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
-                              onClick={swaptext}
-                            >
-                              ภาคเหนือ
-                            </p>
+                          
                           </div>
                         </div>
                         {/* end */}
@@ -209,7 +273,7 @@ const InternshipForm = () => {
                   <div className="grid w-full grid-cols-1 sm2:grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-7 ">
                     <div>
                       <p className="text-base font-medium leading-none text-gray-800">
-                        งานที่เกี่ยวข้อง
+                        กิจกรรมหลักของหน่วยงานที่เกี่ยวข้องกับคอมพิวเตอร์
                       </p>
                       <input
                         className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
@@ -244,13 +308,24 @@ const InternshipForm = () => {
                     </div>
                     <div>
                       <p className="text-base font-medium leading-none text-gray-800">
-                        โทรศัพท์
+                        เบอร์ติดต่อ
                       </p>
                       <input
                         className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                        placeholder="โทรศัพท์"
+                        placeholder="เบอร์ติดต่อ"
                         defaultValue={internPhone}
-                        onChange={(e) => setInternPhone(e.target.value)}
+                        onChange={(e) => setInternContactWithPhone(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium leading-none text-gray-800">
+                        การเสนอหนังสือความอนุเคราะห์ต้องเสนอต่อ
+                      </p>
+                      <input
+                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                        placeholder="หัวหน้าฝ่ายบุคคล"
+                        defaultValue={internProposeTo}
+                        onChange={(e) => setInternProposeTo(e.target.value)}
                       />
                     </div>
                   </div>
@@ -488,15 +563,18 @@ const InternshipForm = () => {
                     Cancel
                   </button>
                   <button
-                    onClick={(e) => {
-                      handleSave();
-                    }}
+                    // onClick={(e) => {
+                    //   handleSave();
+                    // }}
+                    id="submit"
+                    type="submit"
                     className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
                   >
                     Save Changes
                   </button>
                 </div>
               </div>
+              </form>
             </div>
           </div>
         </div>

@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 		postCode: {
 			type: DataTypes.STRING(8),
 		},
-		AddressesType: {
+		addressesType: {
 			type: DataTypes.ENUM(["hometown", "present", "company", "contactPerson"]),
 			defaultValue: "present",
 		}

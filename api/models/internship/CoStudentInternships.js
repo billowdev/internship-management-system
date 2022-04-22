@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			allowNull: false,
 		},
-		firstName: {
+		first_name: {
 			type: DataTypes.STRING(150),
 			allowNull: false,
 		},
-		lastName: {
+		last_name: {
 			type: DataTypes.STRING(150),
 			allowNull: false,
 		},
@@ -17,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(10),
 			allowNull: false,
 		},
+	}, {
+		underscored: true
 	});
 
 	CoStudentInternships.associate = (models) => {

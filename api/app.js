@@ -22,6 +22,7 @@ const authRoute = require("./routes/auth.route");
 const studentsRoute = require("./routes/students.route");
 const loginRoute = require("./routes/admin/login.route");
 const internshipsRoute = require("./routes/internships.route");
+const thaiAddressesRoute = require("./routes/thaiAddresses.route");
 
 // authentications
 app.use("/api/auth", authRoute);
@@ -34,6 +35,9 @@ app.use("/api/students", studentsRoute);
 
 //student get internship data
 app.use("/api/internships", internshipsRoute);
+
+// get province thailand
+app.use("/api/thai-addresses", thaiAddressesRoute);
 
 
 

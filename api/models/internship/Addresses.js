@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
 		  },
-		houseNumber: {
+		house_number: {
 			type: DataTypes.STRING(10),
 		},
 		road: {
@@ -14,27 +14,29 @@ module.exports = (sequelize, DataTypes) => {
 		village: {
 			type: DataTypes.STRING(50),
 		},
-		subDistrict: {
-			type: DataTypes.STRING(50),
+		sub_district: {
+			type: DataTypes.STRING(150),
 		},
 		district: {
-			type: DataTypes.STRING(50),
+			type: DataTypes.STRING(150),
 		},
 		province: {
-			type: DataTypes.STRING(50),
+			type: DataTypes.STRING(150),
 		},
-		postCode: {
-			type: DataTypes.STRING(8),
+		post_code: {
+			type: DataTypes.STRING(10),
 		},
-		addressesType: {
-			type: DataTypes.ENUM(["hometown", "present", "company", "contactPerson"]),
+		addresses_type: {
+			type: DataTypes.ENUM(["hometown", "present", "company", "contact_person"]),
 			defaultValue: "present",
 		}
+	}, {
+		underscored: true
 	});
 
 	Addresses.associate = (models) => {
 		Addresses.hasMany(models.Companies);
-		Addresses.hasMany(models.Resumes);
+		Addresses.hasMany(models.Students);
 		Addresses.hasMany(models.ContactPersons);
 	};
 

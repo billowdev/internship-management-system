@@ -13,15 +13,15 @@ const Home = () => {
   return (
     <>
       <div className="wrapper bg-gray-200 antialiased ">
-        {isAuth?.permission === "admin" ? (
+        {isAuth?.roles === "admin" ? (
           <>
             <Navigate to="/admin" />
           </>
-        ) : isAuth?.permission === "director" ? (
+        ) : isAuth?.roles === "director" ? (
           <>
             <Navigate to="/student-list" />
           </>
-        ) : isAuth?.permission === "student" ? (
+        ) : isAuth?.roles === "student" ? (
           <>
             <div className="flex md:flex-row sm0:flex-col sm1:flex-col sm3:flex-row sm3:space-x-10 md:space-x-5 lg:flex-row lg:space-x-16 items-center justify-center min-h-screen">
               <div className="w-64 px-8 py-6 mt-4 text-left bg-white shadow-2xl rounded-3xl">
@@ -52,7 +52,7 @@ const Home = () => {
                     className="fill-current h-16 w-16"
                     icon={faEdit}
                   />
-                  <i class="fas fa-file-user"></i>
+                  <i className="fas fa-file-user"></i>
                 </div>
                 <h3 className="text-2xl font-bold text-center">
                   ประวัตินักศึกษา

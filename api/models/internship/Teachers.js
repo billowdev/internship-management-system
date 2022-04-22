@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
 	const Teachers = sequelize.define("Teachers", {
 		name: {
@@ -17,11 +16,13 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(50),
 			allowNull: true,
 		},
+	}, {
+		underscored: true
 	});
 
 	Teachers.associate = (models) => {
 		Teachers.belongsTo(models.Login, {
-			foreignKey: "LoginId",
+			foreignKey: "login_id",
 		});
 	};
 

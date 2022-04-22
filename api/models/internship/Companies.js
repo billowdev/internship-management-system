@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
 		},
-		contactPersonName: {
+		contact_person_name: {
 			type: DataTypes.STRING(100),
 		},
-		contactPersonPhone: {
+		contact_person_phone: {
 			type: DataTypes.STRING(10),
 		},
 		name: {
@@ -19,21 +19,22 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: "รัฐบาล",
 		},
-		activity: {
+		activities: {
 			type: DataTypes.STRING(100),
 		},
-		proposeTo:{
+		propose_to:{
 			type: DataTypes.STRING(40)
 		},
 		phone: {
 			type: DataTypes.STRING(10),
 		},
 		
+	}, {
+		underscored: true
 	});
 
 	Companies.associate = (models) => {
 		Companies.hasMany(models.Internships);
-		
 		Companies.belongsTo(models.Addresses)
 	};
 

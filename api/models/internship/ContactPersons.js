@@ -6,26 +6,24 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
 		  },
-		firstName: {
+		first_name: {
 			type: DataTypes.STRING(50),
 			allowNull: false,
 		},
-		lastName: {
+		last_name: {
 			type: DataTypes.STRING(50),
-			allowNull: false,
-		},
-		phone: {
-			type: DataTypes.STRING(10),
 			allowNull: false,
 		},
 		relationship: {
 			type: DataTypes.ENUM(["บิดา", "มารดา", "ผู้ปกครอง"]),
 			defaultValue: "ผู้ปกครอง",
 		},
+	}, {
+		underscored: true
 	});
 
 	ContactPersons.associate = (models) => {
-		ContactPersons.belongsTo(models.Resumes);
+		ContactPersons.belongsTo(models.Students);
 		ContactPersons.belongsTo(models.Addresses)
 	};
 

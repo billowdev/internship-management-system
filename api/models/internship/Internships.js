@@ -5,9 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
 		},
-		coStudent: {
-			type: DataTypes.JSON(),
-		},
+		status: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		}
 	});
 
 	Internships.associate = (models) => {

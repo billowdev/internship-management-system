@@ -1,4 +1,4 @@
-const { Students, Login } = require("../models");
+const { Students, Login } = require("../models/internship");
 
 // exports.createStudents = async (req, res) => {
 // 	try {

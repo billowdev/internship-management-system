@@ -5,19 +5,25 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
 		},
-		contactPerson: {
-			type: DataTypes.JSON(),
+		contactPersonName: {
+			type: DataTypes.STRING(100),
+		},
+		contactPersonPhone: {
+			type: DataTypes.STRING(10),
 		},
 		name: {
 			type: DataTypes.STRING(100),
 		},
 		region: {
-			type: DataTypes.ENUM(["ภาคเหนือ", "ภาคตะวันออกเฉียงเหนือ", "ภาคตะวันตก", "ภาคกลาง", "ภาคตะวันออก", "ภาคใต้"]),
+			type: DataTypes.ENUM(["รัฐบาล", "เอกชน", "รัฐวิสาหกิจ"]),
 			allowNull: false,
-			defaultValue: "ภาคกลาง",
+			defaultValue: "รัฐบาล",
 		},
-		mainActivity: {
+		activity: {
 			type: DataTypes.STRING(100),
+		},
+		proposeTo:{
+			type: DataTypes.STRING(40)
 		},
 		phone: {
 			type: DataTypes.STRING(10),

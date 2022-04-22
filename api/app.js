@@ -17,21 +17,23 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'))
 }
 
-const usersRoute = require("./routes/users.route");
+
 const authRoute = require("./routes/auth.route");
 const studentsRoute = require("./routes/students.route");
 const loginRoute = require("./routes/admin/login.route");
+const internshipsRoute = require("./routes/internships.route");
 
-app.use("/api/users", usersRoute);
 // authentications
 app.use("/api/auth", authRoute);
 // admin
 app.use("/api/admin/login", loginRoute);
 // app.use("/api/admin/login", loginRoute);
 
-//student
+//student get student data
 app.use("/api/students", studentsRoute);
 
+//student get internship data
+app.use("/api/internships", internshipsRoute);
 
 
 

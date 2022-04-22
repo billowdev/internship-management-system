@@ -1,8 +1,9 @@
-const { Users } = require("../models");
+const { Students, Login } = require("../models/internship");
 
-exports.getUsers = async(req, res) => {
+
+exports.getInternships = async (req, res) => {
 	try {
-		const resp = await Users.findAll();
+		const resp = await Students.findAll();
 		if (resp.length != 0) {
 			res.status(200).json({ success: true, msg: "success", data: resp })
 		} else {

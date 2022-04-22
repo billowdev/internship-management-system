@@ -33,7 +33,7 @@ const Navbar = () => {
             <div className="hidden md:block">
               {isAuth && (
                 <div className="ml-10 flex items-baseline space-x-4">
-                  {isAuth?.permission === "student" ? (
+                  {isAuth?.roles === "student" ? (
                     <>
                       <Link
                         to="/"
@@ -60,7 +60,7 @@ const Navbar = () => {
                     <></>
                   )}
 
-                  {!isAuth?.permission === "director" ? (
+                  {!isAuth?.roles === "director" ? (
                     <>
                       <Link
                         to="/"
@@ -79,7 +79,7 @@ const Navbar = () => {
                     <></>
                   )}
 
-                  {isAuth?.permission === "admin" ? (
+                  {isAuth?.roles === "admin" ? (
                     <>
                       <Link
                         to="/"
@@ -189,7 +189,7 @@ const Navbar = () => {
             <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {isAuth && (
                 <div className="ml-10 flex items-baseline space-x-4">
-                  {isAuth?.permission === "student" ? (
+                  {isAuth?.roles === "student" ? (
                     <>
                       <Link
                         to="/"
@@ -216,7 +216,7 @@ const Navbar = () => {
                     <></>
                   )}
 
-                  {!isAuth?.permission === "director" ? (
+                  {!isAuth?.roles === "director" ? (
                     <>
                       <Link
                         to="/"
@@ -235,7 +235,7 @@ const Navbar = () => {
                     <></>
                   )}
 
-                  {isAuth?.permission === "admin" ? (
+                  {isAuth?.roles === "admin" ? (
                     <>
                       <Link
                         to="/"

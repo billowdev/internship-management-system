@@ -22,11 +22,13 @@ module.exports = (sequelize, DataTypes) => {
 		gpa: {
 			type: DataTypes.DECIMAL(4),
 		},
+	}, {
+		underscored: true
 	});
 
 	Educations.associate = (models) => {
-		Educations.belongsTo(models.Resumes, {
-			foreignKey: "ResumeId",
+		Educations.belongsTo(models.Students, {
+			foreignKey: "student_id",
 		});
 	};
 

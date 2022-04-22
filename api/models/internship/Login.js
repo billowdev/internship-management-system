@@ -13,15 +13,17 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(50),
 			allowNull: false,
 		},
-		permission: {
+		roles: {
 			type: DataTypes.ENUM(["admin", "director", "student"]),
 			allowNull: false,
 			defaultValue: "student",
 		},
-		isActive: {
+		is_active: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: true,
 		},
+	}, {
+		underscored: true
 	});
 
 	Login.associate = (models) => {

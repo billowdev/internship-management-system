@@ -9,12 +9,7 @@ const config = require(__dirname + '/../../config/config.js')[env];
 const db = {};
 
 let sequelize;
-// if (config.use_env_variable) {
-//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
-// } else {
-//   sequelize = new Sequelize(config.database, config.username, config.password, config);
-// }
-
+// loop check database name from config.js
 const databases = Object.keys(config.databases);
 for (let i = 0; i < databases.length; ++i) {
   let database = databases[i];
@@ -27,7 +22,7 @@ for (let i = 0; i < databases.length; ++i) {
     }
   }
 }
-
+// find all models intership
 fs
   .readdirSync(__dirname)
   .filter(file => {

@@ -20,7 +20,7 @@ const { Op } = require("sequelize");
 // 		  {
 // 			id: user.id,
 // 			username: user.username,
-// 			permission: user.permission,
+// 			roles: user.roles,
 // 		  },
 // 		  process.env.JWT_SECRET,
 // 		  {
@@ -39,7 +39,7 @@ const { Op } = require("sequelize");
 // 		  id: user.id,
 // 		  token: accessToken,
 // 		  username: user.username,
-// 		  permission: user.permission,
+// 		  roles: user.roles,
 // 		});
 // 	  } else {
 // 		return res.status(400).json({success:false, msg:"Invalid Credentials"});
@@ -67,7 +67,7 @@ exports.signinController = async (req, res) => {
 				{
 					id: user.id,
 					username: user.username,
-					permission: user.permission,
+					roles: user.roles,
 				},
 				process.env.JWT_SECRET,
 				{
@@ -86,7 +86,7 @@ exports.signinController = async (req, res) => {
 				token: accessToken,
 				username: user.username,
 				authenticated: true,
-				permission: user.permission,
+				roles: user.roles,
 			});
 		} else {
 			return res.status(400).json({ success: false, msg: "Invalid Credentials" });

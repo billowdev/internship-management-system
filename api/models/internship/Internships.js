@@ -9,16 +9,18 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
 		}
+	}, {
+		underscored: true
 	});
 
 	Internships.associate = (models) => {
 		Internships.belongsTo(models.Students, {
-			foreignKey: "StudentId",
+			foreignKey: "student_id",
 		});
 		Internships.belongsTo(models.Companies);
 
 		Internships.hasMany(models.CoStudentInternships, {
-			foreignKey: "InternshipId",
+			foreignKey: "internship_id",
 		});
 	};
 

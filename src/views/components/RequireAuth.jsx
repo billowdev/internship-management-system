@@ -9,7 +9,7 @@ const RequireAuth = ({ allowedRoles }) => {
     setauthState(auth);
   }, []);
 
-  let roles = authState?.permission;
+  let roles = authState?.roles;
 
   const location = useLocation();
 

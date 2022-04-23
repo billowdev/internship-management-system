@@ -16,6 +16,24 @@ export const loadGeographiesFailure = error => ({
     payload: error,
 });
 
+export const LOAD_ALL_PROVINCES = '[THAI ADDRESSES.ALL_PROVINCES ] LOAD';
+export const LOAD_ALL_PROVINCES_SUCCESS = '[THAI ADDRESSES.ALL_PROVINCES ] LOAD SUCCESS';
+export const LOAD_ALL_PROVINCES_FAILURE = '[THAI ADDRESSES.ALL_PROVINCES ] LOAD FAILURE';
+
+export const loadAllProvinces = {
+    type: LOAD_ALL_PROVINCES,
+};
+
+export const loadAllProvincesSuccess = data => ({
+    type: LOAD_ALL_PROVINCES_SUCCESS,
+    payload: data,
+});
+
+export const loadAllProvincesFailure = error => ({
+    type: LOAD_GEOGRAPHIES_FAILURE,
+    payload: error,
+});
+
 
 export const LOAD_PROVINCES = '[THAI ADDRESSES.PROVINCES] LOAD';
 export const LOAD_PROVINCES_SUCCESS = '[THAI ADDRESSES.PROVINCES] LOAD SUCCESS';

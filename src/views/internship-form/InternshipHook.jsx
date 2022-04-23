@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { removeState } from "../../helpers/Persist";
+import ThaiAddressesHook from "./ThaiAddressesHook";
 
 const InternshipHook = () => {
   const [name, setName] = useState("Akkarapon Phikulsri");
@@ -25,6 +27,11 @@ const InternshipHook = () => {
   const [internProvince, setInternProvince] = useState("สกลนคร");
   const [internPostCode, setInternPostCode] = useState("47000");
 
+  const {
+    getDistricts,
+    getSubDistricts,
+  } = ThaiAddressesHook();
+
   // ---- Drop Down Meny for company branch or region ---
   const showDropDownMenu = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
@@ -45,21 +52,47 @@ const InternshipHook = () => {
   const swaptextProgram = (el) => {
     const targetText = el.target.innerText;
     setProgram(targetText);
+    console.log(targetText);
     document.getElementById("drop-down-content-setter-program").innerText =
       targetText;
     document.getElementById("drop-down-div-program").classList.toggle("hidden");
   };
   // ---- end  Drop Down Meny for fild of study ----
 
-  // const showDropDownMenuOne = (el) => {
-  //   el.target.parentElement.children[1].classList.toggle("hidden");
-  // };
-  // function swaptextone(el) {
-  //   const targetText = el.target.innerText;
-  //   document.getElementById("drop-down-content-setter-one").innerText =
-  //     targetText;
-  //   document.getElementById("drop-down-div-one").classList.toggle("hidden");
-  // }
+  // ---- Drop Down Meny for province internship data ---
+  const showDropDownMenuProvinces = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+  const swaptextProvinces = async (el) => {
+    const targetText = el.target.innerText;
+    const provinceId = Object.values(el.target)[0].key;
+    await removeState("districts");
+    getDistricts(provinceId);
+    setInternProvince(targetText);
+    document.getElementById("drop-down-provinces-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-provinces")
+      .classList.toggle("hidden");
+  };
+  // ---- end  Drop Down Meny for province internship data ----
+
+  // ---- Drop Down Meny for province internship data ---
+  const showDropDownMenuDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+  const swaptextDistricts = (el) => {
+    const targetText = el.target.innerText;
+    const districtId = Object.values(el.target)[0].key;
+    getSubDistricts(districtId);
+    setInternProvince(targetText);
+    document.getElementById("drop-down-districts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-districts")
+      .classList.toggle("hidden");
+  };
+  // ---- end  Drop Down Meny for province internship data ----
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -84,10 +117,12 @@ const InternshipHook = () => {
   // console.log()
 
   return {
-    showDropDownMenu,
-    swaptext,
+    // showDropDownMenu,
+    // swaptext,
     showDropDownMenuProgram,
     swaptextProgram,
+    // swaptextProvinces,
+    // showDropDownMenuProvinces,
     handleSave,
 
     internType,

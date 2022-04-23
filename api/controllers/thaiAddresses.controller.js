@@ -14,6 +14,21 @@ exports.getGeographies = async (req, res) => {
 	}
 }
 
+
+exports.getProvinces = async (req, res) => {
+	try {
+		const resp = await Provinces.findAll();
+		if (resp.length != 0) {
+			res.status(200).json({ success: true, msg: "get Provinces success", data: resp })
+		} else {
+			res.json({})
+		}
+	} catch (err) {
+		console.log({ msg: "on thai address controller", error: err })
+		res.status(500).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
 exports.getProvincesByGeographyId = async (req, res) => {
 	try {
 		console.log(req.params.geographyId)

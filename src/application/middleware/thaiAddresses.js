@@ -12,11 +12,23 @@ const loadThaiAddressesFlow =
 							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getGeographies();
 							dispatch(thaiAddressesActions.loadGeographiesSuccess(resp));
-							saveState('geographies', resp);
+							saveState('geographies', resp.data);
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('geographies')
 							dispatch(thaiAddressesActions.loadGeographiesFailure(error));
+						}
+					}
+					if (action.type === thaiAddressesActions.LOAD_ALL_PROVINCES) {
+						try {
+							dispatch(uiActions.setLoading(true));
+							const resp = await api.thaiAddresses.getAllProvinces();
+							dispatch(thaiAddressesActions.loadAllProvincesSuccess(resp));
+							saveState('all-provinces', resp.data);
+							dispatch(uiActions.setLoading(false));
+						} catch (error) {
+							removeState('all-provinces')
+							dispatch(thaiAddressesActions.loadProvincesFailure(error));
 						}
 					}
 					if (action.type === thaiAddressesActions.LOAD_PROVINCES) {
@@ -24,7 +36,7 @@ const loadThaiAddressesFlow =
 							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getProvinces(action.payload);
 							dispatch(thaiAddressesActions.loadProvincesSuccess(resp));
-							saveState('provinces', resp);
+							saveState('provinces', resp.data);
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('provinces')
@@ -36,7 +48,7 @@ const loadThaiAddressesFlow =
 							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getDistricts(action.payload);
 							dispatch(thaiAddressesActions.loadDistrictsSuccess(resp));
-							saveState('districts', resp);
+							saveState('districts', resp.data);
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('districts')
@@ -48,7 +60,7 @@ const loadThaiAddressesFlow =
 							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getSubDistricts(action.payload);
 							dispatch(thaiAddressesActions.loadSubDistrictsSuccess(resp));
-							saveState('sub-districts', resp);
+							saveState('sub-districts', resp.data);
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('sub-districts')
@@ -60,7 +72,7 @@ const loadThaiAddressesFlow =
 							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getSubDistrictById(action.payload);
 							dispatch(thaiAddressesActions.loadSubDistrictByIdSuccess(resp));
-							saveState('sub-district-data', resp);
+							saveState('sub-district-data', resp.data);
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('sub-district-data')

@@ -6,6 +6,10 @@ export default {
 		const resp = await axios.get((BASE_URL + '/thai-addresses/get/geographies/all'));
 		return resp.data;
 	},
+	getAllProvinces: async () => {
+		const resp = await axios.get((BASE_URL + '/thai-addresses/get/provinces/all'));
+		return resp.data;
+	},
 	getProvinces: async (props) => {
 		const resp = await axios.get((BASE_URL + '/thai-addresses/get/provinces/' + props));
 		return resp.data;

@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import { removeState } from "../../helpers/Persist";
+import React, { useState, useEffect } from "react";
+import { loadState, removeState } from "../../helpers/Persist";
 import InternshipHook from "./InternshipHook";
-
-import ThaiAddressesHook from "./ThaiAddressesHook";
-
+import { useDispatch, useSelector } from "react-redux";
+import { loadAllProvinces } from "../../application/actions/thaiAddresses";
+import {
+  getDistricts,
+  getProvinces,
+  getSubDisticts,
+} from "../../application/selectors/thaiAddresses";
+import Thaiaddresseshook from "./ThaiAddressesHook";
 const InternshipForm = () => {
+  const dispatch = useDispatch();
   const {
     internType,
     setInternType,
@@ -43,31 +49,31 @@ const InternshipForm = () => {
     phone,
     setPhone,
   } = InternshipHook();
-  const { handleSave } = InternshipHook();
 
-  const {
-    geographies,
-    getProvinces,
-    getDistricts,
-    getSubDistricts,
-    getSubDistrictById,
-    provinces,
-    allProvinces,
-    districts,
-    subDistricts,
-    subDistrictData,
-  } = ThaiAddressesHook();
+  const { handleSave } = InternshipHook();
 
   const {
     showDropDownMenuProgram,
     swaptextProgram,
     showDropDownMenu,
     swaptext,
-    showDropDownMenuProvinces,
-    swaptextProvinces,
-    showDropDownMenuDistricts,
-    swaptextDistricts,
   } = InternshipHook();
+  const {
+    provinces,
+    districts,
+    subDistricts,
+    subDistrictData,
+    showDropDownMenuProvinces,
+    showDropDownMenuDistricts,
+    swaptextProvinces,
+    showDropDownMenuSubDistricts,
+    swaptextDistricts,
+    swaptextSubDistricts
+  } = Thaiaddresseshook();
+
+  useEffect(() => {
+    dispatch(loadAllProvinces);
+  }, [dispatch]);
 
   const Sender = (
     <div>
@@ -309,30 +315,8 @@ const InternshipForm = () => {
           />
         </div>
       </div>
-
+      {/* // ======================== Addresses API  ======================== */}
       <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            เลขที่
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เลขที่"
-            defaultValue={internNumber}
-            onChange={(e) => setInternNumber(e.target.value)}
-          />
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            ถนน
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ตำแหน่ง"
-            defaultValue={internRoad}
-            onChange={(e) => setInternRoad(e.target.value)}
-          />
-        </div>
         {/* ===================== Provinces Selection ===================== */}
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
@@ -349,9 +333,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-provinces-setter"
                 >
-                  {internProvince != ""
-                    ? internProvince
-                    : "- กรุณาเลือกจังหวัด -"}
+                  "- กรุณาเลือกจังหวัด -"
                 </span>
                 <svg
                   id="rotate"
@@ -374,12 +356,11 @@ const InternshipForm = () => {
                 className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
                 id="drop-down-div-provinces"
               >
-                {allProvinces?.map((item) => {
+                {provinces?.map((item) => {
                   {
                     return (
                       <p
                         key={item.id}
-                        alt={item.id}
                         className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
                         onClick={swaptextProvinces}
                       >
@@ -395,7 +376,8 @@ const InternshipForm = () => {
           {/* end */}
         </div>
         {/* ===================== Provinces Selection ===================== */}
-        {/* ===================== Provinces Selection ===================== */}
+
+        {/* ===================== districts Selection ===================== */}
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             อำเภอ
@@ -411,9 +393,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-districts-setter"
                 >
-                  {internDistrict != ""
-                    ? internDistrict
-                    : "- กรุณาเลือกอำเภอ -"}
+                  "- กรุณาเลือกอำเภอ -"
                 </span>
                 <svg
                   id="rotate"
@@ -441,7 +421,6 @@ const InternshipForm = () => {
                     return (
                       <p
                         key={item.id}
-                        defaultValue={internDistrict}
                         className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
                         onClick={swaptextDistricts}
                       >
@@ -456,22 +435,71 @@ const InternshipForm = () => {
           </div>
           {/* end */}
         </div>
-        {/* ===================== Provinces Selection ===================== */}
+        {/* ===================== district Selection ===================== */}
+        {/* ===================== sub districts Selection ===================== */}
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            อำเภอ
+            ตำบล
           </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="อำเภอ"
-            defaultValue={internDistrict}
-            onChange={(e) => setInternDistrict(e.target.value)}
-          />
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuSubDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-subdistricts-setter"
+                >
+                  - กรุณาเลือกตำบล -
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-subdistricts"
+              >
+                {subDistricts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextSubDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
         </div>
+        {/* ===================== district Selection ===================== */}
       </div>
+      {/* // ======================== Addresses API  ======================== */}
 
       <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
-        <div>
+        {/* <div>
           <p className="text-base font-medium leading-none text-gray-800">
             จังหวัด
           </p>
@@ -481,7 +509,30 @@ const InternshipForm = () => {
             defaultValue={internProvince}
             onChange={(e) => setInternProvince(e.target.value)}
           />
+        </div> */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            เลขที่
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="เลขที่"
+            defaultValue={internNumber}
+            onChange={(e) => setInternNumber(e.target.value)}
+          />
         </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ถนน
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ตำแหน่ง"
+            defaultValue={internRoad}
+            onChange={(e) => setInternRoad(e.target.value)}
+          />
+        </div>
+
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             รหัสไปรษณีย์

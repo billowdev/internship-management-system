@@ -5,7 +5,6 @@ import Home from "./home";
 import InternshipForm from "./internship-form";
 import StudentList from "./student-list";
 import Resume from "./resume";
-import ProtectedRoutes from "./ProtectedRoutes";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -39,6 +38,7 @@ const App = () => (
         {/* public routes */}
         <Route path="login" element={<Signin />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        
         {/* protect rotes */}
         <Route
           element={

@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import ui from './ui';
 import auth from './auth';
-import users from './users';
+import thaiAddresses from './thaiAddresses';
 import adminLogin from './admin/login';
 
 export default combineReducers({
     ui,
     auth,
-    users,
+    thaiAddresses,
     adminLogin
 })

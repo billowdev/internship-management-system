@@ -1,62 +1,87 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import {
-  loadGeographies,
-  loadAllProvinces,
-  loadProvinces,
-  loadDistricts,
-  loadSubDistricts,
-  loadSubDistrictById,
-} from "../../application/actions/thaiAddresses";
-import { loadState } from "../../helpers/Persist";
-const ThaiAddressesHook = () => {
-  const dispatch = useDispatch();
-//   const [geographies, setGeographies] = useState([]);
+import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";
+const Thaiaddresseshook = () => {
+  // ======================== Addresses API  ========================
   const [provinces, setProvinces] = useState([]);
-  const [allProvinces, setAllProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [subDistricts, setSubDistricts] = useState([]);
   const [subDistrictData, setSubDistrictData] = useState([]);
+  const fetchProvinces = async () => {
+    const resp = await thaiAddresses.getAllProvinces();
+    setProvinces(resp.data);
+  };
+  const fetchDistricts = async (provinceId) => {
+    const resp = await thaiAddresses.getDistricts(provinceId);
+    setDistricts(resp.data);
+  };
+  const fetchSubDistricts = async (districtId) => {
+    const resp = await thaiAddresses.getSubDistricts(districtId);
+    setSubDistricts(resp.data);
+  };
+  const fetchSubDistrictData = async (subDistrictId) => {
+    const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
+    setSubDistrictData(resp.data);
+  };
 
-  const getProvinces = (geographyId) => {
-    dispatch(loadProvinces(geographyId));
-    setProvinces(loadState("provinces"));
+  // -------- Provinces --------
+  const showDropDownMenuProvinces = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
   };
-  const getDistricts = (provinceId) => {
-    dispatch(loadDistricts(provinceId));
-    setDistricts(loadState("districts"));
+  const swaptextProvinces = (el) => {
+    const targetText = el.target.innerText;
+    const provinceId = Object.values(el.target)[0].key;
+    fetchDistricts(provinceId);
+    document.getElementById("drop-down-provinces-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-provinces")
+      .classList.toggle("hidden");
   };
-  const getSubDistricts = (districtId) => {
-    dispatch(loadSubDistricts(districtId));
-    setSubDistricts(loadState("sub-district"));
+  // -------- Districts --------
+  const showDropDownMenuDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
   };
-  const getSubDistrictById = (SubDistrictId) => {
-    dispatch(loadSubDistrictById(SubDistrictId));
-    setSubDistrictData(loadState("sub-district-data"));
+  const swaptextDistricts = (el) => {
+    const targetText = el.target.innerText;
+    const districtId = Object.values(el.target)[0].key;
+    fetchSubDistricts(districtId);
+    document.getElementById("drop-down-districts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-districts")
+      .classList.toggle("hidden");
+  };
+  // -------- Sub districts --------
+  const showDropDownMenuSubDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+  const swaptextSubDistricts = (el) => {
+    const targetText = el.target.innerText;
+    const subDistrictId = Object.values(el.target)[0].key;
+    fetchSubDistrictData(subDistrictId);
+    document.getElementById("drop-down-subdistricts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-subdistricts")
+      .classList.toggle("hidden");
   };
 
   useEffect(() => {
-    // setGeographies(loadState("geographies"));
-    setAllProvinces(loadState("all-provinces"));
+    fetchProvinces();
   }, []);
 
-  useEffect(() => {
-    // dispatch(loadGeographies);
-	dispatch(loadAllProvinces);
-  }, [dispatch]);
-
   return {
-    // geographies,
-    getProvinces,
-    getDistricts,
-    getSubDistricts,
-    getSubDistrictById,
-	provinces,
-	allProvinces,
-	districts,
-	subDistricts,
-	subDistrictData
+    provinces,
+    districts,
+    subDistricts,
+    subDistrictData,
+    showDropDownMenuProvinces,
+    showDropDownMenuDistricts,
+    swaptextProvinces,
+    showDropDownMenuSubDistricts,
+    swaptextDistricts,
+    swaptextSubDistricts,
   };
 };
-export default ThaiAddressesHook;
+
+export default Thaiaddresseshook;

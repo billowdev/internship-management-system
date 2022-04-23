@@ -9,11 +9,9 @@ const loadThaiAddressesFlow =
 					next(action);
 					if (action.type === thaiAddressesActions.LOAD_GEOGRAPHIES) {
 						try {
-							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getGeographies();
 							dispatch(thaiAddressesActions.loadGeographiesSuccess(resp));
 							saveState('geographies', resp.data);
-							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('geographies')
 							dispatch(thaiAddressesActions.loadGeographiesFailure(error));
@@ -21,11 +19,9 @@ const loadThaiAddressesFlow =
 					}
 					if (action.type === thaiAddressesActions.LOAD_ALL_PROVINCES) {
 						try {
-							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getAllProvinces();
-							dispatch(thaiAddressesActions.loadAllProvincesSuccess(resp));
+							dispatch(thaiAddressesActions.loadAllProvincesSuccess(resp.data));
 							saveState('all-provinces', resp.data);
-							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('all-provinces')
 							dispatch(thaiAddressesActions.loadProvincesFailure(error));
@@ -33,11 +29,9 @@ const loadThaiAddressesFlow =
 					}
 					if (action.type === thaiAddressesActions.LOAD_PROVINCES) {
 						try {
-							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getProvinces(action.payload);
-							dispatch(thaiAddressesActions.loadProvincesSuccess(resp));
+							dispatch(thaiAddressesActions.loadProvincesSuccess(resp.data));
 							saveState('provinces', resp.data);
-							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('provinces')
 							dispatch(thaiAddressesActions.loadProvincesFailure(error));
@@ -45,11 +39,9 @@ const loadThaiAddressesFlow =
 					}
 					if (action.type === thaiAddressesActions.LOAD_DISTRICTS) {
 						try {
-							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getDistricts(action.payload);
-							dispatch(thaiAddressesActions.loadDistrictsSuccess(resp));
+							dispatch(thaiAddressesActions.loadDistrictsSuccess(resp.data));
 							saveState('districts', resp.data);
-							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('districts')
 							dispatch(thaiAddressesActions.loadDistrictsFailure(error));
@@ -57,11 +49,9 @@ const loadThaiAddressesFlow =
 					}
 					if (action.type === thaiAddressesActions.LOAD_SUB_DISTRICTS) {
 						try {
-							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getSubDistricts(action.payload);
-							dispatch(thaiAddressesActions.loadSubDistrictsSuccess(resp));
+							dispatch(thaiAddressesActions.loadSubDistrictsSuccess(resp.data));
 							saveState('sub-districts', resp.data);
-							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('sub-districts')
 							dispatch(thaiAddressesActions.loadSubDistrictsFailure(error));
@@ -69,11 +59,9 @@ const loadThaiAddressesFlow =
 					}
 					if (action.type === thaiAddressesActions.LOAD_SUB_DISTRICT_BY_ID) {
 						try {
-							dispatch(uiActions.setLoading(true));
 							const resp = await api.thaiAddresses.getSubDistrictById(action.payload);
-							dispatch(thaiAddressesActions.loadSubDistrictByIdSuccess(resp));
+							dispatch(thaiAddressesActions.loadSubDistrictByIdSuccess(resp.data));
 							saveState('sub-district-data', resp.data);
-							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							removeState('sub-district-data')
 							dispatch(thaiAddressesActions.loadSubDistrictByIdFailure(error));

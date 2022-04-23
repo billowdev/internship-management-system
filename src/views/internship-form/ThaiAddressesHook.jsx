@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { loadState, removeState, saveState } from "../../helpers/Persist";
 import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";
 const Thaiaddresseshook = () => {
   // ======================== Addresses API  ========================
@@ -26,10 +27,12 @@ const Thaiaddresseshook = () => {
   // -------- Provinces --------
   const showDropDownMenuProvinces = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
+    removeState('provinceId')
   };
   const swaptextProvinces = (el) => {
     const targetText = el.target.innerText;
     const provinceId = Object.values(el.target)[0].key;
+    saveState('provinceId', provinceId)
     fetchDistricts(provinceId);
     document.getElementById("drop-down-provinces-setter").innerText =
       targetText;
@@ -40,10 +43,13 @@ const Thaiaddresseshook = () => {
   // -------- Districts --------
   const showDropDownMenuDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
+    removeState('districtId')
+    fetchDistricts(loadState('provinceId'));
   };
   const swaptextDistricts = (el) => {
     const targetText = el.target.innerText;
     const districtId = Object.values(el.target)[0].key;
+    saveState('districtId', districtId)
     fetchSubDistricts(districtId);
     document.getElementById("drop-down-districts-setter").innerText =
       targetText;
@@ -54,6 +60,8 @@ const Thaiaddresseshook = () => {
   // -------- Sub districts --------
   const showDropDownMenuSubDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
+    fetchSubDistricts(loadState('districtId'));
+    removeState('districtId')
   };
   const swaptextSubDistricts = (el) => {
     const targetText = el.target.innerText;

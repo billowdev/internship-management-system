@@ -4,13 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
 import { loadState } from "../../helpers/Persist";
 import { Link, Navigate } from "react-router-dom";
-import { loadAllProvinces } from "../../application/actions/thaiAddresses";
+
 const Home = () => {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState({});
   useEffect(() => {
     setIsAuth(loadState("auth-state"));
-    dispatch(loadAllProvinces);
   }, []);
   return (
     <>

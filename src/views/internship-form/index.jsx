@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { loadState, removeState } from "../../helpers/Persist";
 import InternshipHook from "./InternshipHook";
 import { useDispatch, useSelector } from "react-redux";
-import { loadAllProvinces } from "../../application/actions/thaiAddresses";
-import {
-  getDistricts,
-  getProvinces,
-  getSubDisticts,
-} from "../../application/selectors/thaiAddresses";
 import Thaiaddresseshook from "./ThaiAddressesHook";
 const InternshipForm = () => {
   const dispatch = useDispatch();
@@ -68,12 +61,8 @@ const InternshipForm = () => {
     swaptextProvinces,
     showDropDownMenuSubDistricts,
     swaptextDistricts,
-    swaptextSubDistricts
+    swaptextSubDistricts,
   } = Thaiaddresseshook();
-
-  useEffect(() => {
-    dispatch(loadAllProvinces);
-  }, [dispatch]);
 
   const Sender = (
     <div>
@@ -214,7 +203,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-content-setter"
                 >
-                  รัฐบาล
+                  {internType==""? "รัฐบาล":internType}
                 </span>
                 <svg
                   id="rotate"
@@ -250,6 +239,13 @@ const InternshipForm = () => {
                 >
                   รัฐวิสาหกิจ
                 </p>
+
+                <p
+                  className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                  onClick={swaptext}
+                >
+                  รัฐบาล
+                </p>
               </div>
             </div>
             {/* end */}
@@ -258,10 +254,10 @@ const InternshipForm = () => {
         </div>
       </div>
 
-      <div className="grid w-full grid-cols-1 sm2:grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-7 ">
+      <div className="grid w-full grid-cols-1 sm2:grid-cols-1 lg:grid-cols-2 md:grid-cols-4 gap-7 mt-7 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            กิจกรรมหลักของหน่วยงานที่เกี่ยวข้องกับคอมพิวเตอร์
+            กิจกรรมหลักของหน่วยงาน
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
@@ -270,6 +266,19 @@ const InternshipForm = () => {
             onChange={(e) => setInternWork(e.target.value)}
           />
         </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            เสนอหนังสือต่อ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="หัวหน้าฝ่ายบุคคล"
+            defaultValue={internProposeTo}
+            onChange={(e) => setInternProposeTo(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-1 sm2:grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-7 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ติดต่อสถานที่ฝึกงานกับ
@@ -303,17 +312,6 @@ const InternshipForm = () => {
             onChange={(e) => setInternContactWithPhone(e.target.value)}
           />
         </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            การเสนอหนังสือความอนุเคราะห์ต้องเสนอต่อ
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="หัวหน้าฝ่ายบุคคล"
-            defaultValue={internProposeTo}
-            onChange={(e) => setInternProposeTo(e.target.value)}
-          />
-        </div>
       </div>
       {/* // ======================== Addresses API  ======================== */}
       <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
@@ -333,7 +331,11 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-provinces-setter"
                 >
-                  "- กรุณาเลือกจังหวัด -"
+                  {internProvince == "" ? (
+                    <> - กรุณาเลือกจังหวัด - </>
+                  ) : (
+                    internProvince
+                  )}
                 </span>
                 <svg
                   id="rotate"
@@ -375,7 +377,6 @@ const InternshipForm = () => {
           </div>
           {/* end */}
         </div>
-        {/* ===================== Provinces Selection ===================== */}
 
         {/* ===================== districts Selection ===================== */}
         <div>
@@ -393,7 +394,11 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-districts-setter"
                 >
-                  "- กรุณาเลือกอำเภอ -"
+                  {internDistrict == "" ? (
+                    <> - กรุณาเลือกอำเภอ -</>
+                  ) : (
+                    internDistrict
+                  )}
                 </span>
                 <svg
                   id="rotate"
@@ -435,7 +440,7 @@ const InternshipForm = () => {
           </div>
           {/* end */}
         </div>
-        {/* ===================== district Selection ===================== */}
+
         {/* ===================== sub districts Selection ===================== */}
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
@@ -452,7 +457,11 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-subdistricts-setter"
                 >
-                  - กรุณาเลือกตำบล -
+                  {internSubDistrict == "" ? (
+                    <> - กรุณาเลือกตำบล - </>
+                  ) : (
+                    internSubDistrict
+                  )}
                 </span>
                 <svg
                   id="rotate"
@@ -499,17 +508,6 @@ const InternshipForm = () => {
       {/* // ======================== Addresses API  ======================== */}
 
       <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
-        {/* <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            จังหวัด
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="จังหวัด"
-            defaultValue={internProvince}
-            onChange={(e) => setInternProvince(e.target.value)}
-          />
-        </div> */}
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             เลขที่
@@ -523,7 +521,7 @@ const InternshipForm = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ถนน
+            ถนน / ซอย / หมู่
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"

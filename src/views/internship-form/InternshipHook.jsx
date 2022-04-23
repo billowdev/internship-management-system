@@ -10,7 +10,7 @@ const InternshipHook = () => {
   const [internCompanyName, setInternCompanyName] = useState(
     "บริษัท โค้ดทูแพนด้า จำกัด"
   );
-  const [internType, setInternType] = useState("ตะวันออกเฉียงเหนือ");
+  const [internType, setInternType] = useState("รัฐบาล");
   const [internWork, setInternWork] = useState("developer");
   const [internContactWith, setInternContactWith] = useState("lacakp");
   const [internContactWithPosition, setInternContactWithPosition] =
@@ -24,7 +24,7 @@ const InternshipHook = () => {
   const [internSubDistrict, setInternSubDistrict] = useState("ธาตุเชิงชุม");
   const [internDistrict, setInternDistrict] = useState("เมือง");
   const [internProvince, setInternProvince] = useState("สกลนคร");
-  const [internPostCode, setInternPostCode] = useState("47000");
+  const [internPostCode, setInternPostCode] = useState("");
 
   // ---- Drop Down Meny for company branch or region ---
   const showDropDownMenu = (el) => {

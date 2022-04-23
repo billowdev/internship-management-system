@@ -203,7 +203,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-content-setter"
                 >
-                  {internType==""? "รัฐบาล":internType}
+                  {internType == "" ? "รัฐบาล" : internType}
                 </span>
                 <svg
                   id="rotate"
@@ -505,20 +505,22 @@ const InternshipForm = () => {
         </div>
         {/* ===================== district Selection ===================== */}
       </div>
+
       {/* // ======================== Addresses API  ======================== */}
 
       <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-7 mt-3 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            เลขที่
+            รหัสไปรษณีย์
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เลขที่"
-            defaultValue={internNumber}
-            onChange={(e) => setInternNumber(e.target.value)}
+            placeholder="รหัสไปรษณีย์"
+            defaultValue={internPostCode}
+            onChange={(e) => setInternPostCode(e.target.value)}
           />
         </div>
+
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ถนน / ซอย / หมู่
@@ -530,16 +532,15 @@ const InternshipForm = () => {
             onChange={(e) => setInternRoad(e.target.value)}
           />
         </div>
-
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            รหัสไปรษณีย์
+            เลขที่
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
-            defaultValue={internPostCode}
-            onChange={(e) => setInternPostCode(e.target.value)}
+            placeholder="เลขที่"
+            defaultValue={internNumber}
+            onChange={(e) => setInternNumber(e.target.value)}
           />
         </div>
       </div>

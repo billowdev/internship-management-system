@@ -38,7 +38,7 @@ const App = () => (
         {/* public routes */}
         <Route path="login" element={<Signin />} />
         <Route path="unauthorized" element={<Unauthorized />} />
-        
+
         {/* protect rotes */}
         <Route
           element={

@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const {  } = require("../controllers/students.controller");
+const { getGeographies, getProvincesByGeographyId, getDistrictsByProvinceId, getSubDistrictsByDistrictId, getSubDistrictsById } = require("../controllers/thaiAddresses.controller");
 
 // Load Controllers
-router.get("/get/geographies/all");
-router.get("/get/provinces/:geographyId");
-router.get("/get/districts/:provinceId");
-router.get("/get/sub-districts/:districtId");
+router.get("/", getGeographies);
+router.get("/get/geographies/all", getGeographies);
+router.get("/get/provinces/:geographyId", getProvincesByGeographyId);
+router.get("/get/districts/:provinceId", getDistrictsByProvinceId);
+router.get("/get/sub-districts/:districtId", getSubDistrictsByDistrictId);
+router.get("/get/sub-districts/ById/:id", getSubDistrictsById);
 
 
 module.exports = router;

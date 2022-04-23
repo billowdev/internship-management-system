@@ -1,6 +1,6 @@
 export const LOAD_AUTH = '[AUTH] LOAD';
-export const LOAD_AUTH_SUCCESS = '[AUTH] LOAD success';
-export const LOAD_AUTH_FAILURE = '[AUTH] LOAD failure';
+export const LOAD_AUTH_SUCCESS = '[AUTH] LOAD SUCCESS';
+export const LOAD_AUTH_FAILURE = '[AUTH] LOAD FAILURE';
 
 export const loadAuth = {
     type: LOAD_AUTH,

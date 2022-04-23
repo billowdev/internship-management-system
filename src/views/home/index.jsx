@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
 import { loadState } from "../../helpers/Persist";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { loadAllProvinces } from "../../application/actions/thaiAddresses";
 const Home = () => {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState({});
   useEffect(() => {
     setIsAuth(loadState("auth-state"));
-    dispatch(loadAllProvinces)
+    dispatch(loadAllProvinces);
   }, []);
   return (
     <>
@@ -41,9 +41,11 @@ const Home = () => {
                     </button>
                   </div>
                   <div className="flex justify-center items-center mb-3 mt-3">
-                    <button className="w-32 px-6 py-2  text-white btn btn-sky">
-                      ดู
-                    </button>
+                    <Link to="/internship-form">
+                      <button className="w-32 px-6 py-2  text-white btn btn-sky">
+                        ดู
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -66,9 +68,11 @@ const Home = () => {
                     </button>
                   </div>
                   <div className="flex justify-center items-center mb-3 mt-3">
-                    <button className="w-32 px-6 py-2  text-white btn btn-sky">
-                      ดู
-                    </button>
+                    <Link to="/resume">
+                      <button className="w-32 px-6 py-2  text-white btn btn-sky">
+                        ดู
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

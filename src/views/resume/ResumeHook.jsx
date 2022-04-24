@@ -1,15 +1,16 @@
-import {useState, useEffect} from 'react';
-import { useDispatch } from 'react-redux';
-import { loadState } from '../../helpers/Persist';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loadState } from "../../helpers/Persist";
 
 const Resumehook = () => {
+  const dispatch = useDispatch();
+  
+  const [studentData, setStudentData] = useState([]);
+  useEffect(() => {
+    setStudentData(loadState("profile"));
+  }, []);
 
-	
-	return (
-		<div>
-			
-		</div>
-	);
-}
+  return { studentData };
+};
 
 export default Resumehook;

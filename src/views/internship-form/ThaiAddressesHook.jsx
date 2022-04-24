@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
 import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";
+import InternshipHook from "./InternshipHook";
+
+
 const Thaiaddresseshook = () => {
+  const {internFormData, setInternFormData} = InternshipHook()
   // ======================== Addresses API  ========================
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -32,6 +36,7 @@ const Thaiaddresseshook = () => {
   const swaptextProvinces = (el) => {
     const targetText = el.target.innerText;
     const provinceId = Object.values(el.target)[0].key;
+    setInternFormData({ ...internFormData, ["internProvince"]: targetText });
     saveState('provinceId', provinceId)
     fetchDistricts(provinceId);
     document.getElementById("drop-down-provinces-setter").innerText =
@@ -48,6 +53,7 @@ const Thaiaddresseshook = () => {
   };
   const swaptextDistricts = (el) => {
     const targetText = el.target.innerText;
+    setInternFormData({ ...internFormData, ["internDistrict"]: targetText });
     const districtId = Object.values(el.target)[0].key;
     saveState('districtId', districtId)
     fetchSubDistricts(districtId);
@@ -65,6 +71,7 @@ const Thaiaddresseshook = () => {
   };
   const swaptextSubDistricts = (el) => {
     const targetText = el.target.innerText;
+    setInternFormData({ ...internFormData, ["internSubDistrict"]: targetText });
     const subDistrictId = Object.values(el.target)[0].key;
     fetchSubDistrictData(subDistrictId);
     document.getElementById("drop-down-subdistricts-setter").innerText =

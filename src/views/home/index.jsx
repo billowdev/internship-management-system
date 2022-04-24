@@ -4,10 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
 import { loadState } from "../../helpers/Persist";
 import { Link, Navigate } from "react-router-dom";
+import { loadProfile } from "../../application/actions/student/profile";
+import { loadInternship } from "../../application/actions/student/internship";
 
 const Home = () => {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState({});
+
+  useEffect(() => {
+    dispatch(loadProfile);
+    dispatch(loadInternship);
+  }, [dispatch]);
+
   useEffect(() => {
     setIsAuth(loadState("auth-state"));
   }, []);
@@ -61,7 +69,6 @@ const Home = () => {
                   ประวัตินักศึกษา
                 </h3>
                 <div className="mt-4">
-          
                   <div className="flex justify-center items-center mb-12 mt-12">
                     <Link to="/resume">
                       <button className="w-32 px-6 py-2  text-white btn btn-sky">

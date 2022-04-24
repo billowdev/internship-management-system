@@ -2,45 +2,18 @@ import React, { useState, useEffect } from "react";
 import InternshipHook from "./InternshipHook";
 import { useDispatch, useSelector } from "react-redux";
 import Thaiaddresseshook from "./ThaiAddressesHook";
+import { loadState } from "../../helpers/Persist";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   const {
-    internType,
-    setInternType,
-    internWork,
-    setInternWork,
-    internContactWith,
-    setInternContactWith,
-    internCompanyName,
-    setInternCompanyName,
-    internContactWithPosition,
-    setInternContactWithPosition,
-    internContactWithPhone,
-    setInternContactWithPhone,
-    internProposeTo,
-    setInternProposeTo,
-    internPhone,
-    setInternPhone,
-    internNumber,
-    setInternNumber,
-    internRoad,
-    setInternRoad,
-    internSubDistrict,
-    setInternSubDistrict,
-    internDistrict,
-    setInternDistrict,
-    internProvince,
-    setInternProvince,
-    internPostCode,
-    setInternPostCode,
-    name,
-    setName,
-    studentId,
-    setStudentId,
-    program,
-    setProgram,
-    phone,
-    setPhone,
+    handleCoStudentFormChange,
+    coStudentFormData,
+
+    internFormData,
+    studentFormData,
+    handleStudentFormChange,
+    handleInternFormChange,
+    handleFormSave,
   } = InternshipHook();
 
   const { handleSave } = InternshipHook();
@@ -74,13 +47,26 @@ const InternshipForm = () => {
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
           <div>
             <p className="text-base font-medium leading-none text-gray-800">
-              ชื่อ - นามสุกล
+              นามสุกล
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               placeholder="ชื่อ-นามสุกล"
-              defaultValue={name}
-              onChange={(e) => setName(e.target.value)}
+              defaultValue={studentFormData.firstName}
+              onChange={handleStudentFormChange("firstName")}
+              required
+            />
+            <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+          </div>
+          <div>
+            <p className="text-base font-medium leading-none text-gray-800">
+              นามสุกล
+            </p>
+            <input
+              className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+              placeholder="ชื่อ-นามสุกล"
+              defaultValue={studentFormData.lastName}
+              onChange={handleStudentFormChange("lastName")}
               required
             />
             <p className="mt-3 text-xs leading-3 text-gray-600"></p>
@@ -92,8 +78,8 @@ const InternshipForm = () => {
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               placeholder="รหัสนักศึกษา"
-              defaultValue={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
+              defaultValue={studentFormData.id}
+              onChange={handleStudentFormChange("id")}
             />
           </div>
           <div>
@@ -103,8 +89,22 @@ const InternshipForm = () => {
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               placeholder="เบอร์โทรศัพท์"
-              defaultValue={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              defaultValue={studentFormData.phone}
+              onChange={handleStudentFormChange("phone")}
+            />
+          </div>
+          <div>
+            <p className="text-base font-medium leading-none text-gray-800">
+              email
+            </p>
+            <input
+              className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+              placeholder="exsample@gmail.com"
+              type="email"
+              id="email"
+              required
+              defaultValue={studentFormData.email}
+              onChange={handleStudentFormChange("email")}
             />
           </div>
           <div>
@@ -183,8 +183,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
-            defaultValue={internCompanyName}
-            onChange={(e) => setInternCompanyName(e.target.value)}
+            defaultValue={internFormData?.internCompanyName}
+            onChange={handleInternFormChange("internCompanyName")}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -203,7 +203,9 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-content-setter"
                 >
-                  {internType == "" ? "รัฐบาล" : internType}
+                  {internFormData?.internType == ""
+                    ? "รัฐบาล"
+                    : internFormData?.internType}
                 </span>
                 <svg
                   id="rotate"
@@ -262,8 +264,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="งานที่เกี่ยวข้อง"
-            defaultValue={internWork}
-            onChange={(e) => setInternWork(e.target.value)}
+            defaultValue={internFormData?.internWork}
+            onChange={handleInternFormChange("internWork")}
           />
         </div>
         <div>
@@ -273,8 +275,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="หัวหน้าฝ่ายบุคคล"
-            defaultValue={internProposeTo}
-            onChange={(e) => setInternProposeTo(e.target.value)}
+            defaultValue={internFormData?.internProposeTo}
+            onChange={handleInternFormChange("internProposeTo")}
           />
         </div>
       </div>
@@ -286,8 +288,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ผู้ติดต่อ"
-            defaultValue={internContactWith}
-            onChange={(e) => setInternContactWith(e.target.value)}
+            defaultValue={internFormData?.internContactWithName}
+            onChange={handleInternFormChange("internContactWithName")}
           />
         </div>
         <div>
@@ -297,8 +299,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ตำแหน่ง"
-            defaultValue={internContactWithPosition}
-            onChange={(e) => setInternContactWithPosition(e.target.value)}
+            defaultValue={internFormData?.internContactWithPosition}
+            onChange={handleInternFormChange("internContactWithPosition")}
           />
         </div>
         <div>
@@ -308,8 +310,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="เบอร์ติดต่อ"
-            defaultValue={internPhone}
-            onChange={(e) => setInternContactWithPhone(e.target.value)}
+            defaultValue={internFormData?.internPhone}
+            onChange={handleInternFormChange("internPhone")}
           />
         </div>
       </div>
@@ -331,10 +333,10 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-provinces-setter"
                 >
-                  {internProvince == "" ? (
+                  {internFormData?.internProvince == "" ? (
                     <> - กรุณาเลือกจังหวัด - </>
                   ) : (
-                    internProvince
+                    internFormData?.internProvince
                   )}
                 </span>
                 <svg
@@ -394,10 +396,10 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-districts-setter"
                 >
-                  {internDistrict == "" ? (
+                  {internFormData?.internDistrict == "" ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
-                    internDistrict
+                    internFormData?.internDistrict
                   )}
                 </span>
                 <svg
@@ -457,10 +459,10 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-subdistricts-setter"
                 >
-                  {internSubDistrict == "" ? (
+                  {internFormData?.internSubDistrict == "" ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
-                    internSubDistrict
+                    internFormData?.internSubDistrict
                   )}
                 </span>
                 <svg
@@ -516,8 +518,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสไปรษณีย์"
-            defaultValue={internPostCode}
-            onChange={(e) => setInternPostCode(e.target.value)}
+            defaultValue={internFormData?.internPostCode}
+            onChange={handleInternFormChange("internPostCode")}
           />
         </div>
 
@@ -528,8 +530,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ตำแหน่ง"
-            defaultValue={internRoad}
-            onChange={(e) => setInternRoad(e.target.value)}
+            defaultValue={internFormData?.internRoad}
+            onChange={handleInternFormChange("internRoad")}
           />
         </div>
         <div>
@@ -539,8 +541,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="เลขที่"
-            defaultValue={internNumber}
-            onChange={(e) => setInternNumber(e.target.value)}
+            defaultValue={internFormData?.internHouseNumber}
+            onChange={handleInternFormChange("internHouseNumber")}
           />
         </div>
       </div>
@@ -553,16 +555,28 @@ const InternshipForm = () => {
         พร้อมด้วยนักศึกษา
       </p>
       {/* =========================== 1 Person  =========================== */}
-      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+      <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            1.ชื่อ-นามสกุล
+            1.ชื่อ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อ"
+            defaultValue={coStudentFormData?.firstPerson?.firstName}
+            onChange={handleCoStudentFormChange("firstPerson","firstName")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            นามสกุล
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ชื่อ-นามสุกล"
-            defaultValue={name}
-            onChange={(e) => setName(e.target.value)}
+            defaultValue={coStudentFormData?.firstPerson?.lastName}
+            onChange={handleCoStudentFormChange("firstPerson","lastName")}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -573,8 +587,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            defaultValue={coStudentFormData?.firstPerson?.id}
+            onChange={handleCoStudentFormChange("firstPerson","id")}
           />
         </div>
         <div>
@@ -584,22 +598,34 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="เบอร์โทรศัพท์"
-            defaultValue={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            defaultValue={coStudentFormData?.firstPerson?.phone}
+            onChange={handleCoStudentFormChange("firstPerson","phone")}
           />
         </div>
       </div>
       {/* =========================== 2 erson  =========================== */}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+      <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            2.ชื่อ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อ"
+            defaultValue={coStudentFormData?.secondPerson?.firstName}
+            onChange={handleCoStudentFormChange("secondPerson","firstName")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            2.ชื่อ-นามสกุล
+            นามสกุล
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ชื่อ-นามสุกล"
-            defaultValue={name}
-            onChange={(e) => setName(e.target.value)}
+            defaultValue={coStudentFormData?.secondPerson?.lastName}
+            onChange={handleCoStudentFormChange("secondPerson","lastName")}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -610,8 +636,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            defaultValue={coStudentFormData?.secondPerson?.id}
+            onChange={handleCoStudentFormChange("secondPerson","id")}
           />
         </div>
         <div>
@@ -621,22 +647,34 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="เบอร์โทรศัพท์"
-            defaultValue={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            defaultValue={coStudentFormData?.secondPerson?.phone}
+            onChange={handleCoStudentFormChange("secondPerson","phone")}
           />
         </div>
       </div>
       {/* =========================== 3 Person  =========================== */}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+      <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            2.ชื่อ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อ"
+            defaultValue={coStudentFormData?.thirdPerson?.firstName}
+            onChange={handleCoStudentFormChange("thirdPerson","firstName")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            3.ชื่อ-นามสกุล
+            นามสกุล
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ชื่อ-นามสุกล"
-            defaultValue={name}
-            onChange={(e) => setName(e.target.value)}
+            defaultValue={coStudentFormData?.thirdPerson?.lastName}
+            onChange={handleCoStudentFormChange("thirdPerson","lastName")}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -647,8 +685,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            defaultValue={coStudentFormData?.thirdPerson?.id}
+            onChange={handleCoStudentFormChange("thirdPerson","id")}
           />
         </div>
         <div>
@@ -658,22 +696,34 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="เบอร์โทรศัพท์"
-            defaultValue={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            defaultValue={coStudentFormData?.thirdPerson?.phone}
+            onChange={handleCoStudentFormChange("thirdPerson","phone")}
           />
         </div>
       </div>
       {/* =========================== 4 Person  =========================== */}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+      <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            2.ชื่อ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อ"
+            defaultValue={coStudentFormData?.fourthPerson?.firstName}
+            onChange={handleCoStudentFormChange("fourthPerson","firstName")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            4.ชื่อ-นามสกุล
+            นามสกุล
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ชื่อ-นามสุกล"
-            defaultValue={name}
-            onChange={(e) => setName(e.target.value)}
+            defaultValue={coStudentFormData?.fourthPerson?.lastName}
+            onChange={handleCoStudentFormChange("fourthPerson","lastName")}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -684,8 +734,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            defaultValue={coStudentFormData?.fourthPerson?.id}
+            onChange={handleCoStudentFormChange("fourthPerson","id")}
           />
         </div>
         <div>
@@ -695,8 +745,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="เบอร์โทรศัพท์"
-            defaultValue={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            defaultValue={coStudentFormData?.fourthPerson?.phone}
+            onChange={handleCoStudentFormChange("fourthPerson","phone")}
           />
         </div>
       </div>
@@ -723,9 +773,9 @@ const InternshipForm = () => {
                       Cancel
                     </button>
                     <button
-                      // onClick={(e) => {
-                      //   handleSave();
-                      // }}
+                      onClick={(e) => {
+                        handleFormSave(e);
+                      }}
                       id="submit"
                       type="submit"
                       className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import Thaiaddresseshook from "../internship-form/ThaiAddressesHook";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Resumehook from "./ResumeHook";
 
 function Resume() {
-  useEffect(() => {});
   const {
     provinces,
     districts,
@@ -18,6 +18,8 @@ function Resume() {
     swaptextSubDistricts,
   } = Thaiaddresseshook();
 
+  const { studentData } = Resumehook();
+  console.log(studentData);
   const [name, setName] = useState("Akkarapon Phikulsri");
   const [studentId, setStudentId] = useState("63102105112");
   const [program, setProgram] = useState("วิทยาการคอมพิวเตอร์");
@@ -379,13 +381,13 @@ function Resume() {
                         <p className="text-base font-medium leading-none text-gray-800">
                           วันเดือนปีเกิด
                         </p>
-                          <DatePicker
-                            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                            placeholder="Select date"
-                            selected={birthDate}
-                            onChange={(date) => setBirthDate(date)}
-                          />
-                        </div>
+                        <DatePicker
+                          className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                          placeholder="Select date"
+                          selected={birthDate}
+                          onChange={(date) => setBirthDate(date)}
+                        />
+                      </div>
                       <div>
                         <p className="text-base font-medium leading-none text-gray-800">
                           สาขาวิชา

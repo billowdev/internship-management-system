@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			allowNull: false,
 		},
+		email: {
+			type: DataTypes.STRING(150),
+			allowNull: true,
+		},
 		first_name: {
 			type: DataTypes.STRING(150),
 			allowNull: false,
@@ -72,7 +76,10 @@ module.exports = (sequelize, DataTypes) => {
 		status_resume: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
-		}
+		}, phone: {
+			type: DataTypes.STRING(10),
+			allowNull: true,
+		},
 	}, {
 		underscored: true
 	});
@@ -90,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
 
 		Students.hasOne(models.PresentAddresses, { onDelete: 'cascade' });
 		Students.hasOne(models.HometownAddresses, { onDelete: 'cascade' });
-		
+
 	};
 
 	return Students;

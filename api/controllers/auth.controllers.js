@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { createTokens } = require("../middlewares/auth.middleware");
 const { sign, verify } = require("jsonwebtoken");
-const { Login, Students, Teachers, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations,CoStudentInternships } = require("../models/internship");
+const { Login, Students, Teachers, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations, CoStudentInternships } = require("../models/internship");
 const { Op } = require("sequelize");
 
 
@@ -10,7 +10,7 @@ const { Op } = require("sequelize");
 // 	  const { username, password } = req.body;
 // 	  // validate user input
 // 	  if (!(username && password)) {
-// 		res.status(400).send("All input is required");
+// 		res.status(400).json({success:false, msg:"All input is required"});
 // 	  }
 
 // 	  const user = await Login.findOne({ where: { username } });
@@ -33,9 +33,10 @@ const { Op } = require("sequelize");
 // 		  maxAge: 60 * 60 * 24 * 7 * 1000,
 // 		  httpOnly: true,
 // 		});
-
 // 		// save user token
-// 		// user.accessToken = accessToken;
+
+// 		user.accessToken = accessToken;
+// 		// res.status(200).json(accessToken);
 // 		return res.status(200).json({
 // 		  id: user.id,
 // 		  token: accessToken,
@@ -46,8 +47,8 @@ const { Op } = require("sequelize");
 // 		return res.status(400).json({success:false, msg:"Invalid Credentials"});
 // 	  }
 // 	} catch (err) {
-// 	  console.log(`Error auth.controllers - ERROR: ${err}`);
-// 	  return res.status(400).json({success:false, msg:"Something went wrong!"});
+// 		console.log(`Error auth.controllers - ERROR: ${err}`);
+// 		return res.status(500).json({success:false, msg:"Something went wrong"});
 // 	}
 //   };
 
@@ -108,10 +109,10 @@ exports.signupController = async (req, res) => {
 	} else {
 
 		try {
-			const hasing = await bcrypt.hash(password, 10)
+			// const hasing = await bcrypt.hash(password, 10)
 			const user = await Login.create({
 				username: username,
-				password: hasing,
+				password: password,
 				roles: reqRoles
 			})
 			// const { id, roles } = user
@@ -139,9 +140,10 @@ exports.signupController = async (req, res) => {
 					// hook table address for company 
 					const companyAddress = await Addresses.create({ address_type: "company" })
 					const companyData = await Companies.create({ name: "", address_id: companyAddress.id })
+					await Internships.create({ student_id: id, company_id: companyData.id })
 				}
 				if (roles === 'director') {
-					const {id} = user
+					const { id } = user
 					await Teachers.create({ id: username, name: "", login_id: id })
 				}
 			} else {

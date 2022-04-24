@@ -1,5 +1,6 @@
-const { Login } = require("../../models/internship");
+const { Login, Students, Teachers, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations,CoStudentInternships  } = require("../../models/internship");
 const { Op } = require('sequelize')
+
 
 exports.createLogin = async (req, res) => {
 	try {
@@ -58,7 +59,7 @@ exports.getLogin = async (req, res) => {
 					where: {
 						username: {
 							[Op.like]: `%${search}%`,
-						},
+						},	
 					},
 					raw: true,
 				});

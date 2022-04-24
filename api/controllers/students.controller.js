@@ -10,7 +10,6 @@ exports.getStudents = async (req, res) => {
 		}else{
 			
 		}
-
 		const resp = await Students.findAll();
 		if (resp.length != 0) {
 			res.status(200).json({ success: true, msg: "success", data: resp })

@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import { loadLogin } from "../../../application/actions/admin/login";
 import { getLogin } from "../../../application/selectors/admin/login";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -52,20 +53,25 @@ const Login = () => {
   };
 
   const columns = [
-    {
-      name: "id",
-      selector: (row) => row.id,
-      sortable: true,
-      width: "280px",
-    },
+    // {
+    //   name: "id",
+    //   selector: (row) => row.id,
+    //   sortable: true,
+    //   width: "280px",
+    // },
     {
       name: "username",
       selector: (row) => row.username,
       sortable: true,
     },
     {
-      name: "permission",
-      selector: (row) => row.permission,
+      name: "roles",
+      selector: (row) => row.roles,
+      sortable: true,
+    },
+    {
+      name: "is_active",
+      selector: (row) => row.is_active,
       sortable: true,
     },
     {
@@ -74,12 +80,33 @@ const Login = () => {
       sortable: true,
       cell: (row) => (
         <div>
-          <div></div>
+          <Link to="/resume">
+            <button className="w-26 text-white btn btn-sky">
+              แก้ไขข้อมูล
+            </button>
+          </Link>
+        </div>
+      ),
+    },
+    {
+      name: "controllers",
+      selector: (row) => row.id,
+      sortable: true,
+      cell: (row) => (
+        <div>
+           <button className="w-26 text-white btn btn-red" onClick={(e)=>{
+             handleDelete(row.id)
+           }}>
+              ลบ
+            </button>
         </div>
       ),
     },
   ];
 
+  const handleDelete = (id)=>{
+    console.log(id)
+  }
   useEffect(() => {
     fetchData();
   }, [dispatch]);
@@ -87,7 +114,9 @@ const Login = () => {
   return (
     <>
       <div className="container mx-auto px-4 wrapper">
-        <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">จัดการข้อมูลสมาชิกทั้งหมด</h3>
+        <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
+          จัดการข้อมูลสมาชิกทั้งหมด
+        </h3>
         <DataTable
           //   title="MineImages"
           columns={columns}

@@ -13,6 +13,7 @@ const loadLoginFlow =
               dispatch(uiActions.setLoading(true));
               const loginData = await api.adminLogin.getLogin(action.payload);
               dispatch(loginActions.loadLoginSuccess(loginData));
+              saveState('students', loginData?.data?.data)
               dispatch(uiActions.setLoading(false));
             } catch (error) {
               dispatch(loginActions.loadLoginFailure(error));

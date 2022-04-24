@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Companies.associate = (models) => {
-		Companies.hasMany(models.Internships);
-		Companies.belongsTo(models.Addresses)
+		Companies.hasOne(models.Internships);
+		Companies.belongsTo(models.Addresses,{foreignKey: "address_id"})
 	};
 
 	return Companies;

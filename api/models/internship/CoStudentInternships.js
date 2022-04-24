@@ -3,19 +3,19 @@ module.exports = (sequelize, DataTypes) => {
 		id: {
 			type: DataTypes.STRING(11),
 			primaryKey: true,
-			allowNull: false,
+			allowNull: true,
 		},
 		first_name: {
 			type: DataTypes.STRING(150),
-			allowNull: false,
+			allowNull: true,
 		},
 		last_name: {
 			type: DataTypes.STRING(150),
-			allowNull: false,
+			allowNull: true,
 		},
 		phone: {
 			type: DataTypes.STRING(10),
-			allowNull: false,
+			allowNull: true,
 		},
 	}, {
 		underscored: true

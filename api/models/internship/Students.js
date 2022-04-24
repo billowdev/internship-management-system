@@ -81,11 +81,16 @@ module.exports = (sequelize, DataTypes) => {
 		Students.belongsTo(models.Login, {
 			foreignKey: "login_id",
 		});
-		Students.hasOne(models.ContactPersons)
-		Students.hasOne(models.Educations, {
+		Students.hasOne(models.ContactPersons, {
+			onDelete: "cascade",
+		})
+		Students.hasMany(models.Educations, {
 			onDelete: "cascade",
 		});
-		Students.belongsTo(models.Addresses)
+
+		Students.hasOne(models.PresentAddresses, { onDelete: 'cascade' });
+		Students.hasOne(models.HometownAddresses, { onDelete: 'cascade' });
+		
 	};
 
 	return Students;

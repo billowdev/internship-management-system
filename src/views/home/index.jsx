@@ -61,12 +61,8 @@ const Home = () => {
                   ประวัตินักศึกษา
                 </h3>
                 <div className="mt-4">
-                  <div className="flex justify-center items-center mb-3 mt-3">
-                    <button className="w-32 px-6 py-2 mt-4 text-white btn btn-red">
-                      ยังไม่ส่ง
-                    </button>
-                  </div>
-                  <div className="flex justify-center items-center mb-3 mt-3">
+          
+                  <div className="flex justify-center items-center mb-12 mt-12">
                     <Link to="/resume">
                       <button className="w-32 px-6 py-2  text-white btn btn-sky">
                         ดู

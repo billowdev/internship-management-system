@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const { createTokens } = require("../middlewares/auth.middleware");
 const { sign, verify } = require("jsonwebtoken");
-const { Login, Students, Teachers } = require("../models/internship");
+const { Login, Students, Teachers, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations,CoStudentInternships } = require("../models/internship");
 const { Op } = require("sequelize");
-const e = require("express");
+
 
 // exports.signinController = async (req, res) => {
 // 	try {
@@ -101,38 +101,69 @@ exports.signinController = async (req, res) => {
 
 exports.signupController = async (req, res) => {
 	const { username, password, roles } = req?.body;
+	const reqRoles = roles
 	const response = await Login.findOne({ where: { username: username } });
 	if (response != null) {
 		res.status(400).json({ success: false, msg: "username has already exists" });
 	} else {
-		bcrypt.hash(password, 10).then((hash) => {
-			Login.create({
+
+		try {
+			const hasing = await bcrypt.hash(password, 10)
+			const user = await Login.create({
 				username: username,
-				password: hash,
-				roles: roles
+				password: hasing,
+				roles: reqRoles
 			})
-				.then((data) => {
-					if (data.roles != null || data.roles != undefined || data.roles != "") {
-						const respId = data.id
-						if (roles === 'student') {
-							Students.create({ id: username, first_name: "", last_name: "", program: "", department: "", login_id: respId });
-						}
-						if (roles === 'director') {
-							console.log("response login create ===", data)
-							Teachers.create({ id: username, name: "", login_id: respId })
-						}
-					} else {
-						return res.status(400).json({ success: true, msg: "USER REGISTER FAILED", data })
-					}
-					return res.status(200).json({ success: true, msg: "USER REGISTER SUCCESSFULY" });
-				})
-				.catch((err) => {
-					if (err) {
-						console.log("Error in signup while account activation", err);
-						return res.status(500).json({ success: false, msg: "something went wrong!" });
-					}
-				});
-		});
+			// const { id, roles } = user
+			if (user.roles != null || user.roles != undefined || user.roles != "") {
+				if (roles === 'student') {
+					const respStudentData = await Students.create({ id: username, first_name: "", last_name: "", program: "", department: "", login_id: user.id })
+					const { id } = respStudentData;
+					// hook education table for student
+					await Educations.create({ student_id: id })
+					// hook address table for student
+					await Addresses.create({ address_type: "hometown" }).then(data => {
+						HometownAddresses.create({ student_id: id, address_id: data.id })
+					})
+
+					await Addresses.create({ address_type: "present" }).then(data => {
+						PresentAddresses.create({ student_id: id, address_id: data.id })
+					})
+
+					// hook address table for contact_person
+					await Addresses.create({ address_type: "contact_person" }).then(data => {
+						// hook table contact_person for student
+						ContactPersons.create({ first_name: "", last_name: "", student_id: id, address_id: data.id })
+					})
+
+					// hook table address for company 
+					const companyAddress = await Addresses.create({ address_type: "company" })
+					const companyData = await Companies.create({ name: "", address_id: companyAddress.id })
+				}
+				if (roles === 'director') {
+					const {id} = user
+					await Teachers.create({ id: username, name: "", login_id: id })
+				}
+			} else {
+				return res.status(400).json({ success: true, msg: "USER REGISTER FAILED", data })
+			}
+
+			return res.status(200).json({ success: true, msg: "USER REGISTER SUCCESSFULY" });
+		} catch (err) {
+
+			console.log("Error in signup while account activation", err);
+			return res.status(500).json({ success: false, msg: "something went wrong!" });
+
+		}
+
+
+
+
+
+
+
+
+
 	}
 };
 

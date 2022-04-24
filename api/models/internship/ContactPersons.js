@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.UUID,
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
-		  },
+		},
 		first_name: {
 			type: DataTypes.STRING(50),
 			allowNull: false,
@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	ContactPersons.associate = (models) => {
-		ContactPersons.belongsTo(models.Students);
-		ContactPersons.belongsTo(models.Addresses)
+		ContactPersons.belongsTo(models.Students, { foreignKey: "student_id" });
+		ContactPersons.belongsTo(models.Addresses, { foreignKey: "address_id" })
 	};
 
 	return ContactPersons;

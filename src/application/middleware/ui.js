@@ -3,7 +3,7 @@ import * as authActions from "../actions/auth";
 import { toast } from "react-toastify";
 import { saveState } from "../../helpers/Persist";
 import Swal from "sweetalert2";
-import { Navigate } from "react-router-dom";
+import * as internshipActions from "../actions/student/internship"
 
 const pageLoadedFlow =
   ({ log }) =>
@@ -30,7 +30,7 @@ const authFlow =
               'signin!',
               'You clicked the button!',
               'success'
-            ).then(()=>window.location.reload())
+            ).then(() => window.location.reload())
           }
 
           if (action.type === authActions.LOAD_SIGNOUT_SUCCESS) {
@@ -40,7 +40,7 @@ const authFlow =
               'ออกจากระบบ!',
               'You clicked the button!',
               'success'
-            ).then(()=>window.location.reload())
+            ).then(() => window.location.reload())
             dispatch(authActions.loadAuth)
           }
 
@@ -56,7 +56,22 @@ const authFlow =
               progress: undefined,
             });
           }
-
         };
 
-export default [pageLoadedFlow, authFlow];
+
+const internshipFlow =
+  ({ log }) =>
+    ({ dispatch }) =>
+      (next) =>
+        (action) => {
+          next(action);
+          if (action.type === internshipActions.UPDATE_INTERNSHIP_SUCCESS) {
+            Swal.fire(
+              'สำเร็จ!',
+              'อัปเดตข้อมูลเรียบร้อย',
+              'success'
+            ).then(() => dispatch(internshipActions.loadInternship)
+            )
+          }
+        };
+export default [pageLoadedFlow, authFlow, internshipFlow];

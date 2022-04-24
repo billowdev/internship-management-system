@@ -12,4 +12,14 @@ export default {
 		);
 		return resp.data;
 	},
+	updateInternship: async (props) => {
+		const resp = await axios.patch(`${BASE_URL}/internships/update/information`, props, {
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": accessToken
+			}
+		}
+		);
+		return resp.data;
+	},
 }

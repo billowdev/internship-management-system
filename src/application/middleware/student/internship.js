@@ -18,7 +18,16 @@ const loadInternshipFlow =
               dispatch(studentInternshipActionsons.loadInternshipFailure(error));
             }
           }
-
+          if (action.type === studentInternshipActionsons.UPDATE_INTERNSHIP) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respInternship = await api.student.updateInternship(action.payload);
+              dispatch(studentInternshipActionsons.updateInternshipSuccess(respInternship));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(studentInternshipActionsons.updateInternshipFailure(error));
+            }
+          }
         };
 
 export default [loadInternshipFlow];

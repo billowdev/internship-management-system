@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
 import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";
-import InternshipHook from "./InternshipHook";
+import InternshipHook from "../internship-form/InternshipHook";
 
 
-const Thaiaddresseshook = () => {
+const ThaiAddressesHook = () => {
   const {internFormData, setInternFormData} = InternshipHook()
   // ======================== Addresses API  ========================
   const [provinces, setProvinces] = useState([]);
@@ -99,4 +99,4 @@ const Thaiaddresseshook = () => {
   };
 };
 
-export default Thaiaddresseshook;
+export default ThaiAddressesHook;

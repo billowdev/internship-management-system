@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Thaiaddresseshook from "../internship-form/ThaiAddressesHook";
+import ThaiAddressesHook from "./ThaiAddressesHook";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Resumehook from "./ResumeHook";
@@ -16,7 +16,7 @@ function Resume() {
     showDropDownMenuSubDistricts,
     swaptextDistricts,
     swaptextSubDistricts,
-  } = Thaiaddresseshook();
+  } = ThaiAddressesHook();
 
   const { studentData } = Resumehook();
   console.log(studentData);

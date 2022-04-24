@@ -15,8 +15,6 @@ export const loadInternshipFailure = error => ({
 	payload: error,
 });
 
-
-
 export const UPDATE_INTERNSHIP = '[INTERNSHIP] UPDATE';
 export const UPDATE_INTERNSHIP_SUCCESS = '[INTERNSHIP] UPDATE SUCCESS';
 export const UPDATE_INTERNSHIP_FAILURE = '[INTERNSHIP] UPDATE FAILURE';

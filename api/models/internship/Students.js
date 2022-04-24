@@ -67,6 +67,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		present_gpa: {
 			type: DataTypes.DECIMAL(4),
+			allowNull: true,
 		},
 		status_resume: {
 			type: DataTypes.BOOLEAN,

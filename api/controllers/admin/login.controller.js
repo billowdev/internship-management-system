@@ -1,15 +1,15 @@
 const { Login } = require("../../models/internship");
 const { Op } = require('sequelize')
+
 exports.createLogin = async (req, res) => {
 	try {
-		const isAdmin = await Login.findOne({ where: { id: req.user.id, permission: 'admin' } })
-		const { username, password, permission } = req.body;
-
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
+		const { username, password, roles } = req.body;
 		if (isAdmin != null) {
 			const isExist = await Login.findOne({ where: { username: username } })
 
 			if (isExist == null) {
-				const resp = await Login.create({ username, password, permission })
+				const resp = await Login.create({ username, password, roles })
 				res.status(200).json({ success: true, msg: "create login success", data: resp })
 			} else {
 				res.status(201).json({ success: false, msg: "create login faild user is exist" })
@@ -26,7 +26,7 @@ exports.createLogin = async (req, res) => {
 
 exports.getLogin = async (req, res) => {
 	try {
-		const isAdmin = await Login.findOne({ where: { id: req.user.id, permission: 'admin' } })
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
 		if (isAdmin != null) {
 			const page = parseInt(req.query.page);
 			const perPage = parseInt(req.query.per_page);
@@ -100,11 +100,11 @@ exports.getLogin = async (req, res) => {
 
 exports.updateLogin = async (req, res) => {
 	try {
-		const isAdmin = await Login.findOne({ where: { id: req.user.id, permission: 'admin' } })
-		const { username, password, permission } = req.body;
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
+		const { username, password, roles } = req.body;
 
 		if (isAdmin != null) {
-			await Login.update({ username, password, permission }, { where: { id: req.params.id } })
+			await Login.update({ username, password, roles }, { where: { id: req.params.id } })
 			res.status(200).json({ success: true, msg: "update login success" })
 		} else {
 			res.status(404).json({ success: false, msg: "404 Not Found" })
@@ -118,7 +118,7 @@ exports.updateLogin = async (req, res) => {
 
 exports.deleteLogin = async (req, res) => {
 	try {
-		const isAdmin = await Login.findOne({ where: { id: req.user.id, permission: 'admin' } })
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
 
 		if (isAdmin != null) {
 			await Login.update({isActive: 0},{where: { id: req.params.id } })

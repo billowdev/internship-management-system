@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			allowNull: false,
 		},
+		email: {
+			type: DataTypes.STRING(150),
+			allowNull: true,
+		},
 		first_name: {
 			type: DataTypes.STRING(150),
 			allowNull: false,
@@ -67,11 +71,15 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		present_gpa: {
 			type: DataTypes.DECIMAL(4),
+			allowNull: true,
 		},
 		status_resume: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
-		}
+		}, phone: {
+			type: DataTypes.STRING(10),
+			allowNull: true,
+		},
 	}, {
 		underscored: true
 	});
@@ -80,11 +88,16 @@ module.exports = (sequelize, DataTypes) => {
 		Students.belongsTo(models.Login, {
 			foreignKey: "login_id",
 		});
-		Students.hasOne(models.ContactPersons)
-		Students.hasOne(models.Educations, {
+		Students.hasOne(models.ContactPersons, {
+			onDelete: "cascade",
+		})
+		Students.hasMany(models.Educations, {
 			onDelete: "cascade",
 		});
-		Students.belongsTo(models.Addresses)
+
+		Students.hasOne(models.PresentAddresses, { onDelete: 'cascade' });
+		Students.hasOne(models.HometownAddresses, { onDelete: 'cascade' });
+
 	};
 
 	return Students;

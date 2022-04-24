@@ -48,7 +48,7 @@ const Navbar = () => {
                       >
                         สถานที่ฝึกงาน
                       </Link>
-
+                   
                       <Link
                         to="/resume"
                         className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"

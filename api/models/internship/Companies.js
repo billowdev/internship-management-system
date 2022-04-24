@@ -8,13 +8,16 @@ module.exports = (sequelize, DataTypes) => {
 		contact_person_name: {
 			type: DataTypes.STRING(100),
 		},
+		contact_person_position: {
+			type: DataTypes.STRING(50),
+		},
 		contact_person_phone: {
 			type: DataTypes.STRING(10),
 		},
 		name: {
 			type: DataTypes.STRING(100),
 		},
-		region: {
+		type: {
 			type: DataTypes.ENUM(["รัฐบาล", "เอกชน", "รัฐวิสาหกิจ"]),
 			allowNull: false,
 			defaultValue: "รัฐบาล",
@@ -34,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Companies.associate = (models) => {
-		Companies.hasMany(models.Internships);
-		Companies.belongsTo(models.Addresses)
+		Companies.hasOne(models.Internships);
+		Companies.belongsTo(models.Addresses,{foreignKey: "address_id"})
 	};
 
 	return Companies;

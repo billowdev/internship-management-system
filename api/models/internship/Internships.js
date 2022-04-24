@@ -5,7 +5,11 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
 		},
-		status: {
+		is_send: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		},
+		is_confirm: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
 		}
@@ -17,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 		Internships.belongsTo(models.Students, {
 			foreignKey: "student_id",
 		});
-		Internships.belongsTo(models.Companies);
+		Internships.belongsTo(models.Companies,{foreignKey: "company_id"});
 
 		Internships.hasMany(models.CoStudentInternships, {
 			foreignKey: "internship_id",

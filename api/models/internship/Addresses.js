@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.UUID,
 			primaryKey: true,
 			defaultValue: DataTypes.UUIDV4,
-		  },
+		},
 		house_number: {
 			type: DataTypes.STRING(10),
 		},
@@ -26,18 +26,19 @@ module.exports = (sequelize, DataTypes) => {
 		post_code: {
 			type: DataTypes.STRING(10),
 		},
-		addresses_type: {
-			type: DataTypes.ENUM(["hometown", "present", "company", "contact_person"]),
-			defaultValue: "present",
+		address_type: {
+			type: DataTypes.ENUM(["hometown", "present", "company", "contact_person"])
 		}
 	}, {
 		underscored: true
 	});
 
 	Addresses.associate = (models) => {
-		Addresses.hasMany(models.Companies);
-		Addresses.hasMany(models.Students);
-		Addresses.hasMany(models.ContactPersons);
+		Addresses.hasOne(models.PresentAddresses, {onDelete:'cascade'})
+		Addresses.hasOne(models.HometownAddresses, {onDelete:'cascade'})
+		
+		Addresses.hasOne(models.Companies, {onDelete:'cascade'});
+		Addresses.hasOne(models.ContactPersons, {onDelete:'cascade'});
 	};
 
 	return Addresses;

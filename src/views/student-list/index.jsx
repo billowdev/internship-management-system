@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import Layout from "../components/Layout";
 
 const StudentList = () => {
     const [name, setName] = useState("Akkarapon Phikulsri");

@@ -10,3 +10,4 @@ export const setLoading = isLoading => ({
     type: isLoading ? SET_LOADING_ON : SET_LOADING_OFF,
     payload: isLoading,
 });
+

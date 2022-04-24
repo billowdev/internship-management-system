@@ -1,14 +1,14 @@
 import ui from './ui';
 import auth from './auth';
-import users from './users';
-import thaiAddresses from './thaiAddresses';
-
 import adminLogin from './admin/login';
+import studentProfile from './student/profile';
+import studentInternship from './student/internship';
 
 export default [
     ...ui,
     ...auth,
-    ...users,
     ...adminLogin,
-    ...thaiAddresses
+    ...studentProfile,
+    ...studentInternship,
+
 ]

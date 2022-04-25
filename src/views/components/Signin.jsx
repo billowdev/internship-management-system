@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loadAuth, loadSignin } from "../../application/actions/auth";
+import { loadAuth, loadSignin } from "../../redux/actions/auth";
 import { loginApi } from "../../services/api/auth/login";
 
 const Signin = () => {

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   loadInternship,
   updateInternship,
-} from "../../application/actions/student/internship";
+} from "../../redux/actions/student/internship";
 
 import { loadState, removeState, saveState } from "../../helpers/Persist";
 import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";

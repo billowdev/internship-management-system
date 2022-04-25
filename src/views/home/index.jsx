@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
 import { loadState } from "../../helpers/Persist";
 import { Link, Navigate } from "react-router-dom";
-import { loadProfile } from "../../application/actions/student/profile";
-import { loadInternship } from "../../application/actions/student/internship";
+import { loadProfile } from "../../redux/actions/student/profile";
+import { loadInternship } from "../../redux/actions/student/internship";
 
 const Home = () => {
   const dispatch = useDispatch();

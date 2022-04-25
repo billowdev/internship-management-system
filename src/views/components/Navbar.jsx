@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
-import { loadSignout } from "../../application/actions/auth";
+import { loadSignout } from "../../redux/actions/auth";
 
 const Navbar = () => {
   const dispatch = useDispatch();

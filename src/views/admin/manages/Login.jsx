@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
-import { loadLogin } from "../../../application/actions/admin/login";
-import { getLogin } from "../../../application/selectors/admin/login";
+import { loadLogin } from "../../../redux/actions/admin/login";
+import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link } from "react-router-dom";
 
 const Login = () => {

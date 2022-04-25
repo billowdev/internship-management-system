@@ -13,8 +13,10 @@ const Navbar = () => {
     navigate("/");
   };
   const [isAuth, setIsAuth] = useState({});
+  const [who, setWho] = useState({});
   useEffect(() => {
     setIsAuth(loadState("auth-state"));
+    setWho(loadState('profile'))
   }, []);
   const [isOpen, setIsOpen] = useState(false);
   const component = React.createRef();
@@ -24,11 +26,12 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <img
+              {/* <img
                 className="w-44"
-                src="https://www.snru.ac.th/wp-content/themes/core/img/site-logo.png"
+                src=""
                 alt="Workflow"
-              />
+              /> */}
+            
             </div>
             <div className="hidden md:block">
               {isAuth && (

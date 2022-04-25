@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { loadResume } from "../../redux/actions/student/resume";
+import { updateResume } from "../../redux/actions/student/resume";
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -108,15 +110,15 @@ const Index = () => {
       post_code: presentPostCode,
     };
     const education = {
-      education: [educationData1, educationData2, educationData3],
+      educationData1, educationData2, educationData3
     };
-    
-    console.log(student, hometown, present, education);
+    const updateData = { student, hometown, present, education };
+    dispatch(updateResume(updateData));
   };
 
   useEffect(() => {
     // const intern = loadState("internship");
-    const resume = loadState("profile");
+    const resume = loadState("resume");
     const resumeData = resume?.student;
     const hometownData = resume?.HometownAddress;
     const presentData = resume?.PresentAddress;
@@ -155,9 +157,10 @@ const Index = () => {
     setEducationData1(resume?.education[0]);
     setEducationData2(resume?.education[1]);
     setEducationData3(resume?.education[2]);
-   
   }, []);
-
+  useEffect(() => {
+    dispatch(loadResume);
+  }, [dispatch]);
 
   const privateData = (
     <div className="mt-10 px-7">

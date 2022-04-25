@@ -6,13 +6,15 @@ import { loadState } from "../../helpers/Persist";
 import { Link, Navigate } from "react-router-dom";
 import { loadProfile } from "../../redux/actions/student/profile";
 import { loadInternship } from "../../redux/actions/student/internship";
+import { loadResume } from "../../redux/actions/student/resume";
 
 const Home = () => {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState({});
 
   useEffect(() => {
-    dispatch(loadProfile);
+    // dispatch(loadProfile);
+    dispatch(loadResume);
     dispatch(loadInternship);
   }, [dispatch]);
 

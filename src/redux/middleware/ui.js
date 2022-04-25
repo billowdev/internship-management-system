@@ -15,7 +15,6 @@ const pageLoadedFlow =
 
           if (action.type === PAGE_LOADED) {
             log("page loaded");
-            // dispatch(authActions.loadAuth);
           }
 
         };
@@ -72,7 +71,7 @@ const internshipFlow =
               'สำเร็จ!',
               'อัปเดตข้อมูลเรียบร้อย',
               'success'
-            ).then(() => window.location.reload())
+            )
           }
         };
 
@@ -83,13 +82,11 @@ const resumeFlow =
         (action) => {
           next(action);
           if (action.type === resumeActions.UPDATE_RESUME_SUCCESS) {
-            dispatch(resumeActions.loadResume)
             Swal.fire(
               'สำเร็จ!',
               'อัปเดตข้อมูลเรียบร้อย',
               'success'
-            ).then(() => window.location.reload())
-
+            )
           }
         };
 export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow];

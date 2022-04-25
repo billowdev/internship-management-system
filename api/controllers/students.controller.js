@@ -34,9 +34,22 @@ exports.updateStudents = async (req, res) => {
 		const isStudent = await Students.findOne({ where: { login_id: login.id } })
 		if (isStudent != null) {
 			const { id } = isStudent
-			console.log(req.body)
+			const { present, hometown, student } = req?.body
+			const eduaction1 = req.body?.education?.educationData1
+			const eduaction2 = req.body?.education?.educationData2
+			const eduaction3 = req.body?.education?.educationData3
 
-			res.status(200).json({ success: true, msg: "get student success" })
+			await Educations.update(eduaction1, {where:{id:eduaction1.id}})
+			await Educations.update(eduaction2, {where:{id:eduaction2.id}})
+			await Educations.update(eduaction3, {where:{id:eduaction3.id}})
+			
+			const present_id = await PresentAddresses.findOne({ where: { student_id: id } }).then(resp => { return resp.address_id })
+			const hometown_id = await HometownAddresses.findOne({ where: { student_id: id } }).then(resp => { return resp.address_id })
+			await Addresses.update(present, { where: { id: present_id } })
+			await Addresses.update(hometown, { where: { id: hometown_id } })
+			await Students.update(student, { where: { id: id } })
+
+			res.status(200).json({ success: true, msg: "update student success" })
 		} else {
 			res.status(400).json({ success: false, msg: "something wen wrong" })
 		}

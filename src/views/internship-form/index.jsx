@@ -60,7 +60,6 @@ const InternshipForm = () => {
         ...{ [input]: e.target.value },
       },
     };
-    console.log(updateValue);
     setCoStudentFormData(updateValue);
   };
 
@@ -237,7 +236,7 @@ const InternshipForm = () => {
 
   useEffect(() => {
     const intern = loadState("internship");
-    const sender = loadState("profile");
+    const sender = loadState("resume");
     const senderData = sender?.student;
     setStudentFormData({
       id: senderData?.id,
@@ -266,31 +265,34 @@ const InternshipForm = () => {
     setInternDistrict(internCompanyAddressData?.district);
     setInternProvince(internCompanyAddressData?.province);
     setInternPostCode(internCompanyAddressData?.post_code);
-
+    const first = internCoStudentData[0];
+    const second = internCoStudentData[1];
+    const third = internCoStudentData[2];
+    const fourth = internCoStudentData[3];
     setCoStudentFormData({
       firstPerson: {
-        id: internCoStudentData[0]?.id,
-        firstName: internCoStudentData[0]?.first_name,
-        lastName: internCoStudentData[0]?.last_name,
-        phone: internCoStudentData[0]?.phone,
+        id: first?.id,
+        firstName: first?.first_name,
+        lastName: first?.last_name,
+        phone: first?.phone,
       },
       secondPerson: {
-        id: internCoStudentData[1]?.id,
-        firstName: internCoStudentData[1]?.first_name,
-        lastName: internCoStudentData[1]?.last_name,
-        phone: internCoStudentData[1]?.phone,
+        id: second?.id,
+        firstName: second?.first_name,
+        lastName: second?.last_name,
+        phone: second?.phone,
       },
       thirdPerson: {
-        id: internCoStudentData[2]?.id,
-        firstName: internCoStudentData[2]?.first_name,
-        lastName: internCoStudentData[2]?.last_name,
-        phone: internCoStudentData[2]?.phone,
+        id: third?.id,
+        firstName: third?.first_name,
+        lastName: third?.last_name,
+        phone: third?.phone,
       },
       fourthPerson: {
-        id: internCoStudentData[3]?.id,
-        firstName: internCoStudentData[3]?.first_name,
-        lastName: internCoStudentData[3]?.last_name,
-        phone: internCoStudentData[3]?.phone,
+        id: fourth?.id,
+        firstName: fourth?.first_name,
+        lastName: fourth?.last_name,
+        phone: fourth?.phone,
       },
     });
   }, []);
@@ -298,6 +300,9 @@ const InternshipForm = () => {
   useEffect(() => {
     fetchProvinces();
   }, []);
+  useEffect(() => {
+    dispatch(loadInternship);
+  }, [dispatch]);
 
   const SelectProgram = (
     <>

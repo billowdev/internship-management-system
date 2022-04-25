@@ -12,7 +12,7 @@ const loadResumeFlow =
 							dispatch(uiActions.setLoading(true));
 							const respReusume = await api.student.getResume();
 							dispatch(studentResumeActions.loadResumeSuccess(respReusume));
-							saveState('profile', respReusume.data)
+							saveState('resume', respReusume.data)
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							dispatch(studentResumeActions.loadResumeFailure(error));
@@ -21,11 +21,12 @@ const loadResumeFlow =
 					if (action.type === studentResumeActions.UPDATE_RESUME) {
 						try {
 							dispatch(uiActions.setLoading(true));
-							const respReusume = await api.student.updateResume();
-							dispatch(studentResumeActions.loadResumeSuccess(respReusume));
+							const respReusume = await api.student.updateResume(action.payload);
+							dispatch(studentResumeActions.updateResumeSuccess(respReusume));
+							dispatch(studentResumeActions.loadResume)
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
-							dispatch(studentResumeActions.loadResumeFailure(error));
+							dispatch(studentResumeActions.updateResumeFailure(error));
 						}
 					}
 				};

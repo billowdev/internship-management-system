@@ -29,14 +29,47 @@ const ResumeHook = () => {
   const [presentDistrict, setPresentDistrict] = useState("");
   const [presentProvince, setPresentProvince] = useState("");
   const [presentPostCode, setPresentPostCode] = useState("");
+  
+  const [educationData1, setEducationData1] = useState({
+    academy: "",
+    gpa: "",
+    id: "",
+    level: "",
+  });
+  const [educationData2, setEducationData2] = useState({
+    academy: "",
+    gpa: "",
+    id: "",
+    level: "",
+  });
+  const [educationData3, setEducationData3] = useState({
+    academy: "",
+    gpa: "",
+    id: "",
+    level: "",
+  });
+  
+  const handleEducation1FormChange = (input) => (e) => {
+    e.preventDefault();
+    setEducationData1({ ...educationData1, [input]: e.target.value });
+  };
+  const handleEducation2FormChange = (input) => (e) => {
+    e.preventDefault();
+    setEducationData2({ ...educationData2, [input]: e.target.value });
+  };
+  const handleEducation3FormChange = (input) => (e) => {
+    e.preventDefault();
+    setEducationData3({ ...educationData3, [input]: e.target.value });
+  };
 
   const handleFormSave = async (e) => {
     e.preventDefault();
+    const bod = e.target[3].value;
     const student = {
       first_name: firstName,
       last_name: lastName,
       phone,
-      bod: birthDate,
+      bod: bod,
       id_card: idCard,
       religion,
       father_name: fatherName,
@@ -60,9 +93,15 @@ const ResumeHook = () => {
       province: presentProvince,
       post_code: presentPostCode,
     };
-
-    console.log(student, hometown, present);
+    const education = {
+      education: [educationData1, educationData2, educationData3],
+    };
+    console.log(student, hometown, present, education);
   };
+  useEffect(()=>{
+    console.log("effect", birthDate)
+    
+  }, [birthDate])
 
   useEffect(() => {
     const intern = loadState("internship");
@@ -70,7 +109,7 @@ const ResumeHook = () => {
     const resumeData = resume?.student;
     const hometownData = resume?.HometownAddress;
     const presentData = resume?.PresentAddress;
-    console.log(presentData);
+
     // private student data
     setidCardCart(resumeData?.id_card);
     setFirstName(resumeData?.first_name);
@@ -96,10 +135,25 @@ const ResumeHook = () => {
     setPresentProvince(presentData?.province);
     setPresentPostCode(presentData?.post_code);
 
-    console.log(intern);
+    setEducationData1(resume?.education[0]);
+    setEducationData2(resume?.education[1]);
+    setEducationData3(resume?.education[2]);
+    // console.log(resume?.education)
+    // console.log(intern);
   }, []);
 
   return {
+    educationData1,
+    setEducationData1,
+    educationData2,
+    setEducationData2,
+    educationData3,
+    setEducationData3,
+
+    handleEducation1FormChange,
+    handleEducation2FormChange,
+    handleEducation3FormChange,
+
     handleFormSave,
     firstName,
     setFirstName,

@@ -53,10 +53,22 @@ const Index = () => {
     setPresentProvince,
     presentPostCode,
     setPresentPostCode,
+
+    educationData1,
+    setEducationData1,
+    educationData2,
+    setEducationData2,
+    educationData3,
+    setEducationData3,
+
+    handleEducation1FormChange,
+    handleEducation2FormChange,
+    handleEducation3FormChange,
   } = ResumeHook();
+
   const privateData = (
     <div className="mt-10 px-7">
-      <p className="text-xl font-semibold leading-tight text-gray-800">
+      <p className="text-lg font-semibold leading-tight text-gray-800">
         1. ข้อมูลส่วนตัว
       </p>
       <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
@@ -199,9 +211,9 @@ const Index = () => {
       </div>
     </div>
   );
-  const hometowData = (
+  const hometownDataSection = (
     <div className="mt-10 px-7">
-      <p className="text-xl font-semibold leading-tight text-gray-800">
+      <p className="text-lg font-semibold leading-tight text-gray-800">
         2. ภูมิลำเนาเดิม
       </p>
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
@@ -212,9 +224,9 @@ const Index = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บ้านเลขที่"
-            defaultValue={firstName}
+            defaultValue={hometownHouseNumber}
             onChange={(e) => {
-              setFirstName(e.target.value);
+              setHometownHouseNumber(e.target.value);
             }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
@@ -292,13 +304,12 @@ const Index = () => {
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
-  
       </div>
     </div>
   );
-  const presentData = (
+  const presentDataSection = (
     <div className="mt-10 px-7">
-      <p className="text-xl font-semibold leading-tight text-gray-800">
+      <p className="text-lg font-semibold leading-tight text-gray-800">
         3. ที่อยู่ปัจจุบัน
       </p>
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
@@ -392,6 +403,379 @@ const Index = () => {
       </div>
     </div>
   );
+
+  const educationSection = (
+    <div className="mt-10 px-7">
+      <p className="text-lg font-semibold leading-tight text-gray-800">
+        4. ประวัติการศึกษา
+      </p>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ระดับการศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.level}
+            onChange={handleEducation1FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ชื่อสถานศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อสถานศึกษา"
+            defaultValue={educationData1?.academy}
+            onChange={handleEducation1FormChange("academy")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            เกรดเฉลี่ย
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.gpa}
+            onChange={handleEducation1FormChange("gpa")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ระดับการศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData2?.level}
+            onChange={handleEducation2FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ชื่อสถานศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อสถานศึกษา"
+            defaultValue={educationData2?.academy}
+            onChange={handleEducation2FormChange("academy")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            เกรดเฉลี่ย
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData2?.gpa}
+            onChange={handleEducation2FormChange("gpa")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ระดับการศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData3?.level}
+            onChange={handleEducation3FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ชื่อสถานศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ชื่อสถานศึกษา"
+            defaultValue={educationData3?.academy}
+            onChange={handleEducation3FormChange("academy")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            เกรดเฉลี่ย
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData3?.gpa}
+            onChange={handleEducation3FormChange("gpa")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+    </div>
+  );
+  const experienceSection = (
+    <div className="mt-10 px-7">
+      <p className="text-lg font-semibold leading-tight text-gray-800">
+        5 ประสบการณ์ทำงาน
+      </p>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ข้อมูลการทำงาน ประสบการณ์ทำงาน
+          </p>
+          <textarea
+            className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.level}
+            onChange={handleEducation1FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const gpaSection = (
+    <div className="mt-10 px-7">
+      <div className="grid w-full grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ปัจจุบันศึกษาชั้นปีที่ 4 เกรดเฉลี่ยปัจจุบัน
+          </p>
+          <input
+            className="w-24 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.level}
+            onChange={handleEducation1FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            หัวข้อโครงงานวิทยาการคอมพิวเตอร์ / โครงงานเทคโนโลยีสารสนเทศเรื่อง
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.level}
+            onChange={handleEducation1FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+    </div>
+  );
+  const skillSection = (
+    <div className="mt-10 px-7">
+      <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7 mt-7 ">
+        <p className="text-lg font-semibold leading-tight text-gray-800">
+          6. ความสามารถพิเศษ
+        </p>
+        <p className="text-lg font-semibold leading-tight text-gray-800">
+          7. ความสนใจพิเศษในด้านการขอรับการฝึกงานจากหน่วยงาน
+        </p>
+      </div>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ข้อมูลการทำงาน ประสบการณ์ทำงาน
+          </p>
+          <textarea
+            className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.level}
+            onChange={handleEducation1FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ข้อมูลการทำงาน ประสบการณ์ทำงาน
+          </p>
+          <textarea
+            className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={educationData1?.level}
+            onChange={handleEducation1FormChange("level")}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+    </div>
+  );
+  const interestSection = <div className="mt-10 px-7"></div>;
+
+  const contactPersonSection = (
+    <div className="mt-10 px-7">
+      <p className="text-lg font-semibold leading-tight text-gray-800">
+        8. บุคคลที่สามารถติดต่อได้
+      </p>
+        
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 "> 
+      <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ชื่อ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={presentHouseNumber}
+            onChange={(e) => {
+              setPresentHouseNumber(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            นามสกุล
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={presentHouseNumber}
+            onChange={(e) => {
+              setPresentHouseNumber(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ความสัมพันธุ์กับนักศึกษา
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={presentHouseNumber}
+            onChange={(e) => {
+              setPresentHouseNumber(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            บ้านเลขที่
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="บ้านเลขที่"
+            defaultValue={presentHouseNumber}
+            onChange={(e) => {
+              setPresentHouseNumber(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ถนน / ซอย / หมู่
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ถนน / ซอย / หมู่"
+            defaultValue={presentRoad}
+            onChange={(e) => {
+              setPresentRoad(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ตำบล / แขวง
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="ถนน / ซอย / หมู่"
+            defaultValue={presentSubDistrict}
+            onChange={(e) => {
+              setPresentSubDistrict(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            อำเภอ
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="อำเภอ"
+            defaultValue={presentDistrict}
+            onChange={(e) => {
+              setPresentDistrict(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            จังหวัด
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="จังหวัด"
+            defaultValue={presentProvince}
+            onChange={(e) => {
+              setPresentProvince(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            รหัสไปรษณีย์
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="รหัสไปรษณีย์"
+            defaultValue={presentPostCode}
+            onChange={(e) => {
+              setPresentPostCode(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+      <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+      <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            โทร
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="โทร"
+            defaultValue={presentPostCode}
+            onChange={(e) => {
+              setPresentPostCode(e.target.value);
+            }}
+          />
+          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        </div>
+      </div>
+    </div>
+  );
   return (
     <>
       <div className="2xl:px-56 xl:px-48 lg:px-36">
@@ -404,9 +788,21 @@ const Index = () => {
                   {/* ข้อมูลส่วนตัว */}
                   {privateData}
                   {/* ภูมิลำเนา */}
-                  {hometowData}
+                  {hometownDataSection}
                   {/* ที่อยู่ปัจจุบัน */}
-                  {presentData}
+                  {presentDataSection}
+                  {/* ประวัติการศึกษา */}
+                  {educationSection}
+                  {/* ประสบการณ์การทำงาน */}
+                  {experienceSection}
+                  {/* ข้อมูลผลการเรียน */}
+                  {gpaSection}
+                  {/* ความสามารถพิเศษ */}
+                  {skillSection}
+                  {/* ความสนใจ */}
+                  {interestSection}
+                  {/* บุคคลที่สามารถติดต่อได้ */}
+                  {contactPersonSection}
 
                   <hr className="h-[1px] bg-gray-100 my-14" />
                   <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">

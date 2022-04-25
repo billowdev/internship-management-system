@@ -11,14 +11,6 @@ module.exports = (sequelize, DataTypes) => {
 		level: {
 			type: DataTypes.STRING(100),
 		},
-		program: {
-			type: DataTypes.STRING(50),
-			allowNull: true,
-		},
-		department: {
-			type: DataTypes.STRING(50),
-			allowNull: true,
-		},
 		gpa: {
 			type: DataTypes.DECIMAL(4),
 		},

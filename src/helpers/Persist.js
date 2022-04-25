@@ -1,4 +1,4 @@
-import log from "../services/logger/console";
+import log from "../infrastructure/services/logger/console";
 
 export const loadState = (key) => {
   try {

@@ -7,8 +7,8 @@ import {
 } from "../../redux/actions/student/internship";
 
 import { loadState, removeState, saveState } from "../../helpers/Persist";
-import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";
-
+import * as thaiAddresses from "../../infrastructure/services/api/thaiAddresses/thaiAddressApi";
+import log from "../../infrastructure/services/logger/console";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -295,6 +295,7 @@ const InternshipForm = () => {
         phone: fourth?.phone,
       },
     });
+    log('test')
   }, []);
 
   useEffect(() => {

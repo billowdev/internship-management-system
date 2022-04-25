@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-import { saveState } from "../../../helpers/Persist.js";
+import { saveState } from "../../../../helpers/Persist.js";
 const { BASE_URL, accessToken } = require("../../config");
 
 export const getGeographies = async () => {

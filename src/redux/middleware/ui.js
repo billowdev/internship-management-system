@@ -12,7 +12,6 @@ const pageLoadedFlow =
       (next) =>
         (action) => {
           next(action);
-
           if (action.type === PAGE_LOADED) {
             log("page loaded");
           }
@@ -82,6 +81,7 @@ const resumeFlow =
         (action) => {
           next(action);
           if (action.type === resumeActions.UPDATE_RESUME_SUCCESS) {
+            log('update rusume')
             Swal.fire(
               'สำเร็จ!',
               'อัปเดตข้อมูลเรียบร้อย',

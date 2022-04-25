@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { loadResume } from "../../redux/actions/student/resume";
 import { updateResume } from "../../redux/actions/student/resume";
+import Moment from "moment";
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -75,12 +76,14 @@ const Index = () => {
 
   const handleFormSave = async (e) => {
     e.preventDefault();
-    const bod = e.target[3].value;
+    const dob = e.target[3].value;
+    const newDob = Moment(dob).format("DD-MM-yyyy")
+    console.log(newDob)
     const student = {
       first_name: firstName,
       last_name: lastName,
       phone,
-      bod: bod,
+      dob: newDob,
       id_card: idCard,
       religion,
       father_name: fatherName,
@@ -110,7 +113,9 @@ const Index = () => {
       post_code: presentPostCode,
     };
     const education = {
-      educationData1, educationData2, educationData3
+      educationData1,
+      educationData2,
+      educationData3,
     };
     const updateData = { student, hometown, present, education };
     dispatch(updateResume(updateData));
@@ -132,12 +137,16 @@ const Index = () => {
     setFatherJob(resumeData?.father_job);
     setMotherName(resumeData?.mother_name);
     setMotherJob(resumeData?.mother_job);
-
+    setPhone(resumeData?.phone);
     setInterest(resumeData?.interest);
     setSkill(resumeData?.skill);
     setExp(resumeData?.exp);
     setPresentGpa(resumeData?.present_gpa);
     setProjectTopic(resumeData?.project_topic);
+    const dateData = (resumeData?.dob)
+    console.log(new Date(dateData))
+    console.log(Moment(dateData).format("DD/MM/yyyy"));
+    setBirthDate(new Date(dateData))
 
     // hometown data
     setHometownHouseNumber(hometownData?.house_number);
@@ -176,6 +185,7 @@ const Index = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ชื่อ"
             defaultValue={firstName}
+            maxLength={150}
             onChange={(e) => {
               setFirstName(e.target.value);
             }}
@@ -190,6 +200,7 @@ const Index = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ชื่อ-นามสุกล"
             defaultValue={lastName}
+            maxLength={150}
             onChange={(e) => {
               setLastName(e.target.value);
             }}
@@ -206,6 +217,7 @@ const Index = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสประจำตัวประชาชน"
             defaultValue={idCard}
+            maxLength={11}
             onChange={(e) => {
               setIdCard(e.target.value);
             }}
@@ -219,6 +231,7 @@ const Index = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="Select date"
             selected={birthDate}
+            dateFormat="dd/MM/yyyy"
             onChange={(date) => setBirthDate(date)}
           />
         </div>

@@ -1,125 +1,95 @@
 import React, { useState, useEffect } from "react";
-// import ResumeHook from "./ResumeHook";
-import { useDispatch } from "react-redux";
-import { loadState } from "../../helpers/Persist";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Resumehook from "../Hook/ResumeHook";
+import { useDispatch } from "react-redux";
+import { loadState } from "../../helpers/Persist";
 import { loadResume } from "../../redux/actions/student/resume";
-import { updateResume } from "../../redux/actions/student/resume";
-import Moment from "moment";
 
 const Index = () => {
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
+  const {
+    showDropDownMenuProgram,
+    swaptextProgram,
+    handleEducation1FormChange,
+    handleEducation2FormChange,
+    handleEducation3FormChange,
+    handleFormSave,
+    SelectProgram,
+    educationData1,
+    setEducationData1,
+    educationData2,
+    setEducationData2,
+    educationData3,
+    setEducationData3,
 
-  const [idCard, setIdCard] = useState("");
-  const [religion, setReligion] = useState("");
-  const [fatherName, setFatherName] = useState("");
-  const [fatherJob, setFatherJob] = useState("");
-  const [motherName, setMotherName] = useState("");
-  const [motherJob, setMotherJob] = useState("");
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    phone,
+    setPhone,
+    birthDate,
+    setBirthDate,
+    email,
+    setEmail,
 
-  const [interest, setInterest] = useState("");
-  const [skill, setSkill] = useState("");
-  const [exp, setExp] = useState("");
-  const [presentGpa, setPresentGpa] = useState("");
-  const [projectTopic, setProjectTopic] = useState("");
+    idCard,
+    setIdCard,
+    religion,
+    setReligion,
+    fatherName,
+    setFatherName,
+    fatherJob,
+    setFatherJob,
+    motherName,
+    setMotherName,
+    motherJob,
+    setMotherJob,
+    program,
+    setProgram,
 
-  const [hometownHouseNumber, setHometownHouseNumber] = useState("");
-  const [hometownRoad, setHometownRoad] = useState("");
-  const [hometownSubDistrict, setHometownSubDistrict] = useState("");
-  const [hometownDistrict, setHometownDistrict] = useState("");
-  const [hometownProvince, setHometownProvince] = useState("");
-  const [hometownPostCode, setHometownPostCode] = useState("");
+    interest,
+    setInterest,
+    skill,
+    setSkill,
+    exp,
+    setExp,
+    presentGpa,
+    setPresentGpa,
+    projectTopic,
+    setProjectTopic,
 
-  const [presentHouseNumber, setPresentHouseNumber] = useState("");
-  const [presentRoad, setPresentRoad] = useState("");
-  const [presentSubDistrict, setPresentSubDistrict] = useState("");
-  const [presentDistrict, setPresentDistrict] = useState("");
-  const [presentProvince, setPresentProvince] = useState("");
-  const [presentPostCode, setPresentPostCode] = useState("");
+    hometownHouseNumber,
+    setHometownHouseNumber,
+    hometownRoad,
+    setHometownRoad,
+    hometownSubDistrict,
+    setHometownSubDistrict,
+    hometownDistrict,
+    setHometownDistrict,
+    hometownProvince,
+    setHometownProvince,
+    hometownPostCode,
+    setHometownPostCode,
 
-  const [educationData1, setEducationData1] = useState({
-    academy: "",
-    gpa: "",
-    id: "",
-    level: "",
-  });
-  const [educationData2, setEducationData2] = useState({
-    academy: "",
-    gpa: "",
-    id: "",
-    level: "",
-  });
-  const [educationData3, setEducationData3] = useState({
-    academy: "",
-    gpa: "",
-    id: "",
-    level: "",
-  });
+    presentHouseNumber,
+    setPresentHouseNumber,
+    presentRoad,
+    setPresentRoad,
+    presentSubDistrict,
+    setPresentSubDistrict,
+    presentDistrict,
+    setPresentDistrict,
+    presentProvince,
+    setPresentProvince,
+    presentPostCode,
+    setPresentPostCode,
+  } = Resumehook();
 
-  const handleEducation1FormChange = (input) => (e) => {
-    e.preventDefault();
-    setEducationData1({ ...educationData1, [input]: e.target.value });
-  };
-  const handleEducation2FormChange = (input) => (e) => {
-    e.preventDefault();
-    setEducationData2({ ...educationData2, [input]: e.target.value });
-  };
-  const handleEducation3FormChange = (input) => (e) => {
-    e.preventDefault();
-    setEducationData3({ ...educationData3, [input]: e.target.value });
-  };
-
-  const handleFormSave = async (e) => {
-    e.preventDefault();
-    const dob = e.target[3].value;
-    const newDob = Moment(dob).format("DD-MM-yyyy")
-    console.log(newDob)
-    const student = {
-      first_name: firstName,
-      last_name: lastName,
-      phone,
-      dob: newDob,
-      id_card: idCard,
-      religion,
-      father_name: fatherName,
-      father_job: fatherJob,
-      mother_name: motherName,
-      mother_job: motherJob,
-      interest,
-      skill,
-      exp,
-      project_topic: projectTopic,
-      present_gpa: presentGpa,
-    };
-    const hometown = {
-      house_number: hometownHouseNumber,
-      road: hometownRoad,
-      sub_district: hometownSubDistrict,
-      district: hometownDistrict,
-      province: hometownProvince,
-      post_code: hometownPostCode,
-    };
-    const present = {
-      house_number: presentHouseNumber,
-      road: presentRoad,
-      sub_district: presentSubDistrict,
-      district: presentDistrict,
-      province: presentProvince,
-      post_code: presentPostCode,
-    };
-    const education = {
-      educationData1,
-      educationData2,
-      educationData3,
-    };
-    const updateData = { student, hometown, present, education };
-    dispatch(updateResume(updateData));
-  };
+  useEffect(() => {
+    dispatch(loadResume);
+  }, [dispatch]);
 
   useEffect(() => {
     // const intern = loadState("internship");
@@ -141,12 +111,12 @@ const Index = () => {
     setInterest(resumeData?.interest);
     setSkill(resumeData?.skill);
     setExp(resumeData?.exp);
+    setEmail(resumeData?.email);
+    setProgram(resumeData?.program);
     setPresentGpa(resumeData?.present_gpa);
     setProjectTopic(resumeData?.project_topic);
-    const dateData = (resumeData?.dob)
-    console.log(new Date(dateData))
-    console.log(Moment(dateData).format("DD/MM/yyyy"));
-    setBirthDate(new Date(dateData))
+    const dateData = resumeData?.dob;
+    setBirthDate(new Date(dateData));
 
     // hometown data
     setHometownHouseNumber(hometownData?.house_number);
@@ -167,9 +137,6 @@ const Index = () => {
     setEducationData2(resume?.education[1]);
     setEducationData3(resume?.education[2]);
   }, []);
-  useEffect(() => {
-    dispatch(loadResume);
-  }, [dispatch]);
 
   const privateData = (
     <div className="mt-10 px-7">
@@ -207,6 +174,23 @@ const Index = () => {
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            email
+          </p>
+          <input
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+            placeholder="exsample@gmail.com"
+            type="email"
+            id="email"
+            required
+            defaultValue={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+        </div>
+        {SelectProgram}
       </div>
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
         <div>

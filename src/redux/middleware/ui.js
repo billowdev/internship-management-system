@@ -1,7 +1,6 @@
 import { PAGE_LOADED } from "../actions/ui";
 import * as authActions from "../actions/auth";
 import { toast } from "react-toastify";
-import { saveState } from "../../helpers/Persist";
 import Swal from "sweetalert2";
 import * as internshipActions from "../actions/student/internship"
 import * as resumeActions from "../actions/student/resume"

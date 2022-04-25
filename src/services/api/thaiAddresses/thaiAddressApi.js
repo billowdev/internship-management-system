@@ -24,6 +24,6 @@ export const getSubDistricts = async (props) => {
 	return resp.data;
 }
 export const getSubDistrictById = async (props) => {
-	const resp = await axios.get((BASE_URL + '/thai-addresses/get/sub-districts/ById/100101'));
+	const resp = await axios.get(BASE_URL + '/thai-addresses/get/sub-districts/ById/' + props);
 	return resp.data;
 }

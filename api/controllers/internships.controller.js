@@ -72,51 +72,21 @@ exports.updateInternship = async (req, res) => {
 		} else {
 			const { id } = student
 			const companyId = await Internships.findOne({ where: { student_id: id } }).then(resp => { return resp.company_id })
+
 			const companyAddressId = await Companies.findOne({ where: { id: companyId } }).then(resp => { return resp.address_id })
 
-			// const { firstName, lastName, email, program, phone } = req.body?.studentDataSave
-			// const sender = { id: req.body?.studentDataSave?.id, first_name: firstName, last_name: lastName, email, program, phone }
-			const companyData = req.body?.InternshipDataSave
-			const companyAddress = {
-				house_number: companyData?.internHouseNumber,
-				road: companyData?.internRoad,
-				sub_district: companyData?.internSubDistrict,
-				district: companyData?.internDistrict,
-				province: companyData?.internProvince,
-				post_code: companyData?.internPostCode
-			}
-			const company = {
-				type: companyData?.internType,
-				name: companyData?.internCompanyName,
-				ccontact_person_name: companyData?.internContactWithName,
-				contact_person_phone: companyData?.internContactWithPhone,
-				contact_person_position: companyData?.internContactWithPosition,
-				activities: companyData?.internWork,
-				propose_to: companyData?.internProposeTo,
-				phone: companyData?.internPhone
-			}
-
-
-			const { firstPerson, secondPerson, thirdPerson, fourthPerson } = req.body?.CoStudentInternshipData
-			const coStudent = [firstPerson, secondPerson, thirdPerson, fourthPerson]
-			// console.log("sender", sender)
-			// console.log("company", company)
-			console.log("companyAddress", companyAddress)
-			console.log("company id \n", companyId, "\n\n")
-			await Companies.update(company, { where: { id: companyId } }).then(resp => {
-				console.log("company ", resp)
-			})
+			const { coStudent, companies, companyAddress, sender } = req.body
+			await Students.update(sender, { where: { id: sender.id } })
 			await Addresses.update(companyAddress, { where: { id: companyAddressId } })
+			await Companies.update(companies, { where: { id: companyId } })
 
-			Promise.all(
-				coStudent.map(item =>
-					CoStudentInternships.update({ first_name: item?.firstName, last_name: item?.lastName, phone: item?.phone }, { where: { id: item.id } })
-				)
+			const { firstPerson, secondPerson, thirdPerson, fourthPerson } = coStudent
 
-			)
+			await CoStudentInternships.update(firstPerson, { where: { id: firstPerson.id } })
+			await CoStudentInternships.update(secondPerson, { where: { id: secondPerson.id } })
+			await CoStudentInternships.update(thirdPerson, { where: { id: thirdPerson.id } })
+			await CoStudentInternships.update(fourthPerson, { where: { id: fourthPerson.id } })
 
-
-			// await Students.update({ where: { id: id } })
 			res.status(200).json({ success: true, msg: "update internship information successfuly" });
 		}
 

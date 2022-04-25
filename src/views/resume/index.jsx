@@ -1,70 +1,163 @@
-import React from "react";
-import ResumeHook from "./ResumeHook";
+import React, { useState, useEffect } from "react";
+// import ResumeHook from "./ResumeHook";
+import { useDispatch } from "react-redux";
+import { loadState } from "../../helpers/Persist";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Index = () => {
-  const { handleFormSave } = ResumeHook();
-  const {
-    firstName,
-    setFirstName,
-    setLastName,
-    lastName,
-    phone,
-    setPhone,
+  const dispatch = useDispatch();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date());
 
-    idCard,
-    setIdCard,
-    religion,
-    setReligion,
-    birthDate,
-    setBirthDate,
-    fatherName,
-    setFatherName,
-    fatherJob,
-    setFatherJob,
-    motherName,
-    setMotherName,
-    motherJob,
-    setMotherJob,
+  const [idCard, setIdCard] = useState("");
+  const [religion, setReligion] = useState("");
+  const [fatherName, setFatherName] = useState("");
+  const [fatherJob, setFatherJob] = useState("");
+  const [motherName, setMotherName] = useState("");
+  const [motherJob, setMotherJob] = useState("");
 
-    hometownHouseNumber,
-    setHometownHouseNumber,
-    hometownRoad,
-    setHometownRoad,
-    hometownSubDistrict,
-    setHometownSubDistrict,
-    hometownDistrict,
-    setHometownDistrict,
-    hometownProvince,
-    setHometownProvince,
-    hometownPostCode,
-    setHometownPostCode,
+  const [interest, setInterest] = useState("");
+  const [skill, setSkill] = useState("");
+  const [exp, setExp] = useState("");
+  const [presentGpa, setPresentGpa] = useState("");
+  const [projectTopic, setProjectTopic] = useState("");
 
-    presentHouseNumber,
-    setPresentHouseNumber,
-    presentRoad,
-    setPresentRoad,
-    presentSubDistrict,
-    setPresentSubDistrict,
-    presentDistrict,
-    setPresentDistrict,
-    presentProvince,
-    setPresentProvince,
-    presentPostCode,
-    setPresentPostCode,
+  const [hometownHouseNumber, setHometownHouseNumber] = useState("");
+  const [hometownRoad, setHometownRoad] = useState("");
+  const [hometownSubDistrict, setHometownSubDistrict] = useState("");
+  const [hometownDistrict, setHometownDistrict] = useState("");
+  const [hometownProvince, setHometownProvince] = useState("");
+  const [hometownPostCode, setHometownPostCode] = useState("");
 
-    educationData1,
-    setEducationData1,
-    educationData2,
-    setEducationData2,
-    educationData3,
-    setEducationData3,
+  const [presentHouseNumber, setPresentHouseNumber] = useState("");
+  const [presentRoad, setPresentRoad] = useState("");
+  const [presentSubDistrict, setPresentSubDistrict] = useState("");
+  const [presentDistrict, setPresentDistrict] = useState("");
+  const [presentProvince, setPresentProvince] = useState("");
+  const [presentPostCode, setPresentPostCode] = useState("");
 
-    handleEducation1FormChange,
-    handleEducation2FormChange,
-    handleEducation3FormChange,
-  } = ResumeHook();
+  const [educationData1, setEducationData1] = useState({
+    academy: "",
+    gpa: "",
+    id: "",
+    level: "",
+  });
+  const [educationData2, setEducationData2] = useState({
+    academy: "",
+    gpa: "",
+    id: "",
+    level: "",
+  });
+  const [educationData3, setEducationData3] = useState({
+    academy: "",
+    gpa: "",
+    id: "",
+    level: "",
+  });
+
+  const handleEducation1FormChange = (input) => (e) => {
+    e.preventDefault();
+    setEducationData1({ ...educationData1, [input]: e.target.value });
+  };
+  const handleEducation2FormChange = (input) => (e) => {
+    e.preventDefault();
+    setEducationData2({ ...educationData2, [input]: e.target.value });
+  };
+  const handleEducation3FormChange = (input) => (e) => {
+    e.preventDefault();
+    setEducationData3({ ...educationData3, [input]: e.target.value });
+  };
+
+  const handleFormSave = async (e) => {
+    e.preventDefault();
+    const bod = e.target[3].value;
+    const student = {
+      first_name: firstName,
+      last_name: lastName,
+      phone,
+      bod: bod,
+      id_card: idCard,
+      religion,
+      father_name: fatherName,
+      father_job: fatherJob,
+      mother_name: motherName,
+      mother_job: motherJob,
+      interest,
+      skill,
+      exp,
+      project_topic: projectTopic,
+      present_gpa: presentGpa,
+    };
+    const hometown = {
+      house_number: hometownHouseNumber,
+      road: hometownRoad,
+      sub_district: hometownSubDistrict,
+      district: hometownDistrict,
+      province: hometownProvince,
+      post_code: hometownPostCode,
+    };
+    const present = {
+      house_number: presentHouseNumber,
+      road: presentRoad,
+      sub_district: presentSubDistrict,
+      district: presentDistrict,
+      province: presentProvince,
+      post_code: presentPostCode,
+    };
+    const education = {
+      education: [educationData1, educationData2, educationData3],
+    };
+    
+    console.log(student, hometown, present, education);
+  };
+
+  useEffect(() => {
+    // const intern = loadState("internship");
+    const resume = loadState("profile");
+    const resumeData = resume?.student;
+    const hometownData = resume?.HometownAddress;
+    const presentData = resume?.PresentAddress;
+
+    // private student data
+    setIdCard(resumeData?.id_card);
+    setFirstName(resumeData?.first_name);
+    setLastName(resumeData?.last_name);
+    setReligion(resumeData?.religion);
+    setFatherName(resumeData?.father_name);
+    setFatherJob(resumeData?.father_job);
+    setMotherName(resumeData?.mother_name);
+    setMotherJob(resumeData?.mother_job);
+
+    setInterest(resumeData?.interest);
+    setSkill(resumeData?.skill);
+    setExp(resumeData?.exp);
+    setPresentGpa(resumeData?.present_gpa);
+    setProjectTopic(resumeData?.project_topic);
+
+    // hometown data
+    setHometownHouseNumber(hometownData?.house_number);
+    setHometownRoad(hometownData?.road);
+    setHometownSubDistrict(hometownData?.sub_district);
+    setHometownDistrict(hometownData?.district);
+    setHometownProvince(hometownData?.province);
+    setHometownPostCode(hometownData?.post_code);
+
+    setPresentHouseNumber(presentData?.house_number);
+    setPresentRoad(presentData?.road);
+    setPresentSubDistrict(presentData?.sub_district);
+    setPresentDistrict(presentData?.district);
+    setPresentProvince(presentData?.province);
+    setPresentPostCode(presentData?.post_code);
+
+    setEducationData1(resume?.education[0]);
+    setEducationData2(resume?.education[1]);
+    setEducationData3(resume?.education[2]);
+   
+  }, []);
+
 
   const privateData = (
     <div className="mt-10 px-7">
@@ -538,8 +631,10 @@ const Index = () => {
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บ้านเลขที่"
-            defaultValue={educationData1?.level}
-            onChange={handleEducation1FormChange("level")}
+            defaultValue={exp}
+            onChange={(e) => {
+              setExp(e.target.value);
+            }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -557,8 +652,10 @@ const Index = () => {
           <input
             className="w-24 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บ้านเลขที่"
-            defaultValue={educationData1?.level}
-            onChange={handleEducation1FormChange("level")}
+            defaultValue={presentGpa}
+            onChange={(e) => {
+              setPresentGpa(e.target.value);
+            }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -571,8 +668,10 @@ const Index = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บ้านเลขที่"
-            defaultValue={educationData1?.level}
-            onChange={handleEducation1FormChange("level")}
+            defaultValue={projectTopic}
+            onChange={(e) => {
+              setProjectTopic(e.target.value);
+            }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -592,13 +691,15 @@ const Index = () => {
       <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-7 mt-7 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ข้อมูลการทำงาน ประสบการณ์ทำงาน
+            ความสามารถพิเศษ
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
-            defaultValue={educationData1?.level}
-            onChange={handleEducation1FormChange("level")}
+            placeholder="ความสามารถพิเศษ"
+            defaultValue={skill}
+            onChange={(e) => {
+              setSkill(e.target.value);
+            }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -607,13 +708,15 @@ const Index = () => {
         </p>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ข้อมูลการทำงาน ประสบการณ์ทำงาน
+            ความสนใจพิเศษในด้านการขอรับการฝึกงานจากหน่วยงาน
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บ้านเลขที่"
-            defaultValue={educationData1?.level}
-            onChange={handleEducation1FormChange("level")}
+            defaultValue={interest}
+            onChange={(e) => {
+              setInterest(e.target.value);
+            }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
@@ -627,9 +730,9 @@ const Index = () => {
       <p className="text-lg font-semibold leading-tight text-gray-800">
         8. บุคคลที่สามารถติดต่อได้
       </p>
-        
-      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 "> 
-      <div>
+
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ชื่อ
           </p>
@@ -762,7 +865,7 @@ const Index = () => {
         </div>
       </div>
       <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
-      <div>
+        <div>
           <p className="text-base font-medium leading-none text-gray-800">
             โทร
           </p>

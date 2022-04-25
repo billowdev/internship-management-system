@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { saveState } from "../../helpers/Persist";
 import Swal from "sweetalert2";
 import * as internshipActions from "../actions/student/internship"
+import * as resumeActions from "../actions/student/resume"
 
 const pageLoadedFlow =
   ({ log }) =>
@@ -66,12 +67,29 @@ const internshipFlow =
         (action) => {
           next(action);
           if (action.type === internshipActions.UPDATE_INTERNSHIP_SUCCESS) {
+            dispatch(internshipActions.loadInternship)
             Swal.fire(
               'สำเร็จ!',
               'อัปเดตข้อมูลเรียบร้อย',
               'success'
-            ).then(() => dispatch(internshipActions.loadInternship)
-            )
+            ).then(() => window.location.reload())
           }
         };
-export default [pageLoadedFlow, authFlow, internshipFlow];
+
+const resumeFlow =
+  ({ log }) =>
+    ({ dispatch }) =>
+      (next) =>
+        (action) => {
+          next(action);
+          if (action.type === resumeActions.UPDATE_RESUME_SUCCESS) {
+            dispatch(resumeActions.loadResume)
+            Swal.fire(
+              'สำเร็จ!',
+              'อัปเดตข้อมูลเรียบร้อย',
+              'success'
+            ).then(() => window.location.reload())
+
+          }
+        };
+export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow];

@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -6,6 +7,7 @@ import {
 } from "../../application/actions/student/internship";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
 import * as thaiAddresses from "../../services/api/thaiAddresses/thaiAddressApi";
+
 const InternshipHook = () => {
   const dispatch = useDispatch();
 
@@ -63,7 +65,7 @@ const InternshipHook = () => {
     setInternFormData({ ...internFormData, [input]: e.target.value });
   };
 
-  const handleInternAddressFormChange = (input, data) => {
+  const handleInternDataFormChange = (input, data) => {
     setInternFormData({ ...internFormData, [input]: data });
   };
 
@@ -77,7 +79,7 @@ const InternshipHook = () => {
       program: studentFormData.program,
       phone: studentFormData.phone,
     };
-
+    
     const InternshipDataSave = {
       internType: internFormData.internType,
       internWork: internFormData.internWork,
@@ -126,7 +128,7 @@ const InternshipHook = () => {
       InternshipDataSave,
       CoStudentInternshipData,
     };
-    console.log(updateData)
+    console.log(updateData);
     dispatch(updateInternship(updateData));
   };
 
@@ -161,6 +163,7 @@ const InternshipHook = () => {
       internProvince: internCompanyAddressData?.province,
       internPostCode: internCompanyAddressData?.post_code,
     });
+
     setCoStudentFormData({
       firstPerson: {
         id: internCoStudentData[0]?.id,
@@ -196,6 +199,7 @@ const InternshipHook = () => {
   const swaptext = (el) => {
     const targetText = el.target.innerText;
     setInternFormData({ ...internFormData, ["internType"]: targetText });
+    saveState("type-select", targetText);
     document.getElementById("drop-down-content-setter").innerText = targetText;
     document.getElementById("drop-down-div").classList.toggle("hidden");
   };
@@ -215,8 +219,6 @@ const InternshipHook = () => {
   };
   // ---- end  Drop Down Meny for fild of study ----
 
-
- 
   // ======================== Addresses API  ========================
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -242,13 +244,14 @@ const InternshipHook = () => {
   // -------- Provinces --------
   const showDropDownMenuProvinces = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    removeState('provinceId')
+    removeState("provinceId");
   };
   const swaptextProvinces = (el) => {
     const targetText = el.target.innerText;
     const provinceId = Object.values(el.target)[0].key;
-    setInternFormData({ ...internFormData, ["internProvince"]: targetText })
-    saveState('provinceId', provinceId)
+    // setInternFormData({ ...internFormData, ["internProvince"]: targetText })
+    saveState("provinceId", provinceId);
+    saveState("province-select", targetText);
     fetchDistricts(provinceId);
     document.getElementById("drop-down-provinces-setter").innerText =
       targetText;
@@ -260,14 +263,14 @@ const InternshipHook = () => {
   // -------- Districts --------
   const showDropDownMenuDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    removeState('districtId')
-    fetchDistricts(loadState('provinceId'));
+    removeState("districtId");
+    fetchDistricts(loadState("provinceId"));
   };
   const swaptextDistricts = (el) => {
     const targetText = el.target.innerText;
     setInternFormData({ ...internFormData, ["internDistrict"]: targetText });
     const districtId = Object.values(el.target)[0].key;
-    saveState('districtId', districtId)
+    saveState("districtId", districtId);
     fetchSubDistricts(districtId);
     document.getElementById("drop-down-districts-setter").innerText =
       targetText;
@@ -278,12 +281,12 @@ const InternshipHook = () => {
   // -------- Sub districts --------
   const showDropDownMenuSubDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    fetchSubDistricts(loadState('districtId'));
-    removeState('districtId')
+    fetchSubDistricts(loadState("districtId"));
+    removeState("districtId");
   };
   const swaptextSubDistricts = (el) => {
     const targetText = el.target.innerText;
-    handleInternAddressFormChange("");
+    handleInternDataFormChange("");
     setInternFormData({ ...internFormData, ["internSubDistrict"]: targetText });
     const subDistrictId = Object.values(el.target)[0].key;
     fetchSubDistrictData(subDistrictId);
@@ -296,6 +299,8 @@ const InternshipHook = () => {
 
   useEffect(() => {
     fetchProvinces();
+    const type = loadState("type-select");
+    setInternFormData({ ...internFormData, ["internType"]: type });
   }, []);
 
   return {
@@ -313,8 +318,7 @@ const InternshipHook = () => {
     handleCoStudentFormChange,
     coStudentFormData,
     setCoStudentFormData,
-    handleInternAddressFormChange,
-
+    handleInternDataFormChange,
 
     provinces,
     districts,
@@ -326,7 +330,6 @@ const InternshipHook = () => {
     showDropDownMenuSubDistricts,
     swaptextDistricts,
     swaptextSubDistricts,
-    
   };
 };
 export default InternshipHook;

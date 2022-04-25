@@ -122,6 +122,8 @@ exports.signupController = async (req, res) => {
 					const { id } = respStudentData;
 					// hook education table for student
 					await Educations.create({ student_id: id })
+					await Educations.create({ student_id: id })
+					await Educations.create({ student_id: id })
 					// hook address table for student
 					await Addresses.create({ address_type: "hometown" }).then(data => {
 						HometownAddresses.create({ student_id: id, address_id: data.id })

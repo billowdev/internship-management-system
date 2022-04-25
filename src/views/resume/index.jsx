@@ -585,7 +585,7 @@ const Index = () => {
         <p className="text-lg font-semibold leading-tight text-gray-800">
           6. ความสามารถพิเศษ
         </p>
-        <p className="text-lg font-semibold leading-tight text-gray-800">
+        <p className="text-lg font-semibold leading-tight text-gray-800 sm0:hidden  md:grid">
           7. ความสนใจพิเศษในด้านการขอรับการฝึกงานจากหน่วยงาน
         </p>
       </div>
@@ -602,6 +602,9 @@ const Index = () => {
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
+        <p className="text-lg font-semibold leading-tight text-gray-800 lg:hidden md:hidden">
+          7. ความสนใจพิเศษในด้านการขอรับการฝึกงานจากหน่วยงาน
+        </p>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ข้อมูลการทำงาน ประสบการณ์ทำงาน

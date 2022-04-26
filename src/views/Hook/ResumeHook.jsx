@@ -2,24 +2,13 @@ import React, { useEffect, useState } from "react";
 import { loadResume } from "../../redux/actions/student/resume";
 import { updateResume } from "../../redux/actions/student/resume";
 import Moment from "moment";
-import { loadState } from "../../helpers/Persist";
 import { useDispatch } from "react-redux";
+import * as thaiAddresses from "../../infrastructure/services/api/thaiAddresses/thaiAddressApi";
+import { loadState, removeState, saveState } from "../../helpers/Persist";
+
 
 const Resumehook = () => {
   const dispatch = useDispatch();
-  // ---- Drop Down Meny for fild of study ---
-  const showDropDownMenuProgram = (el) => {
-    el.target.parentElement.children[1].classList.toggle("hidden");
-  };
-
-  const swaptextProgram = (el) => {
-    const targetText = el.target.innerText;
-    document.getElementById("drop-down-content-setter-program").innerText =
-      targetText;
-    document.getElementById("drop-down-div-program").classList.toggle("hidden");
-  };
-  // ---- end  Drop Down Meny for fild of study ----
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -42,16 +31,23 @@ const Resumehook = () => {
 
   const [hometownHouseNumber, setHometownHouseNumber] = useState("");
   const [hometownRoad, setHometownRoad] = useState("");
-  const [hometownSubDistrict, setHometownSubDistrict] = useState("");
-  const [hometownDistrict, setHometownDistrict] = useState("");
-  const [hometownProvince, setHometownProvince] = useState("");
-  const [hometownPostCode, setHometownPostCode] = useState("");
 
   const [presentHouseNumber, setPresentHouseNumber] = useState("");
   const [presentRoad, setPresentRoad] = useState("");
+
+  const [hometownSubDistrict, setHometownSubDistrict] = useState("");
+  const [hometownDistrict, setHometownDistrict] = useState("");
+  const [hometownProvince, setHometownProvince] = useState("");
+  const [hometownPostCode, setHometownPostCode] = useState([]);
+
   const [presentSubDistrict, setPresentSubDistrict] = useState("");
   const [presentDistrict, setPresentDistrict] = useState("");
   const [presentProvince, setPresentProvince] = useState("");
+
+  const [presentSubDistricts, setPresentSubDistricts] = useState([]);
+  const [presentDistricts, setPresentDistricts] = useState([]);
+  const [presentProvinces, setPresentProvinces] = useState([]);
+
   const [presentPostCode, setPresentPostCode] = useState("");
 
   const [educationData1, setEducationData1] = useState({
@@ -60,6 +56,7 @@ const Resumehook = () => {
     id: "",
     level: "",
   });
+
   const [educationData2, setEducationData2] = useState({
     academy: "",
     gpa: "",
@@ -72,6 +69,100 @@ const Resumehook = () => {
     id: "",
     level: "",
   });
+
+  // ---- Drop Down Meny for fild of study ---
+  const showDropDownMenuProgram = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+
+  const swaptextProgram = (el) => {
+    const targetText = el.target.innerText;
+    document.getElementById("drop-down-content-setter-program").innerText =
+      targetText;
+    document.getElementById("drop-down-div-program").classList.toggle("hidden");
+  };
+  // ---- end  Drop Down Meny for fild of study ----
+
+  // Hometown Hook Section
+  // ======================== Addresses API  ========================
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [subDistricts, setSubDistricts] = useState([]);
+
+  const fetchProvinces = async () => {
+    const resp = await thaiAddresses.getAllProvinces();
+    setProvinces(resp.data);
+  };
+  const fetchDistricts = async (provinceId) => {
+    const resp = await thaiAddresses.getDistricts(provinceId);
+    setDistricts(resp.data);
+  };
+  const fetchSubDistricts = async (districtId) => {
+    const resp = await thaiAddresses.getSubDistricts(districtId);
+    setSubDistricts(resp.data);
+  };
+  const fetchSubDistrictData = async (subDistrictId) => {
+    console.log(subDistrictId);
+    const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
+    setHometownPostCode(resp.data[0]?.zip_code);
+    console.log(resp.data[0]);
+  };
+
+  // -------- Provinces --------
+  const showDropDownMenuHometownProvinces = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    removeState("hometown-province-id");
+  };
+  const swaptextHometownProvinces = (el) => {
+    const targetText = el.target.innerText;
+    const provinceId = Object.values(el.target)[0].key;
+    setHometownProvince(targetText);
+    saveState("hometown-province-id", provinceId);
+    fetchDistricts(provinceId);
+    document.getElementById("drop-down-hometown-provinces-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-hometown-provinces")
+      .classList.toggle("hidden");
+  };
+
+  // -------- Districts --------
+  const showDropDownMenuHometownDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    removeState("hometown-district-id");
+    fetchDistricts(loadState("hometown-province-id"));
+  };
+  const swaptextHometownDistricts = (el) => {
+    const targetText = el.target.innerText;
+    setHometownDistrict(targetText);
+    const districtId = Object.values(el.target)[0].key;
+    saveState("hometown-district-id", districtId);
+    fetchSubDistricts(districtId);
+    document.getElementById("drop-down-hometown-districts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-hometown-districts")
+      .classList.toggle("hidden");
+  };
+  // -------- Sub districts --------
+  const showDropDownMenuHometownSubDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    fetchSubDistricts(loadState("hometown-district-id"));
+    removeState("hometown-district-id");
+  };
+  const swaptextHometownSubDistricts = (el) => {
+    const targetText = el.target.innerText;
+    setHometownSubDistrict(targetText);
+    const subDistrictId = Object.values(el.target)[0].key;
+    fetchSubDistrictData(subDistrictId);
+    document.getElementById("drop-down-hometown-subdistricts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-hometown-subdistricts")
+      .classList.toggle("hidden");
+  };
+  // ======================== Addresses API  ========================
+ 
 
   const handleEducation1FormChange = (input) => (e) => {
     e.preventDefault();
@@ -88,7 +179,7 @@ const Resumehook = () => {
 
   const handleFormSave = async (e) => {
     e.preventDefault();
-    const dob = e.target[3].value;
+    // const dob = e.target[3].value;
     const newDob = Moment(new Date(birthDate)).format("yyyy-MM-DD");
     const program = document.getElementById("program").innerText;
     const student = {
@@ -121,9 +212,9 @@ const Resumehook = () => {
     const present = {
       house_number: presentHouseNumber,
       road: presentRoad,
-      sub_district: presentSubDistrict,
-      district: presentDistrict,
-      province: presentProvince,
+      sub_district: presentSubDistricts,
+      district: presentDistricts,
+      province: presentProvinces,
       post_code: presentPostCode,
     };
     const education = {
@@ -133,6 +224,24 @@ const Resumehook = () => {
     };
     const updateData = { student, hometown, present, education };
     dispatch(updateResume(updateData));
+  };
+
+  const fetchHometownProvinces = async () => {
+    const resp = await thaiAddresses.getAllProvinces();
+    setHometownProvince(resp.data);
+  };
+
+  const fetchHometownDistricts = async (provinceId) => {
+    const resp = await thaiAddresses.getDistricts(provinceId);
+    setHometownDistrict(resp.data);
+  };
+  const fetchHometownSubDistricts = async (districtId) => {
+    const resp = await thaiAddresses.getSubDistricts(districtId);
+    setHometownSubDistrict(resp.data);
+  };
+  const fetchPostCode = async (subDistrictId) => {
+    const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
+    return resp.data[0]?.zip_code;
   };
 
   const SelectProgram = (
@@ -200,8 +309,6 @@ const Resumehook = () => {
     </>
   );
 
-
-
   return {
     showDropDownMenuProgram,
     swaptextProgram,
@@ -244,29 +351,45 @@ const Resumehook = () => {
     setProjectTopic,
 
     hometownHouseNumber,
-    setHometownHouseNumber,
     hometownRoad,
-    setHometownRoad,
+
     hometownSubDistrict,
-    setHometownSubDistrict,
     hometownDistrict,
-    setHometownDistrict,
     hometownProvince,
-    setHometownProvince,
     hometownPostCode,
+
+    setHometownHouseNumber,
+    setHometownRoad,
+    setHometownSubDistrict,
+    setHometownDistrict,
+    setHometownProvince,
+
     setHometownPostCode,
 
     presentHouseNumber,
-    setPresentHouseNumber,
     presentRoad,
-    setPresentRoad,
+
     presentSubDistrict,
-    setPresentSubDistrict,
     presentDistrict,
-    setPresentDistrict,
     presentProvince,
-    setPresentProvince,
+
+    presentSubDistricts,
+    presentDistricts,
+    presentProvinces,
+
     presentPostCode,
+
+    setPresentHouseNumber,
+    setPresentRoad,
+
+    setPresentSubDistrict,
+    setPresentDistrict,
+    setPresentProvince,
+
+    setPresentSubDistricts,
+    setPresentDistricts,
+    setPresentProvinces,
+
     setPresentPostCode,
 
     handleEducation1FormChange,
@@ -280,7 +403,20 @@ const Resumehook = () => {
     educationData2,
     setEducationData2,
     educationData3,
-    setEducationData3
+    setEducationData3,
+
+    showDropDownMenuHometownProvinces,
+    swaptextHometownProvinces,
+    showDropDownMenuHometownDistricts,
+    swaptextHometownDistricts,
+    showDropDownMenuHometownSubDistricts,
+    swaptextHometownSubDistricts,
+
+    provinces,
+    districts,
+    subDistricts,
+    
+    fetchProvinces,
   };
 };
 

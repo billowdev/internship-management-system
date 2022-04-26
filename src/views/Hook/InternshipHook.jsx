@@ -151,7 +151,7 @@ const Internshiphook = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [subDistricts, setSubDistricts] = useState([]);
-  const [subDistrictData, setSubDistrictData] = useState([]);
+
   const fetchProvinces = async () => {
     const resp = await thaiAddresses.getAllProvinces();
     setProvinces(resp.data);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Resumehook from "../Hook/ResumeHook";
+import Resumehook from "../hook/ResumeHook";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadResume } from "../../redux/actions/student/resume";
@@ -11,17 +11,6 @@ const Index = () => {
   const {
     showDropDownMenuProgram,
     swaptextProgram,
-    handleEducation1FormChange,
-    handleEducation2FormChange,
-    handleEducation3FormChange,
-    handleFormSave,
-    SelectProgram,
-    educationData1,
-    setEducationData1,
-    educationData2,
-    setEducationData2,
-    educationData3,
-    setEducationData3,
 
     firstName,
     setFirstName,
@@ -61,30 +50,62 @@ const Index = () => {
     setProjectTopic,
 
     hometownHouseNumber,
-    setHometownHouseNumber,
     hometownRoad,
-    setHometownRoad,
+
     hometownSubDistrict,
-    setHometownSubDistrict,
     hometownDistrict,
-    setHometownDistrict,
     hometownProvince,
-    setHometownProvince,
     hometownPostCode,
+
+    setHometownHouseNumber,
+    setHometownRoad,
+
+    setHometownSubDistrict,
+    setHometownDistrict,
+    setHometownProvince,
+
     setHometownPostCode,
 
     presentHouseNumber,
-    setPresentHouseNumber,
     presentRoad,
-    setPresentRoad,
+
     presentSubDistrict,
-    setPresentSubDistrict,
     presentDistrict,
-    setPresentDistrict,
     presentProvince,
-    setPresentProvince,
     presentPostCode,
+
+    setPresentHouseNumber,
+    setPresentRoad,
+    setPresentSubDistrict,
+    setPresentDistrict,
+    setPresentProvince,
     setPresentPostCode,
+
+    handleEducation1FormChange,
+    handleEducation2FormChange,
+    handleEducation3FormChange,
+    handleFormSave,
+
+    SelectProgram,
+    educationData1,
+    setEducationData1,
+    educationData2,
+    setEducationData2,
+    educationData3,
+    setEducationData3,
+
+    showDropDownMenuHometownProvinces,
+    swaptextHometownProvinces,
+    showDropDownMenuHometownDistricts,
+    swaptextHometownDistricts,
+    showDropDownMenuHometownSubDistricts,
+    swaptextHometownSubDistricts,
+
+    provinces,
+    districts,
+    subDistricts,
+
+    fetchProvinces,
   } = Resumehook();
 
   useEffect(() => {
@@ -136,6 +157,7 @@ const Index = () => {
     setEducationData1(resume?.education[0]);
     setEducationData2(resume?.education[1]);
     setEducationData3(resume?.education[2]);
+    fetchProvinces();
   }, []);
 
   const privateData = (
@@ -304,26 +326,227 @@ const Index = () => {
       </div>
     </div>
   );
+
+  const SelectHometownAddresses = (
+    <>
+      {/* // ======================== Addresses API  ======================== */}
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-4 gap-7 mt-3 ">
+        {/* ===================== Provinces Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            จังหวัด
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuHometownProvinces}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-hometown-provinces-setter"
+                >
+                  {hometownProvince == "" ? (
+                    <> - กรุณาเลือกจังหวัด - </>
+                  ) : (
+                    hometownProvince
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-hometown-provinces"
+              >
+                {provinces?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextHometownProvinces}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+
+        {/* ===================== districts Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            อำเภอ
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuHometownDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-hometown-districts-setter"
+                >
+                  {hometownDistrict == "" ? (
+                    <> - กรุณาเลือกอำเภอ -</>
+                  ) : (
+                    hometownDistrict
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-hometown-districts"
+              >
+                {districts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextHometownDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+
+        {/* ===================== sub districts Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ตำบล
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuHometownSubDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-hometown-subdistricts-setter"
+                >
+                  {hometownSubDistrict == "" ? (
+                    <> - กรุณาเลือกตำบล - </>
+                  ) : (
+                    hometownSubDistrict
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-hometown-subdistricts"
+              >
+                {subDistricts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextHometownSubDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+        {/* ===================== district Selection ===================== */}
+      </div>
+      {/* // ======================== Addresses API  ======================== */}
+    </>
+  );
+
   const hometownDataSection = (
     <div className="mt-10 px-7">
       <p className="text-lg font-semibold leading-tight text-gray-800">
         2. ภูมิลำเนาเดิม
       </p>
+      {SelectHometownAddresses}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
+      <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            บ้านเลขที่
+            รหัสไปรษณีย์
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
-            defaultValue={hometownHouseNumber}
+            placeholder="รหัสไปรษณีย์"
+            defaultValue={hometownPostCode}
             onChange={(e) => {
-              setHometownHouseNumber(e.target.value);
+              setHometownPostCode(e.target.value);
             }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
+       
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ถนน / ซอย / หมู่
@@ -340,21 +563,22 @@ const Index = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ตำบล / แขวง
+            บ้านเลขที่
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ถนน / ซอย / หมู่"
-            defaultValue={hometownSubDistrict}
+            placeholder="บ้านเลขที่"
+            defaultValue={hometownHouseNumber}
             onChange={(e) => {
-              setHometownSubDistrict(e.target.value);
+              setHometownHouseNumber(e.target.value);
             }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
+
       </div>
 
-      <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+      {/* <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             อำเภอ
@@ -397,7 +621,7 @@ const Index = () => {
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
   const presentDataSection = (

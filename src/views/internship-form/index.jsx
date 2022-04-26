@@ -6,7 +6,7 @@ import {
 
 } from "../../redux/actions/student/internship";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
-import Internshiphook from "../Hook/InternshipHook";
+import Internshiphook from "../hook/InternshipHook";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   const {

@@ -1,10 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  loadInternship,
-
-} from "../../redux/actions/student/internship";
+import { loadInternship } from "../../redux/actions/student/internship";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
 import Internshiphook from "../hook/InternshipHook";
 const InternshipForm = () => {
@@ -64,6 +61,11 @@ const InternshipForm = () => {
     showDropDownMenu,
   } = Internshiphook();
 
+  const [coStudentMsg1, setCoStudentMsg1] = useState("");
+  const [coStudentMsg2, setCoStudentMsg2] = useState("");
+  const [coStudentMsg3, setCoStudentMsg3] = useState("");
+  const [coStudentMsg4, setCoStudentMsg4] = useState("");
+
   useEffect(() => {
     const intern = loadState("internship");
     const sender = loadState("resume");
@@ -102,24 +104,28 @@ const InternshipForm = () => {
     setCoStudentFormData({
       firstPerson: {
         id: first?.id,
+        studentId: first?.student_id,
         firstName: first?.first_name,
         lastName: first?.last_name,
         phone: first?.phone,
       },
       secondPerson: {
         id: second?.id,
+        studentId: second?.student_id,
         firstName: second?.first_name,
         lastName: second?.last_name,
         phone: second?.phone,
       },
       thirdPerson: {
         id: third?.id,
+        studentId: third?.student_id,
         firstName: third?.first_name,
         lastName: third?.last_name,
         phone: third?.phone,
       },
       fourthPerson: {
         id: fourth?.id,
+        studentId: fourth?.student_id,
         firstName: fourth?.first_name,
         lastName: fourth?.last_name,
         phone: fourth?.phone,
@@ -133,72 +139,7 @@ const InternshipForm = () => {
     dispatch(loadInternship);
   }, [dispatch]);
 
-  const SelectProgram = (
-    <>
-      {" "}
-      <div>
-        <p className="text-base font-medium leading-none text-gray-800">
-          สาขาวิชา
-        </p>
-        {/*-Dropdown*/}
-        <div className="relative top-1 ">
-          <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
-            <div
-              onClick={showDropDownMenuProgram}
-              id="program"
-              className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
-            >
-              <span
-                className="pr-4 text-sm font-medium text-gray-600"
-                id="drop-down-content-setter-program"
-              >
-                {studentFormData.program == ""
-                  ? "วิทยาการคอมพิวเตอร์"
-                  : studentFormData.program}
-              </span>
-              <svg
-                id="rotate"
-                className="absolute z-10 cursor-pointer right-5"
-                width={10}
-                height={6}
-                viewBox="0 0 10 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.5 0.75L5 5.25L9.5 0.75"
-                  stroke="#4B5563"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
 
-            <div
-              className="absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
-              id="drop-down-div-program"
-            >
-              <p
-                className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
-                onClick={swaptextProgram}
-              >
-                วิทยาการคอมพิวเตอร์
-              </p>
-
-              <p
-                className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
-                onClick={swaptextProgram}
-              >
-                เทคโนโลยีสารสนเทศ
-              </p>
-            </div>
-          </div>
-          {/* end */}
-        </div>
-        {/* end */}
-      </div>
-    </>
-  );
   const SelectType = (
     <>
       <div>
@@ -488,7 +429,6 @@ const InternshipForm = () => {
               defaultValue={studentFormData.firstName}
               onChange={handleStudentFormChange("firstName")}
               disabled
-              
             />
             <p className="mt-3 text-xs leading-3 text-gray-600"></p>
           </div>
@@ -502,7 +442,6 @@ const InternshipForm = () => {
               defaultValue={studentFormData.lastName}
               onChange={handleStudentFormChange("lastName")}
               disabled
-              
             />
             <p className="mt-3 text-xs leading-3 text-gray-600"></p>
           </div>
@@ -735,13 +674,13 @@ const InternshipForm = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            รหัสนักศึกษา
+            รหัสนักศึกษา 
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={coStudentFormData?.firstPerson?.id}
-            onChange={handleCoStudentFormChange("firstPerson", "id")}
+            defaultValue={coStudentFormData?.firstPerson?.studentId}
+            onChange={handleCoStudentFormChange("firstPerson", "studentId")}
           />
         </div>
         <div>
@@ -784,13 +723,13 @@ const InternshipForm = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            รหัสนักศึกษา
+            รหัสนักศึกษา 
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={coStudentFormData?.secondPerson?.id}
-            onChange={handleCoStudentFormChange("secondPerson", "id")}
+            defaultValue={coStudentFormData?.secondPerson?.studentId}
+            onChange={handleCoStudentFormChange("secondPerson", "studentId")}
           />
         </div>
         <div>
@@ -838,8 +777,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={coStudentFormData?.thirdPerson?.id}
-            onChange={handleCoStudentFormChange("thirdPerson", "id")}
+            defaultValue={coStudentFormData?.thirdPerson?.studentId}
+            onChange={handleCoStudentFormChange("thirdPerson", "studentId")}
           />
         </div>
         <div>
@@ -887,8 +826,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="รหัสนักศึกษา"
-            defaultValue={coStudentFormData?.fourthPerson?.id}
-            onChange={handleCoStudentFormChange("fourthPerson", "id")}
+            defaultValue={coStudentFormData?.fourthPerson?.studentId}
+            onChange={handleCoStudentFormChange("fourthPerson", "studentId")}
           />
         </div>
         <div>

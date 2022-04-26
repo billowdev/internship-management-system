@@ -1,8 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
 	const CoStudentInternships = sequelize.define("CoStudentInternships", {
 		id: {
-			type: DataTypes.STRING(11),
+			type: DataTypes.UUID,
 			primaryKey: true,
+			defaultValue: DataTypes.UUIDV4,
+		},
+		student_id: {
+			type: DataTypes.STRING(11),
 			allowNull: true,
 		},
 		first_name: {

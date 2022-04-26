@@ -31,10 +31,10 @@ const Internshiphook = () => {
   });
 
   const [coStudentFormData, setCoStudentFormData] = useState({
-    firstPerson: { id: "", firstName: "", lastName: "", phone: "" },
-    secondPerson: { id: "", firstName: "", lastName: "", phone: "" },
-    thirdPerson: { id: "", firstName: "", lastName: "", phone: "" },
-    fourthPerson: { id: "", firstName: "", lastName: "", phone: "" },
+    firstPerson: { id: "", studentId: "", firstName: "", lastName: "", phone: "" },
+    secondPerson: { id: "", studentId: "", firstName: "", lastName: "", phone: "" },
+    thirdPerson: { id: "", studentId: "", firstName: "", lastName: "", phone: "" },
+    fourthPerson: { id: "", studentId: "", firstName: "", lastName: "", phone: "" },
   });
 
   //Edit Form Data
@@ -85,28 +85,41 @@ const Internshiphook = () => {
       province: internProvince,
       post_code: internPostCode,
     };
+    let firstId = coStudentFormData.firstPerson.id
+    let secondId = coStudentFormData.secondPerson.id
+    let thirdId = coStudentFormData.thirdPerson.id
+    let fourthId = coStudentFormData.fourthPerson.id
+
+    if(firstId===undefined) firstId="";
+    if(secondId===undefined) secondId="";
+    if(thirdId===undefined) thirdId="";
+    if(fourthId===undefined) fourthId="";
 
     const coStudent = {
       firstPerson: {
-        id: coStudentFormData.firstPerson.id,
+        id: firstId,
+        student_id: coStudentFormData.firstPerson.studentId,
         first_name: coStudentFormData.firstPerson.firstName,
         last_name: coStudentFormData.firstPerson.lastName,
         phone: coStudentFormData.firstPerson.phone,
       },
       secondPerson: {
-        id: coStudentFormData.secondPerson.id,
+        id: secondId,
+        student_id: coStudentFormData.secondPerson.studentId,
         first_name: coStudentFormData.secondPerson.firstName,
         last_name: coStudentFormData.secondPerson.lastName,
         phone: coStudentFormData.secondPerson.phone,
       },
       thirdPerson: {
-        id: coStudentFormData.thirdPerson.id,
+        id: thirdId,
+        student_id: coStudentFormData.thirdPerson.studentId,
         first_name: coStudentFormData.thirdPerson.firstName,
         last_name: coStudentFormData.thirdPerson.lastName,
         phone: coStudentFormData.thirdPerson.phone,
       },
       fourthPerson: {
-        id: coStudentFormData.fourthPerson.id,
+        id: fourthId,
+        student_id: coStudentFormData.fourthPerson.studentId,
         first_name: coStudentFormData.fourthPerson.firstName,
         last_name: coStudentFormData.fourthPerson.lastName,
         phone: coStudentFormData.fourthPerson.phone,

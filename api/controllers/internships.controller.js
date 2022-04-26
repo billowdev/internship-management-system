@@ -72,6 +72,7 @@ exports.updateInternship = async (req, res) => {
 		} else {
 			const { id } = student
 			const companyId = await Internships.findOne({ where: { student_id: id } }).then(resp => { return resp.company_id })
+			const internshipId = await Internships.findOne({ where: { student_id: id } }).then(resp => { return resp.id })
 
 			const companyAddressId = await Companies.findOne({ where: { id: companyId } }).then(resp => { return resp.address_id })
 
@@ -81,11 +82,13 @@ exports.updateInternship = async (req, res) => {
 			await Companies.update(companies, { where: { id: companyId } })
 
 			const { firstPerson, secondPerson, thirdPerson, fourthPerson } = coStudent
+			
+			await CoStudentInternships.update(firstPerson, { where: { id: firstPerson?.id, internship_id: internshipId } })
+			await CoStudentInternships.update(secondPerson, { where: { id: secondPerson?.id, internship_id: internshipId } })
+			await CoStudentInternships.update(thirdPerson, { where: { id: thirdPerson?.id, internship_id: internshipId } })
+			await CoStudentInternships.update(fourthPerson, { where: { id: fourthPerson?.id, internship_id: internshipId } })
+		
 
-			await CoStudentInternships.update(firstPerson, { where: { id: firstPerson.id } })
-			await CoStudentInternships.update(secondPerson, { where: { id: secondPerson.id } })
-			await CoStudentInternships.update(thirdPerson, { where: { id: thirdPerson.id } })
-			await CoStudentInternships.update(fourthPerson, { where: { id: fourthPerson.id } })
 
 			res.status(200).json({ success: true, msg: "update internship information successfuly" });
 		}

@@ -406,8 +406,6 @@ const Resumehook = () => {
     dispatch(updateResume(updateData));
     // console.log(updateData);
   };
-
-
   
   return {
     firstName,

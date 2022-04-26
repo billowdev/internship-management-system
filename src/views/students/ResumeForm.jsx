@@ -1,12 +1,13 @@
 import React, {useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Resumehook from "../hook/ResumeHook";
+import Resumehook from "./ResumeHook";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadResume } from "../../redux/actions/student/resume";
+import { Outlet } from "react-router-dom";
 
-const Index = () => {
+const Resume = () => {
   const dispatch = useDispatch();
 
   const {
@@ -288,7 +289,7 @@ const Index = () => {
 
 
   const privateData = (
-    <div className="mt-10 px-7">
+    <div className="mt-2 px-7">
       <p className="text-lg font-semibold leading-tight text-gray-800">
         1. ข้อมูลส่วนตัว
       </p>
@@ -1548,8 +1549,9 @@ const Index = () => {
           </div>
         </div>
       </div>
+
     </>
   );
 };
 
-export default Index;
+export default Resume;

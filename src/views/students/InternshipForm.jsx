@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadInternship } from "../../redux/actions/student/internship";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
-import Internshiphook from "../hook/InternshipHook";
+import Internshiphook from "./InternshipHook";
+import { Outlet } from "react-router-dom";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   const {
@@ -414,7 +415,7 @@ const InternshipForm = () => {
   const Sender = (
     <div>
       {/* =========================== sender intern splace information  =========================== */}
-      <div className="mt-10 px-7">
+      <div className="mt-2 px-7">
         <p className="text-xl font-semibold leading-tight text-gray-800">
           ข้อมูลผู้เสนอ
         </p>
@@ -849,7 +850,7 @@ const InternshipForm = () => {
       <div className="2xl:px-56 xl:px-48 lg:px-36">
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
-            <div className="py-4 px-2">
+            <div className="px-2">
               <form onSubmit={(e) => handleFormSave(e)}>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
@@ -879,6 +880,7 @@ const InternshipForm = () => {
           </div>
         </div>
       </div>
+    
     </>
   );
 };

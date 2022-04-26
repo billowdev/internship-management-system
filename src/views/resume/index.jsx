@@ -101,9 +101,20 @@ const Index = () => {
     showDropDownMenuHometownSubDistricts,
     swaptextHometownSubDistricts,
 
+    showDropDownMenuPresentProvinces,
+    swaptextPresentProvinces,
+    showDropDownMenuPresentDistricts,
+    swaptextPresentDistricts,
+    showDropDownMenuPresentSubDistricts,
+    swaptextPresentSubDistricts,
+
     provinces,
     districts,
     subDistricts,
+
+    presentProvinces,
+    presentDistricts,
+    presentSubDistricts,
 
     fetchProvinces,
   } = Resumehook();
@@ -525,6 +536,204 @@ const Index = () => {
     </>
   );
 
+  const SelectPresentAddresses = (
+    <>
+      {/* // ======================== Addresses API  ======================== */}
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-4 gap-7 mt-3 ">
+        {/* ===================== Provinces Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            จังหวัด
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuPresentProvinces}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-present-provinces-setter"
+                >
+                  {presentProvince == "" ? (
+                    <> - กรุณาเลือกจังหวัด - </>
+                  ) : (
+                    presentProvince
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-present-provinces"
+              >
+                {presentProvinces?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextPresentProvinces}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+
+        {/* ===================== districts Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            อำเภอ
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuPresentDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-present-districts-setter"
+                >
+                  {presentDistrict == "" ? (
+                    <> - กรุณาเลือกอำเภอ -</>
+                  ) : (
+                    presentDistrict
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-present-districts"
+              >
+                {presentDistricts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextPresentDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+
+        {/* ===================== sub districts Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ตำบล
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuPresentSubDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-present-subdistricts-setter"
+                >
+                  {presentSubDistrict == "" ? (
+                    <> - กรุณาเลือกตำบล - </>
+                  ) : (
+                    presentSubDistrict
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-present-subdistricts"
+              >
+                {presentSubDistricts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextPresentSubDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+        {/* ===================== district Selection ===================== */}
+      </div>
+      {/* // ======================== Addresses API  ======================== */}
+    </>
+  );
+
   const hometownDataSection = (
     <div className="mt-10 px-7">
       <p className="text-lg font-semibold leading-tight text-gray-800">
@@ -575,53 +784,7 @@ const Index = () => {
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
-
       </div>
-
-      {/* <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            อำเภอ
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="อำเภอ"
-            defaultValue={hometownDistrict}
-            onChange={(e) => {
-              setHometownDistrict(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            จังหวัด
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="จังหวัด"
-            defaultValue={hometownProvince}
-            onChange={(e) => {
-              setHometownProvince(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            รหัสไปรษณีย์
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
-            defaultValue={hometownPostCode}
-            onChange={(e) => {
-              setHometownPostCode(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-      </div> */}
     </div>
   );
   const presentDataSection = (
@@ -629,17 +792,18 @@ const Index = () => {
       <p className="text-lg font-semibold leading-tight text-gray-800">
         3. ที่อยู่ปัจจุบัน
       </p>
+      {SelectPresentAddresses}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
+      <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            บ้านเลขที่
+            รหัสไปรษณีย์
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
-            defaultValue={presentHouseNumber}
+            placeholder="รหัสไปรษณีย์"
+            defaultValue={presentPostCode}
             onChange={(e) => {
-              setPresentHouseNumber(e.target.value);
+              setPresentPostCode(e.target.value);
             }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
@@ -660,59 +824,14 @@ const Index = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ตำบล / แขวง
+            บ้านเลขที่
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ถนน / ซอย / หมู่"
-            defaultValue={presentSubDistrict}
+            placeholder="บ้านเลขที่"
+            defaultValue={presentHouseNumber}
             onChange={(e) => {
-              setPresentSubDistrict(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-      </div>
-
-      <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            อำเภอ
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="อำเภอ"
-            defaultValue={presentDistrict}
-            onChange={(e) => {
-              setPresentDistrict(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            จังหวัด
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="จังหวัด"
-            defaultValue={presentProvince}
-            onChange={(e) => {
-              setPresentProvince(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            รหัสไปรษณีย์
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
-            defaultValue={presentPostCode}
-            onChange={(e) => {
-              setPresentPostCode(e.target.value);
+              setPresentHouseNumber(e.target.value);
             }}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>

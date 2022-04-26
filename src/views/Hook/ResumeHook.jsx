@@ -44,9 +44,7 @@ const Resumehook = () => {
   const [presentDistrict, setPresentDistrict] = useState("");
   const [presentProvince, setPresentProvince] = useState("");
 
-  const [presentSubDistricts, setPresentSubDistricts] = useState([]);
-  const [presentDistricts, setPresentDistricts] = useState([]);
-  const [presentProvinces, setPresentProvinces] = useState([]);
+
 
   const [presentPostCode, setPresentPostCode] = useState("");
 
@@ -92,6 +90,7 @@ const Resumehook = () => {
   const fetchProvinces = async () => {
     const resp = await thaiAddresses.getAllProvinces();
     setProvinces(resp.data);
+    setPresentProvinces(resp.data)
   };
   const fetchDistricts = async (provinceId) => {
     const resp = await thaiAddresses.getDistricts(provinceId);
@@ -163,6 +162,90 @@ const Resumehook = () => {
   };
   // ======================== Addresses API  ========================
  
+
+
+
+
+
+// Present Hook Section
+  // ======================== Addresses API  ========================
+  const [presentSubDistricts, setPresentSubDistricts] = useState([]);
+  const [presentDistricts, setPresentDistricts] = useState([]);
+  const [presentProvinces, setPresentProvinces] = useState([]);
+
+  const fetchPresentProvinces = async () => {
+    const resp = await thaiAddresses.getAllProvinces();
+    setPresentProvinces(resp.data);
+  };
+  const fetchPresentDistricts = async (provinceId) => {
+    const resp = await thaiAddresses.getDistricts(provinceId);
+    setPresentDistricts(resp.data);
+  };
+  const fetchPresentSubDistricts = async (districtId) => {
+    const resp = await thaiAddresses.getSubDistricts(districtId);
+    setPresentSubDistricts(resp.data);
+  };
+  const fetchPresentSubDistrictData = async (subDistrictId) => {
+    console.log(subDistrictId);
+    const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
+    setPresentPostCode(resp.data[0]?.zip_code);
+  };
+
+  // -------- Provinces --------
+  const showDropDownMenuPresentProvinces = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    removeState("present-province-id");
+  };
+  const swaptextPresentProvinces = (el) => {
+    const targetText = el.target.innerText;
+    const provinceId = Object.values(el.target)[0].key;
+    setPresentProvince(targetText);
+    saveState("present-province-id", provinceId);
+    fetchPresentDistricts(provinceId);
+    document.getElementById("drop-down-present-provinces-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-present-provinces")
+      .classList.toggle("hidden");
+  };
+
+  // -------- Districts --------
+  const showDropDownMenuPresentDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    removeState("present-district-id");
+    fetchDistricts(loadState("present-province-id"));
+  };
+  const swaptextPresentDistricts = (el) => {
+    const targetText = el.target.innerText;
+    setPresentDistrict(targetText);
+    const districtId = Object.values(el.target)[0].key;
+    saveState("present-district-id", districtId);
+    fetchPresentSubDistricts(districtId);
+    document.getElementById("drop-down-present-districts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-present-districts")
+      .classList.toggle("hidden");
+  };
+  // -------- Sub districts --------
+  const showDropDownMenuPresentSubDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    fetchPresentSubDistricts(loadState("present-district-id"));
+    removeState("present-district-id");
+  };
+  const swaptextPresentSubDistricts = (el) => {
+    const targetText = el.target.innerText;
+    setPresentSubDistrict(targetText);
+    const subDistrictId = Object.values(el.target)[0].key;
+    fetchPresentSubDistrictData(subDistrictId);
+    document.getElementById("drop-down-present-subdistricts-setter").innerText =
+      targetText;
+    document
+      .getElementById("drop-down-div-present-subdistricts")
+      .classList.toggle("hidden");
+  };
+  // ======================== Addresses API  ========================
+
 
   const handleEducation1FormChange = (input) => (e) => {
     e.preventDefault();
@@ -412,10 +495,21 @@ const Resumehook = () => {
     showDropDownMenuHometownSubDistricts,
     swaptextHometownSubDistricts,
 
+    showDropDownMenuPresentProvinces,
+    swaptextPresentProvinces,
+    showDropDownMenuPresentDistricts,
+    swaptextPresentDistricts,
+    showDropDownMenuPresentSubDistricts,
+    swaptextPresentSubDistricts,
+
     provinces,
     districts,
     subDistricts,
-    
+
+    presentProvinces,
+    presentDistricts,
+    presentSubDistricts,
+
     fetchProvinces,
   };
 };

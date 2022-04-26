@@ -122,6 +122,9 @@ exports.signupController = async (req, res) => {
 					const { id } = respStudentData;
 					// hook education table for student
 					await Educations.create({ student_id: id })
+					await Educations.create({ student_id: id })
+					await Educations.create({ student_id: id })
+					
 					// hook address table for student
 					await Addresses.create({ address_type: "hometown" }).then(data => {
 						HometownAddresses.create({ student_id: id, address_id: data.id })
@@ -140,7 +143,12 @@ exports.signupController = async (req, res) => {
 					// hook table address for company 
 					const companyAddress = await Addresses.create({ address_type: "company" })
 					const companyData = await Companies.create({ name: "", address_id: companyAddress.id })
-					await Internships.create({ student_id: id, company_id: companyData.id })
+					const resp = await Internships.create({ student_id: id, company_id: companyData.id })
+					// hook co stdeutn table for student
+					await CoStudentInternships.create({ internship_id: resp.id })
+					await CoStudentInternships.create({ internship_id: resp.id })
+					await CoStudentInternships.create({ internship_id: resp.id })
+					await CoStudentInternships.create({ internship_id: resp.id })
 				}
 				if (roles === 'director') {
 					const { id } = user

@@ -5,6 +5,7 @@ const { validateToken } = require("../middlewares/auth.middleware");
 const { createStudents, getStudents, updateStudents, deleteStudents } = require("../controllers/students.controller");
 
 router.get("/get", validateToken, getStudents);
+router.patch("/update", validateToken, updateStudents);
 
 
 module.exports = router;

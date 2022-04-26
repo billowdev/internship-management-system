@@ -49,6 +49,9 @@ exports.updateStudents = async (req, res) => {
 			await Addresses.update(present, { where: { id: present_id } })
 			await Addresses.update(hometown, { where: { id: hometown_id } })
 			await Students.update(student, { where: { id: id } })
+			await ContactPersons.update(req.body?.contactPerson?.data, {where:{student_id:id}})
+			const contactPersonAddressId = await ContactPersons.findOne({where:{student_id:id}}).then(resp=>{return resp.address_id})
+			await Addresses.update(req.body?.contactPerson?.address, {where:{id:contactPersonAddressId}})
 
 			res.status(200).json({ success: true, msg: "update student success" })
 		} else {

@@ -403,97 +403,13 @@ const Resumehook = () => {
       educationData3,
     };
     const updateData = { student, hometown, present, contactPerson, education };
-    // dispatch(updateResume(updateData));
-    console.log(updateData);
+    dispatch(updateResume(updateData));
+    // console.log(updateData);
   };
 
-  const fetchHometownProvinces = async () => {
-    const resp = await thaiAddresses.getAllProvinces();
-    setHometownProvince(resp.data);
-  };
 
-  const fetchHometownDistricts = async (provinceId) => {
-    const resp = await thaiAddresses.getDistricts(provinceId);
-    setHometownDistrict(resp.data);
-  };
-  const fetchHometownSubDistricts = async (districtId) => {
-    const resp = await thaiAddresses.getSubDistricts(districtId);
-    setHometownSubDistrict(resp.data);
-  };
-  const fetchPostCode = async (subDistrictId) => {
-    const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
-    return resp.data[0]?.zip_code;
-  };
-
-  const SelectProgram = (
-    <>
-      {" "}
-      <div>
-        <p className="text-base font-medium leading-none text-gray-800">
-          สาขาวิชา
-        </p>
-        {/*-Dropdown*/}
-        <div className="relative top-1 ">
-          <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
-            <div
-              onClick={showDropDownMenuProgram}
-              id="program"
-              className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
-            >
-              <span
-                className="pr-4 text-sm font-medium text-gray-600"
-                id="drop-down-content-setter-program"
-              >
-                {program == "" ? "วิทยาการคอมพิวเตอร์" : program}
-              </span>
-              <svg
-                id="rotate"
-                className="absolute z-10 cursor-pointer right-5"
-                width={10}
-                height={6}
-                viewBox="0 0 10 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.5 0.75L5 5.25L9.5 0.75"
-                  stroke="#4B5563"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-
-            <div
-              className="absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
-              id="drop-down-div-program"
-            >
-              <p
-                className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
-                onClick={swaptextProgram}
-              >
-                วิทยาการคอมพิวเตอร์
-              </p>
-
-              <p
-                className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
-                onClick={swaptextProgram}
-              >
-                เทคโนโลยีสารสนเทศ
-              </p>
-            </div>
-          </div>
-          {/* end */}
-        </div>
-        {/* end */}
-      </div>
-    </>
-  );
-
+  
   return {
-    showDropDownMenuProgram,
-    swaptextProgram,
-
     firstName,
     setFirstName,
     lastName,
@@ -531,14 +447,29 @@ const Resumehook = () => {
     projectTopic,
     setProjectTopic,
 
-    contactPersonPhone,
     setContactPersonPhone,
-    contactPersonFirstName,
     setContactPersonFirstName,
-    contactPersonLastName,
     setContactPersonLastName,
-    contactPersonRelationship,
     setContactPersonRelationship,
+    setContactPersonHouseNumber,
+    setContactPersonRoad,
+    setContactPersonSubDistrict,
+    setContactPersonDistrict,
+    setContactPersonProvince,
+    setContactPersonPostCode,
+
+    contactPersonFirstName,
+    contactPersonLastName,
+
+    contactPersonHouseNumber,
+    contactPersonRoad,
+    contactPersonSubDistrict,
+    contactPersonDistrict,
+    contactPersonProvince,
+    contactPersonPostCode,
+
+    contactPersonPhone,
+    contactPersonRelationship,
 
     hometownHouseNumber,
     hometownRoad,
@@ -553,26 +484,20 @@ const Resumehook = () => {
     setHometownDistrict,
     setHometownProvince,
     setHometownPostCode,
+
     presentHouseNumber,
     presentRoad,
 
     presentSubDistrict,
     presentDistrict,
     presentProvince,
-
-    presentSubDistricts,
-    presentDistricts,
-    presentProvinces,
     presentPostCode,
+
     setPresentHouseNumber,
     setPresentRoad,
-
     setPresentSubDistrict,
     setPresentDistrict,
     setPresentProvince,
-    setPresentSubDistricts,
-    setPresentDistricts,
-    setPresentProvinces,
     setPresentPostCode,
 
     handleEducation1FormChange,
@@ -580,13 +505,16 @@ const Resumehook = () => {
     handleEducation3FormChange,
     handleFormSave,
 
-    SelectProgram,
+
     educationData1,
     setEducationData1,
     educationData2,
     setEducationData2,
     educationData3,
     setEducationData3,
+
+    showDropDownMenuProgram,
+    swaptextProgram,
 
     showDropDownMenuHometownProvinces,
     swaptextHometownProvinces,
@@ -610,31 +538,17 @@ const Resumehook = () => {
     presentDistricts,
     presentSubDistricts,
 
-    contactPersonHouseNumber,
-    setContactPersonHouseNumber,
-    contactPersonRoad,
-    setContactPersonRoad,
-    contactPersonSubDistrict,
-    setContactPersonSubDistrict,
-    contactPersonDistrict,
-    setContactPersonDistrict,
-    contactPersonProvince,
-    setContactPersonProvince,
-    contactPersonPostCode,
-    setContactPersonPostCode,
-
+  
     showDropDownMenuContactPersonProvinces,
     swaptextContactPersonProvinces,
     showDropDownMenuContactPersonDistricts,
     swaptextContactPersonDistricts,
     showDropDownMenuContactPersonSubDistricts,
     swaptextContactPersonSubDistricts,
-
+    // list province district sub-district from api
     contactPersonProvinces,
     contactPersonDistricts,
     contactPersonSubDistricts,
-
-    setContactPersonProvinces,
 
     fetchProvinces,
   };

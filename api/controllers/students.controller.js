@@ -7,6 +7,7 @@ exports.getStudents = async (req, res) => {
 		if (isStudent != null) {
 			const student = await Students.findOne({ where: { login_id: isStudent.id } })
 			const contactPerson = await ContactPersons.findOne({ where: { student_id: student.id } })
+			const contactPersonAddress = await Addresses.findOne({ where: { id: contactPerson.address_id } })
 			const education = await Educations.findAll({ where: { student_id: student.id } });
 			const presentAddr = await PresentAddresses.findOne({ where: { student_id: student.id } })
 			const PresentAddress = await Addresses.findOne({ where: { id: presentAddr.address_id } })
@@ -14,7 +15,7 @@ exports.getStudents = async (req, res) => {
 			const HometownAddress = await Addresses.findOne({ where: { id: hometownAddr.address_id } })
 
 			if (education.length != 0) {
-				res.status(200).json({ success: true, msg: "get student success", data: { student, contactPerson, education, PresentAddress, HometownAddress } })
+				res.status(200).json({ success: true, msg: "get student success", data: { student, contactPersonData: { contactPerson, contactPersonAddress }, education, PresentAddress, HometownAddress } })
 			} else {
 				res.status(200).json({ success: true, msg: "get student success", data: { student, contactPerson, education: {}, PresentAddress, HometownAddress } })
 			}
@@ -39,10 +40,10 @@ exports.updateStudents = async (req, res) => {
 			const eduaction2 = req.body?.education?.educationData2
 			const eduaction3 = req.body?.education?.educationData3
 
-			await Educations.update(eduaction1, {where:{id:eduaction1.id}})
-			await Educations.update(eduaction2, {where:{id:eduaction2.id}})
-			await Educations.update(eduaction3, {where:{id:eduaction3.id}})
-			
+			await Educations.update(eduaction1, { where: { id: eduaction1.id } })
+			await Educations.update(eduaction2, { where: { id: eduaction2.id } })
+			await Educations.update(eduaction3, { where: { id: eduaction3.id } })
+
 			const present_id = await PresentAddresses.findOne({ where: { student_id: id } }).then(resp => { return resp.address_id })
 			const hometown_id = await HometownAddresses.findOne({ where: { student_id: id } }).then(resp => { return resp.address_id })
 			await Addresses.update(present, { where: { id: present_id } })

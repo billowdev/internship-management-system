@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadResume } from "../../redux/actions/student/resume";
 
+
 const Index = () => {
   const dispatch = useDispatch();
+ 
   const {
-    showDropDownMenuProgram,
-    swaptextProgram,
 
     firstName,
     setFirstName,
@@ -49,9 +49,13 @@ const Index = () => {
     projectTopic,
     setProjectTopic,
 
+    setContactPersonPhone,
+    setContactPersonFirstName,
+    setContactPersonLastName,
+    setContactPersonRelationship,
+
     hometownHouseNumber,
     hometownRoad,
-
     hometownSubDistrict,
     hometownDistrict,
     hometownProvince,
@@ -59,11 +63,9 @@ const Index = () => {
 
     setHometownHouseNumber,
     setHometownRoad,
-
     setHometownSubDistrict,
     setHometownDistrict,
     setHometownProvince,
-
     setHometownPostCode,
 
     presentHouseNumber,
@@ -116,7 +118,40 @@ const Index = () => {
     presentDistricts,
     presentSubDistricts,
 
+    setContactPersonHouseNumber,
+    setContactPersonRoad,
+    setContactPersonSubDistrict,
+    setContactPersonDistrict,
+    setContactPersonProvince,
+    setContactPersonPostCode,
+
+
+    contactPersonHouseNumber,
+
+    contactPersonRoad,
+  
+    contactPersonSubDistrict,
+    contactPersonDistrict,
+    contactPersonProvince,
+    contactPersonPostCode,
+
+
+    contactPersonPhone,
+    
+
+    showDropDownMenuContactPersonProvinces,
+    swaptextContactPersonProvinces,
+    showDropDownMenuContactPersonDistricts,
+    swaptextContactPersonDistricts,
+    showDropDownMenuContactPersonSubDistricts,
+    swaptextContactPersonSubDistricts,
+    // list province district sub-district from api
+    contactPersonProvinces,
+    contactPersonDistricts,
+    contactPersonSubDistricts,
+
     fetchProvinces,
+ 
   } = Resumehook();
 
   useEffect(() => {
@@ -129,6 +164,21 @@ const Index = () => {
     const resumeData = resume?.student;
     const hometownData = resume?.HometownAddress;
     const presentData = resume?.PresentAddress;
+    const contactPersonData = resume?.contactPersonData?.contactPerson;
+    const contactPersonAddressData =
+      resume?.contactPersonData?.contactPersonAddress;
+
+    setContactPersonFirstName(contactPersonData?.first_name);
+    setContactPersonLastName(contactPersonData?.last_name);
+    setContactPersonRelationship(contactPersonData?.relationship);
+
+    setContactPersonPhone(contactPersonAddressData?.phone);
+    setContactPersonHouseNumber(contactPersonAddressData?.house_number);
+    setContactPersonRoad(contactPersonAddressData?.road);
+    setContactPersonSubDistrict(contactPersonAddressData?.sub_district);
+    setContactPersonDistrict(contactPersonAddressData?.district);
+    setContactPersonProvince(contactPersonAddressData?.province);
+    setContactPersonPostCode(contactPersonAddressData?.post_code);
 
     // private student data
     setIdCard(resumeData?.id_card);
@@ -183,7 +233,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ"
+            // placeholder="ชื่อ"
             defaultValue={firstName}
             maxLength={150}
             onChange={(e) => {
@@ -198,7 +248,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ-นามสุกล"
+            // placeholder="ชื่อ-นามสุกล"
             defaultValue={lastName}
             maxLength={150}
             onChange={(e) => {
@@ -213,7 +263,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="exsample@gmail.com"
+            // placeholder="exsample@gmail.com"
             type="email"
             id="email"
             required
@@ -232,7 +282,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสประจำตัวประชาชน"
+            // placeholder="รหัสประจำตัวประชาชน"
             defaultValue={idCard}
             maxLength={11}
             onChange={(e) => {
@@ -246,7 +296,7 @@ const Index = () => {
           </p>
           <DatePicker
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="Select date"
+            // placeholder="Select date"
             selected={birthDate}
             dateFormat="dd/MM/yyyy"
             onChange={(date) => setBirthDate(date)}
@@ -259,7 +309,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ศาสนา"
+            // placeholder="ศาสนา"
             defaultValue={religion}
             onChange={(e) => {
               setReligion(e.target.value);
@@ -274,7 +324,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อบิดา"
+            // placeholder="ชื่อบิดา"
             defaultValue={fatherName}
             onChange={(e) => {
               setFatherName(e.target.value);
@@ -287,7 +337,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="อาชีพบิดา"
+            // placeholder="อาชีพบิดา"
             defaultValue={fatherJob}
             onChange={(e) => {
               setFatherJob(e.target.value);
@@ -300,7 +350,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อมารดา"
+            // placeholder="ชื่อมารดา"
             defaultValue={motherName}
             onChange={(e) => {
               setMotherName(e.target.value);
@@ -313,7 +363,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="อาชีพมารดา"
+            // placeholder="อาชีพมารดา"
             defaultValue={motherJob}
             onChange={(e) => {
               setMotherJob(e.target.value);
@@ -326,7 +376,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="โทร"
+            // placeholder="โทร"
             defaultValue={phone}
             onChange={(e) => {
               setPhone(e.target.value);
@@ -359,9 +409,9 @@ const Index = () => {
                   id="drop-down-hometown-provinces-setter"
                 >
                   {hometownProvince == "" ? (
-                    <> - กรุณาเลือกจังหวัด - </>
+                    <>- กรุณาเลือกจังหวัด -</>
                   ) : (
-                    hometownProvince
+                    <>{`${hometownProvince}`}</>
                   )}
                 </span>
                 <svg
@@ -741,13 +791,13 @@ const Index = () => {
       </p>
       {SelectHometownAddresses}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
-      <div>
+        <div>
           <p className="text-base font-medium leading-none text-gray-800">
             รหัสไปรษณีย์
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
+            // placeholder="รหัสไปรษณีย์"
             defaultValue={hometownPostCode}
             onChange={(e) => {
               setHometownPostCode(e.target.value);
@@ -755,14 +805,14 @@ const Index = () => {
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
-       
+
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ถนน / ซอย / หมู่
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ถนน / ซอย / หมู่"
+            // placeholder="ถนน / ซอย / หมู่"
             defaultValue={hometownRoad}
             onChange={(e) => {
               setHometownRoad(e.target.value);
@@ -776,7 +826,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={hometownHouseNumber}
             onChange={(e) => {
               setHometownHouseNumber(e.target.value);
@@ -794,13 +844,13 @@ const Index = () => {
       </p>
       {SelectPresentAddresses}
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
-      <div>
+        <div>
           <p className="text-base font-medium leading-none text-gray-800">
             รหัสไปรษณีย์
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
+            // placeholder="รหัสไปรษณีย์"
             defaultValue={presentPostCode}
             onChange={(e) => {
               setPresentPostCode(e.target.value);
@@ -814,7 +864,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ถนน / ซอย / หมู่"
+            // placeholder="ถนน / ซอย / หมู่"
             defaultValue={presentRoad}
             onChange={(e) => {
               setPresentRoad(e.target.value);
@@ -828,7 +878,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={presentHouseNumber}
             onChange={(e) => {
               setPresentHouseNumber(e.target.value);
@@ -852,7 +902,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="ปริญญาตรี"
             defaultValue={educationData1?.level}
             onChange={handleEducation1FormChange("level")}
           />
@@ -864,7 +914,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อสถานศึกษา"
+            // placeholder="มหาวิทยาลัยราชภัฏสกลนคร"
             defaultValue={educationData1?.academy}
             onChange={handleEducation1FormChange("academy")}
           />
@@ -876,7 +926,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={educationData1?.gpa}
             onChange={handleEducation1FormChange("gpa")}
           />
@@ -890,7 +940,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="ปริญญาตรี"
             defaultValue={educationData2?.level}
             onChange={handleEducation2FormChange("level")}
           />
@@ -902,7 +952,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อสถานศึกษา"
+            // placeholder="ชื่อสถานศึกษา"
             defaultValue={educationData2?.academy}
             onChange={handleEducation2FormChange("academy")}
           />
@@ -914,7 +964,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={educationData2?.gpa}
             onChange={handleEducation2FormChange("gpa")}
           />
@@ -928,7 +978,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="ปริญญาตรี"
             defaultValue={educationData3?.level}
             onChange={handleEducation3FormChange("level")}
           />
@@ -940,7 +990,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อสถานศึกษา"
+            // placeholder="ชื่อสถานศึกษา"
             defaultValue={educationData3?.academy}
             onChange={handleEducation3FormChange("academy")}
           />
@@ -952,7 +1002,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={educationData3?.gpa}
             onChange={handleEducation3FormChange("gpa")}
           />
@@ -973,7 +1023,7 @@ const Index = () => {
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={exp}
             onChange={(e) => {
               setExp(e.target.value);
@@ -994,7 +1044,7 @@ const Index = () => {
           </p>
           <input
             className="w-24 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={presentGpa}
             onChange={(e) => {
               setPresentGpa(e.target.value);
@@ -1010,7 +1060,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={projectTopic}
             onChange={(e) => {
               setProjectTopic(e.target.value);
@@ -1038,7 +1088,7 @@ const Index = () => {
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ความสามารถพิเศษ"
+            // placeholder="ความสามารถพิเศษ"
             defaultValue={skill}
             onChange={(e) => {
               setSkill(e.target.value);
@@ -1055,7 +1105,7 @@ const Index = () => {
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={interest}
             onChange={(e) => {
               setInterest(e.target.value);
@@ -1067,6 +1117,204 @@ const Index = () => {
     </div>
   );
   const interestSection = <div className="mt-10 px-7"></div>;
+
+  const SelectContactPersonAddresses = (
+    <>
+      {/* // ======================== Addresses API  ======================== */}
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-4 gap-7 mt-3 ">
+        {/* ===================== Provinces Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            จังหวัด
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuContactPersonProvinces}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-contact-person-provinces-setter"
+                >
+                  {contactPersonProvince == "" ? (
+                    <>- กรุณาเลือกจังหวัด -</>
+                  ) : (
+                    <>{`${contactPersonProvince}`}</>
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-contact-person-provinces"
+              >
+                {contactPersonProvinces?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextContactPersonProvinces}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+
+        {/* ===================== districts Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            อำเภอ
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuContactPersonDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-contact-person-districts-setter"
+                >
+                  {contactPersonDistrict == "" ? (
+                    <> - กรุณาเลือกอำเภอ -</>
+                  ) : (
+                    contactPersonDistrict
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-contact-person-districts"
+              >
+                {contactPersonDistricts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextContactPersonDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+
+        {/* ===================== sub districts Selection ===================== */}
+        <div>
+          <p className="text-base font-medium leading-none text-gray-800">
+            ตำบล
+          </p>
+          {/*-Dropdown*/}
+          <div className="relative top-1 ">
+            <div className="relative w-full mt-2 border border-gray-300 rounded outline-none dropdown-one">
+              <div
+                onClick={showDropDownMenuContactPersonSubDistricts}
+                className="relative flex items-center justify-between w-full px-5 py-4 dropbtn-one"
+              >
+                <span
+                  className="pr-4 text-sm font-medium text-gray-600"
+                  id="drop-down-contact-person-subdistricts-setter"
+                >
+                  {contactPersonSubDistrict == "" ? (
+                    <> - กรุณาเลือกตำบล - </>
+                  ) : (
+                    contactPersonSubDistrict
+                  )}
+                </span>
+                <svg
+                  id="rotate"
+                  className="absolute z-10 cursor-pointer right-5"
+                  width={10}
+                  height={6}
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.5 0.75L5 5.25L9.5 0.75"
+                    stroke="#4B5563"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className="overflow-y-auto h-52 absolute z-20 right-0 hidden w-full px-1 py-2 bg-white border-t border-gray-200 rounded shadow top-12"
+                id="drop-down-div-contact-person-subdistricts"
+              >
+                {contactPersonSubDistricts?.map((item) => {
+                  {
+                    return (
+                      <p
+                        key={item.id}
+                        className="p-3 text-sm leading-none text-gray-600 cursor-pointer hover:bg-indigo-100 hover:font-medium hover:text-indigo-700 hover:rounded"
+                        onClick={swaptextContactPersonSubDistricts}
+                      >
+                        {item.name_th}
+                      </p>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            {/* end */}
+          </div>
+          {/* end */}
+        </div>
+        {/* ===================== district Selection ===================== */}
+      </div>
+      {/* // ======================== Addresses API  ======================== */}
+    </>
+  );
 
   const contactPersonSection = (
     <div className="mt-10 px-7">
@@ -1081,7 +1329,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={presentHouseNumber}
             onChange={(e) => {
               setPresentHouseNumber(e.target.value);
@@ -1095,7 +1343,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={presentHouseNumber}
             onChange={(e) => {
               setPresentHouseNumber(e.target.value);
@@ -1109,7 +1357,7 @@ const Index = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
+            // placeholder="บ้านเลขที่"
             defaultValue={presentHouseNumber}
             onChange={(e) => {
               setPresentHouseNumber(e.target.value);
@@ -1118,112 +1366,71 @@ const Index = () => {
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
       </div>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            บ้านเลขที่
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บ้านเลขที่"
-            defaultValue={presentHouseNumber}
-            onChange={(e) => {
-              setPresentHouseNumber(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+    
+        {SelectContactPersonAddresses}
+        <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+          <div>
+            <p className="text-base font-medium leading-none text-gray-800">
+              รหัสไปรษณีย์
+            </p>
+            <input
+              className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+              // placeholder="รหัสไปรษณีย์"
+              defaultValue={contactPersonPostCode}
+              onChange={(e) => {
+                setContactPersonPostCode(e.target.value);
+              }}
+            />
+            <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+          </div>
+
+          <div>
+            <p className="text-base font-medium leading-none text-gray-800">
+              ถนน / ซอย / หมู่
+            </p>
+            <input
+              className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+              // placeholder="ถนน / ซอย / หมู่"
+              defaultValue={contactPersonRoad}
+              onChange={(e) => {
+                setContactPersonRoad(e.target.value);
+              }}
+            />
+            <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+          </div>
+          <div>
+            <p className="text-base font-medium leading-none text-gray-800">
+              บ้านเลขที่
+            </p>
+            <input
+              className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+              // placeholder="บ้านเลขที่"
+              defaultValue={contactPersonHouseNumber}
+              onChange={(e) => {
+                setContactPersonHouseNumber(e.target.value);
+              }}
+            />
+            <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+          </div>
         </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            ถนน / ซอย / หมู่
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ถนน / ซอย / หมู่"
-            defaultValue={presentRoad}
-            onChange={(e) => {
-              setPresentRoad(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            ตำบล / แขวง
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ถนน / ซอย / หมู่"
-            defaultValue={presentSubDistrict}
-            onChange={(e) => {
-              setPresentSubDistrict(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+        <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
+          <div>
+            <p className="text-base font-medium leading-none text-gray-800">
+              โทร
+            </p>
+            <input
+              className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+              // placeholder="โทร"
+              defaultValue={contactPersonPhone}
+              onChange={(e) => {
+                setContactPersonPhone(e.target.value);
+              }}
+            />
+            <p className="mt-3 text-xs leading-3 text-gray-600"></p>
+          </div>
         </div>
       </div>
 
-      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            อำเภอ
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="อำเภอ"
-            defaultValue={presentDistrict}
-            onChange={(e) => {
-              setPresentDistrict(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            จังหวัด
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="จังหวัด"
-            defaultValue={presentProvince}
-            onChange={(e) => {
-              setPresentProvince(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            รหัสไปรษณีย์
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
-            defaultValue={presentPostCode}
-            onChange={(e) => {
-              setPresentPostCode(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-      </div>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
-        <div>
-          <p className="text-base font-medium leading-none text-gray-800">
-            โทร
-          </p>
-          <input
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="โทร"
-            defaultValue={presentPostCode}
-            onChange={(e) => {
-              setPresentPostCode(e.target.value);
-            }}
-          />
-          <p className="mt-3 text-xs leading-3 text-gray-600"></p>
-        </div>
-      </div>
-    </div>
   );
   return (
     <>

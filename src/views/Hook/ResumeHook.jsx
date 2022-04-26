@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { loadResume } from "../../redux/actions/student/resume";
+import React, { useState } from "react";
 import { updateResume } from "../../redux/actions/student/resume";
 import Moment from "moment";
 import { useDispatch } from "react-redux";
 import * as thaiAddresses from "../../infrastructure/services/api/thaiAddresses/thaiAddressApi";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
-
 
 const Resumehook = () => {
   const dispatch = useDispatch();
@@ -29,6 +27,19 @@ const Resumehook = () => {
   const [presentGpa, setPresentGpa] = useState("");
   const [projectTopic, setProjectTopic] = useState("");
 
+  const [contactPersonPhone, setContactPersonPhone] = useState("");
+  const [contactPersonFirstName, setContactPersonFirstName] = useState("");
+  const [contactPersonLastName, setContactPersonLastName] = useState("");
+  const [contactPersonRelationship, setContactPersonRelationship] =
+    useState("");
+
+  const [contactPersonHouseNumber, setContactPersonHouseNumber] = useState("");
+  const [contactPersonRoad, setContactPersonRoad] = useState("");
+  const [contactPersonSubDistrict, setContactPersonSubDistrict] = useState("");
+  const [contactPersonDistrict, setContactPersonDistrict] = useState("");
+  const [contactPersonProvince, setContactPersonProvince] = useState("");
+  const [contactPersonPostCode, setContactPersonPostCode] = useState("");
+
   const [hometownHouseNumber, setHometownHouseNumber] = useState("");
   const [hometownRoad, setHometownRoad] = useState("");
 
@@ -38,14 +49,11 @@ const Resumehook = () => {
   const [hometownSubDistrict, setHometownSubDistrict] = useState("");
   const [hometownDistrict, setHometownDistrict] = useState("");
   const [hometownProvince, setHometownProvince] = useState("");
-  const [hometownPostCode, setHometownPostCode] = useState([]);
+  const [hometownPostCode, setHometownPostCode] = useState("");
 
   const [presentSubDistrict, setPresentSubDistrict] = useState("");
   const [presentDistrict, setPresentDistrict] = useState("");
   const [presentProvince, setPresentProvince] = useState("");
-
-
-
   const [presentPostCode, setPresentPostCode] = useState("");
 
   const [educationData1, setEducationData1] = useState({
@@ -87,37 +95,77 @@ const Resumehook = () => {
   const [districts, setDistricts] = useState([]);
   const [subDistricts, setSubDistricts] = useState([]);
 
+  const [contactPersonSubDistricts, setContactPersonSubDistricts] = useState(
+    []
+  );
+  const [contactPersonDistricts, setContactPersonDistricts] = useState([]);
+  const [contactPersonProvinces, setContactPersonProvinces] = useState([]);
+
+  const [presentSubDistricts, setPresentSubDistricts] = useState([]);
+  const [presentDistricts, setPresentDistricts] = useState([]);
+  const [presentProvinces, setPresentProvinces] = useState([]);
+
   const fetchProvinces = async () => {
     const resp = await thaiAddresses.getAllProvinces();
     setProvinces(resp.data);
-    setPresentProvinces(resp.data)
+    setPresentProvinces(resp.data);
+    setContactPersonProvinces(resp.data);
   };
-  const fetchDistricts = async (provinceId) => {
+
+  const fetchDistricts = async (option, provinceId) => {
     const resp = await thaiAddresses.getDistricts(provinceId);
-    setDistricts(resp.data);
+    if (option == "present") {
+      setPresentDistricts(resp.data);
+    }
+    if (option == "hometown") {
+      // const resp = await thaiAddresses.getDistricts(provinceId);
+      setDistricts(resp.data);
+    }
+    if (option == "contactPerson") {
+      // const resp = await thaiAddresses.getDistricts(provinceId);
+      setContactPersonDistricts(resp.data);
+    }
   };
-  const fetchSubDistricts = async (districtId) => {
+  const fetchSubDistricts = async (option, districtId) => {
     const resp = await thaiAddresses.getSubDistricts(districtId);
-    setSubDistricts(resp.data);
+    if (option == "present") {
+      setPresentSubDistricts(resp.data);
+    }
+    if (option == "hometown") {
+      // const resp = await thaiAddresses.getSubDistricts(districtId);
+      setSubDistricts(resp.data);
+    }
+    if (option == "contactPerson") {
+      // const resp = await thaiAddresses.getSubDistricts(districtId);
+      setContactPersonSubDistricts(resp.data);
+    }
   };
-  const fetchSubDistrictData = async (subDistrictId) => {
-    console.log(subDistrictId);
+  const fetchSubDistrictData = async (option, subDistrictId) => {
     const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
-    setHometownPostCode(resp.data[0]?.zip_code);
-    console.log(resp.data[0]);
+    if (option == "present") {
+      setPresentPostCode(resp.data[0]?.zip_code);
+    }
+    if (option == "hometown") {
+      // const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
+      setHometownPostCode(resp.data[0]?.zip_code);
+    }
+    if (option == "contactPerson") {
+      // const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
+      setContactPersonPostCode(resp.data[0]?.zip_code);
+    }
   };
 
   // -------- Provinces --------
   const showDropDownMenuHometownProvinces = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    removeState("hometown-province-id");
+    // removeState("hometown-province-id");
   };
   const swaptextHometownProvinces = (el) => {
     const targetText = el.target.innerText;
     const provinceId = Object.values(el.target)[0].key;
     setHometownProvince(targetText);
     saveState("hometown-province-id", provinceId);
-    fetchDistricts(provinceId);
+    fetchDistricts("hometown", provinceId);
     document.getElementById("drop-down-hometown-provinces-setter").innerText =
       targetText;
     document
@@ -128,80 +176,54 @@ const Resumehook = () => {
   // -------- Districts --------
   const showDropDownMenuHometownDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    removeState("hometown-district-id");
-    fetchDistricts(loadState("hometown-province-id"));
+    // removeState("hometown-district-id");
+    fetchDistricts("hometown", loadState("hometown-province-id"));
   };
   const swaptextHometownDistricts = (el) => {
     const targetText = el.target.innerText;
     setHometownDistrict(targetText);
     const districtId = Object.values(el.target)[0].key;
     saveState("hometown-district-id", districtId);
-    fetchSubDistricts(districtId);
+    fetchSubDistricts("hometown",districtId);
     document.getElementById("drop-down-hometown-districts-setter").innerText =
       targetText;
     document
       .getElementById("drop-down-div-hometown-districts")
       .classList.toggle("hidden");
   };
+
   // -------- Sub districts --------
   const showDropDownMenuHometownSubDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    fetchSubDistricts(loadState("hometown-district-id"));
-    removeState("hometown-district-id");
+    fetchSubDistricts("hometown",loadState("hometown-district-id"));
+    // removeState("hometown-district-id");
   };
   const swaptextHometownSubDistricts = (el) => {
     const targetText = el.target.innerText;
     setHometownSubDistrict(targetText);
     const subDistrictId = Object.values(el.target)[0].key;
-    fetchSubDistrictData(subDistrictId);
-    document.getElementById("drop-down-hometown-subdistricts-setter").innerText =
-      targetText;
+    fetchSubDistrictData("hometown", subDistrictId);
+    document.getElementById(
+      "drop-down-hometown-subdistricts-setter"
+    ).innerText = targetText;
     document
       .getElementById("drop-down-div-hometown-subdistricts")
       .classList.toggle("hidden");
   };
+
+  // Present Hook Section
   // ======================== Addresses API  ========================
- 
-
-
-
-
-
-// Present Hook Section
-  // ======================== Addresses API  ========================
-  const [presentSubDistricts, setPresentSubDistricts] = useState([]);
-  const [presentDistricts, setPresentDistricts] = useState([]);
-  const [presentProvinces, setPresentProvinces] = useState([]);
-
-  const fetchPresentProvinces = async () => {
-    const resp = await thaiAddresses.getAllProvinces();
-    setPresentProvinces(resp.data);
-  };
-  const fetchPresentDistricts = async (provinceId) => {
-    const resp = await thaiAddresses.getDistricts(provinceId);
-    setPresentDistricts(resp.data);
-  };
-  const fetchPresentSubDistricts = async (districtId) => {
-    const resp = await thaiAddresses.getSubDistricts(districtId);
-    setPresentSubDistricts(resp.data);
-  };
-  const fetchPresentSubDistrictData = async (subDistrictId) => {
-    console.log(subDistrictId);
-    const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
-    setPresentPostCode(resp.data[0]?.zip_code);
-  };
 
   // -------- Provinces --------
   const showDropDownMenuPresentProvinces = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    removeState("present-province-id");
   };
   const swaptextPresentProvinces = (el) => {
     const targetText = el.target.innerText;
     const provinceId = Object.values(el.target)[0].key;
     setPresentProvince(targetText);
     saveState("present-province-id", provinceId);
-    fetchPresentDistricts(provinceId);
+    fetchDistricts("present", provinceId);
     document.getElementById("drop-down-present-provinces-setter").innerText =
       targetText;
     document
@@ -212,15 +234,14 @@ const Resumehook = () => {
   // -------- Districts --------
   const showDropDownMenuPresentDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    removeState("present-district-id");
-    fetchDistricts(loadState("present-province-id"));
+    fetchDistricts("present", loadState("present-province-id"));
   };
   const swaptextPresentDistricts = (el) => {
     const targetText = el.target.innerText;
     setPresentDistrict(targetText);
     const districtId = Object.values(el.target)[0].key;
     saveState("present-district-id", districtId);
-    fetchPresentSubDistricts(districtId);
+    fetchSubDistricts("present", districtId);
     document.getElementById("drop-down-present-districts-setter").innerText =
       targetText;
     document
@@ -230,22 +251,81 @@ const Resumehook = () => {
   // -------- Sub districts --------
   const showDropDownMenuPresentSubDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    fetchPresentSubDistricts(loadState("present-district-id"));
-    removeState("present-district-id");
+    fetchSubDistricts("present", loadState("present-district-id"));
   };
   const swaptextPresentSubDistricts = (el) => {
     const targetText = el.target.innerText;
     setPresentSubDistrict(targetText);
     const subDistrictId = Object.values(el.target)[0].key;
-    fetchPresentSubDistrictData(subDistrictId);
+    fetchSubDistrictData("present", subDistrictId);
     document.getElementById("drop-down-present-subdistricts-setter").innerText =
       targetText;
     document
       .getElementById("drop-down-div-present-subdistricts")
       .classList.toggle("hidden");
   };
-  // ======================== Addresses API  ========================
 
+
+  // ======================== contact Person Hook Section   ========================
+  // -------- Provinces --------
+  const showDropDownMenuContactPersonProvinces = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  };
+  const swaptextContactPersonProvinces = (el) => {
+    const targetText = el.target.innerText;
+    const provinceId = Object.values(el.target)[0].key;
+    setContactPersonProvince(targetText);
+    saveState("contact-person-province-id", provinceId);
+    fetchDistricts("contactPerson", provinceId);
+    document.getElementById(
+      "drop-down-contact-person-provinces-setter"
+    ).innerText = targetText;
+    document
+      .getElementById("drop-down-div-contact-person-provinces")
+      .classList.toggle("hidden");
+  };
+
+  // -------- Districts --------
+  const showDropDownMenuContactPersonDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    fetchDistricts("contactPerson", loadState("contact-person-province-id"));
+  };
+  const swaptextContactPersonDistricts = (el) => {
+    const targetText = el.target.innerText;
+    setContactPersonDistrict(targetText);
+    const districtId = Object.values(el.target)[0].key;
+    saveState("contact-person-district-id", districtId);
+    fetchSubDistricts("contactPerson", districtId);
+    setTimeout(function () {
+      document.getElementById(
+        "drop-down-contact-person-districts-setter"
+      ).innerText = targetText;
+      document
+        .getElementById("drop-down-div-contact-person-districts")
+        .classList.toggle("hidden");
+    }, 100);
+  };
+  // -------- Sub districts --------
+  const showDropDownMenuContactPersonSubDistricts = (el) => {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+    fetchSubDistricts("contactPerson", loadState("contact-person-district-id"));
+  };
+  const swaptextContactPersonSubDistricts = (el) => {
+    const targetText = el.target.innerText;
+    setContactPersonSubDistrict(targetText);
+    const subDistrictId = Object.values(el.target)[0].key;
+    fetchSubDistrictData("contactPerson", subDistrictId);
+
+    setTimeout(function () {
+      document.getElementById(
+        "drop-down-contact-person-subdistricts-setter"
+      ).innerText = targetText;
+      document
+        .getElementById("drop-down-div-contact-person-subdistricts")
+        .classList.toggle("hidden");
+    }, 100);
+  };
+  // ======================== Addresses API  ========================
 
   const handleEducation1FormChange = (input) => (e) => {
     e.preventDefault();
@@ -292,12 +372,29 @@ const Resumehook = () => {
       province: hometownProvince,
       post_code: hometownPostCode,
     };
+
+    const contactPerson = {
+      data: {
+        first_name: contactPersonFirstName,
+        last_name: contactPersonLastName,
+        relationship: contactPersonRelationship,
+      },
+      address: {
+        house_number: contactPersonHouseNumber,
+        road: contactPersonRoad,
+        sub_district: contactPersonSubDistrict,
+        district: contactPersonDistrict,
+        province: contactPersonProvince,
+        post_code: contactPersonPostCode,
+      },
+    };
+
     const present = {
       house_number: presentHouseNumber,
       road: presentRoad,
-      sub_district: presentSubDistricts,
-      district: presentDistricts,
-      province: presentProvinces,
+      sub_district: presentSubDistrict,
+      district: presentDistrict,
+      province: presentProvince,
       post_code: presentPostCode,
     };
     const education = {
@@ -305,8 +402,9 @@ const Resumehook = () => {
       educationData2,
       educationData3,
     };
-    const updateData = { student, hometown, present, education };
-    dispatch(updateResume(updateData));
+    const updateData = { student, hometown, present, contactPerson, education };
+    // dispatch(updateResume(updateData));
+    console.log(updateData);
   };
 
   const fetchHometownProvinces = async () => {
@@ -433,9 +531,17 @@ const Resumehook = () => {
     projectTopic,
     setProjectTopic,
 
+    contactPersonPhone,
+    setContactPersonPhone,
+    contactPersonFirstName,
+    setContactPersonFirstName,
+    contactPersonLastName,
+    setContactPersonLastName,
+    contactPersonRelationship,
+    setContactPersonRelationship,
+
     hometownHouseNumber,
     hometownRoad,
-
     hometownSubDistrict,
     hometownDistrict,
     hometownProvince,
@@ -446,9 +552,7 @@ const Resumehook = () => {
     setHometownSubDistrict,
     setHometownDistrict,
     setHometownProvince,
-
     setHometownPostCode,
-
     presentHouseNumber,
     presentRoad,
 
@@ -459,20 +563,16 @@ const Resumehook = () => {
     presentSubDistricts,
     presentDistricts,
     presentProvinces,
-
     presentPostCode,
-
     setPresentHouseNumber,
     setPresentRoad,
 
     setPresentSubDistrict,
     setPresentDistrict,
     setPresentProvince,
-
     setPresentSubDistricts,
     setPresentDistricts,
     setPresentProvinces,
-
     setPresentPostCode,
 
     handleEducation1FormChange,
@@ -509,6 +609,32 @@ const Resumehook = () => {
     presentProvinces,
     presentDistricts,
     presentSubDistricts,
+
+    contactPersonHouseNumber,
+    setContactPersonHouseNumber,
+    contactPersonRoad,
+    setContactPersonRoad,
+    contactPersonSubDistrict,
+    setContactPersonSubDistrict,
+    contactPersonDistrict,
+    setContactPersonDistrict,
+    contactPersonProvince,
+    setContactPersonProvince,
+    contactPersonPostCode,
+    setContactPersonPostCode,
+
+    showDropDownMenuContactPersonProvinces,
+    swaptextContactPersonProvinces,
+    showDropDownMenuContactPersonDistricts,
+    swaptextContactPersonDistricts,
+    showDropDownMenuContactPersonSubDistricts,
+    swaptextContactPersonSubDistricts,
+
+    contactPersonProvinces,
+    contactPersonDistricts,
+    contactPersonSubDistricts,
+
+    setContactPersonProvinces,
 
     fetchProvinces,
   };

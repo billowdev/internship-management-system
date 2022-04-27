@@ -28,8 +28,13 @@ export default {
 		return resp.data;
 	},
 	deleteLogin: async (props) => {
-		const resp = await axios.patch(`${BASE_URL}/admin/login/delete/${props?.id}`, accessHeader
 
+		const resp = await axios.post(`${BASE_URL}/admin/login/destroy`, { id: props }, {
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": accessToken
+			}
+		}
 		);
 		return resp.data;
 	},

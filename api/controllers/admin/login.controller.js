@@ -57,7 +57,7 @@ exports.createLogin = async (req, res) => {
 
 				res.status(200).json({ success: true, msg: "create login success" })
 			} else {
-				res.status(401).json({ success: false, msg: "create login faild user is exist" })
+				res.status(400).json({ success: false, msg: "create login faild user is exist" })
 			}
 		} else {
 			res.status(404).json({ success: false, msg: "404 Not Found" })
@@ -251,6 +251,56 @@ exports.deleteLogin = async (req, res) => {
 		if (isAdmin != null) {
 			await Login.update({ is_active: 0 }, { where: { id: req.params.id } })
 			res.status(200).json({ success: true, msg: `delete login id: ${req.params.id} successfuly` })
+		} else {
+			res.status(404).json({ success: false, msg: "404 Not Found" })
+		}
+
+	} catch (err) {
+		console.log({ msg: "on login controller", error: err })
+		res.status(500).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
+exports.destroyLogin = async (req, res) => {
+	try {
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
+
+		if (isAdmin != null) {
+			const reqId = req.body?.id
+			const loginData = await Login.findOne({ where: { id: reqId } })
+			if (reqId === isAdmin.id || loginData.roles === "admin") {
+				return res.status(404).json({ success: false, msg: "404 Not Found" })
+			}
+
+			const loginId = loginData.id
+			console.log(loginId)
+			if (loginData.roles === "student") {
+				const studentId = await Students.findOne({ where: { login_id: loginId } }).then(resp => { return resp.id })
+				const presentAddressId = await PresentAddresses.findOne({ where: { student_id: studentId } }).then(resp => { return resp.address_id })
+				const hometownAddressId = await HometownAddresses.findOne({ where: { student_id: studentId } }).then(resp => { return resp.address_id })
+				const internship = await Internships.findOne({ where: { student_id: studentId } })
+				const company = await Companies.findOne({ where: { id: internship.company_id } })
+				const contactPerson = await ContactPersons.findOne({ where: { student_id: studentId } })
+
+				await Addresses.destroy({ where: { id: company.address_id } })
+				await Addresses.destroy({ where: { id: contactPerson.address_id } })
+				await Addresses.destroy({ where: { id: presentAddressId } })
+				await Addresses.destroy({ where: { id: hometownAddressId } })
+
+				await Companies.destroy({ where: { id: company.id } })
+				await CoStudentInternships.destroy({ where: { internship_id: internship.id } })
+				await Internships.destroy({ where: { student_id: studentId } })
+				await Students.destroy({ where: { id: studentId } })
+				await Login.destroy({ where: { id: loginId } })
+			}
+			if (loginData.roles === "director") {
+				await Teachers.destroy({ where: { login_id: loginId } });
+				await Login.destroy({ where: { id: loginId } });
+			}
+			if (loginData.rolesF === "admin") {
+				await Login.destroy({ where: { id: loginId } });
+			}
+			res.status(200).json({ success: true, msg: `delete login id:  successfuly` })
 		} else {
 			res.status(404).json({ success: false, msg: "404 Not Found" })
 		}

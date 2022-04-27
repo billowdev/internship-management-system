@@ -6,6 +6,7 @@ import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
 import Swal from "sweetalert2";
+import { deleteLogin } from "../../../redux/actions/admin/login"
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -89,14 +90,14 @@ const Login = () => {
             <button className="w-26 text-white btn btn-sky">แก้ไขข้อมูล</button>
           </Link>
           <div>
-            {/* <button
+            <button
               className="w-26 text-white btn btn-red"
               onClick={(e) => {
-                handleDelete(row.username, row.roles);
+                handleDelete(row.id, row.roles);
               }}
             >
               ลบ
-            </button> */}
+            </button>
           </div>
         </div>
       ),
@@ -123,10 +124,12 @@ const Login = () => {
       cancelButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id);
+        dispatch(deleteLogin(id));
+        // console.log(id);
       }
     });
   };
+
   useEffect(() => {
     fetchData();
   }, [dispatch]);

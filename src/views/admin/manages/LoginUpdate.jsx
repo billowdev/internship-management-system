@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Update = () => {
+const LoginUpdate = () => {
 	return (
 		<div>
 			
@@ -8,4 +8,4 @@ const Update = () => {
 	);
 }
 
-export default Update;
+export default LoginUpdate;

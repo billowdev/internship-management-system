@@ -4,14 +4,28 @@ import { Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadSignout } from "../../redux/actions/auth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
-    dispatch(loadSignout);
-    localStorage.clear();
-    navigate("/");
+    Swal.fire({
+      title: "ออกจากระบบ?",
+      text: "คุณต้องการออกจากระบบใช่หรือไม่?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(loadSignout);
+        localStorage.clear();
+        navigate("/");
+      }
+    });
   };
   const [isAuth, setIsAuth] = useState({});
   const [who, setWho] = useState({});
@@ -79,23 +93,16 @@ const Navbar = () => {
                     {isAuth?.roles === "admin" ? (
                       <>
                         <Link
-                          to="/"
+                          to="/admin/manage/login"
                           className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          หน้าหลัก
+                          ข้อมูลสมาชิกทั้งหมด
                         </Link>
                         <Link
-                          to="/student-list"
-                          className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                        >
-                          รายชื่อนักศึกษา
-                        </Link>
-
-                        <Link
-                          to="/admin"
+                          to="/admin/manage/login/add"
                           className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          admin
+                          เพิ่มสมาชิก
                         </Link>
                       </>
                     ) : (
@@ -119,7 +126,7 @@ const Navbar = () => {
               {isAuth && isAuth?.roles === "director" ? (
                 <>
                   <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
-                    คณะกรรมการฝึกประสบการณ์วิชาชีพ
+                    สถานะ : คณะกรรมการฝึกประสบการณ์วิชาชีพ
                   </span>
                 </>
               ) : (
@@ -127,11 +134,9 @@ const Navbar = () => {
               )}
               {isAuth && isAuth?.roles === "admin" ? (
                 <>
-                  <div>
-                    <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
-                      admin
-                    </span>
-                  </div>
+                  <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    สถานะ : admin
+                  </span>
                 </>
               ) : (
                 <></>
@@ -139,22 +144,21 @@ const Navbar = () => {
               {isAuth && isAuth?.roles === "student" ? (
                 <>
                   <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
-                    นักศึกษา
+                    สถานะ : นักศึกษา
                   </span>
                 </>
               ) : (
                 <></>
               )}
               {isAuth && (
-                <Link
-                  to="/"
+                <button
                   onClick={(e) => {
                     handleLogout();
                   }}
                   className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
                 >
                   ออกจากระบบ
-                </Link>
+                </button>
               )}
             </div>
             <div className="-mr-2 flex md:hidden">

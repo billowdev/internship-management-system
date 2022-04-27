@@ -25,7 +25,7 @@ const Home = () => {
       <div className="wrapper bg-gray-200 antialiased ">
         {isAuth?.roles === "admin" ? (
           <>
-            <Navigate to="/admin" />
+            <Navigate to="/admin/manage/login" />
           </>
         ) : isAuth?.roles === "director" ? (
           <>

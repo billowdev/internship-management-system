@@ -1,6 +1,35 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
-const Loginadd = () => {
+const LoginAdd = () => {
+
+  function showDropDownMenu(el) {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  }
+  function swaptext(el) {
+    const targetText = el.target.innerText;
+    document.getElementById("drop-down-content-setter").innerText = targetText;
+    document.getElementById("drop-down-div").classList.toggle("hidden");
+  }
+  function showDropDownMenuOne(el) {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  }
+  function swaptextone(el) {
+    const targetText = el.target.innerText;
+    document.getElementById("drop-down-content-setter-one").innerText =
+      targetText;
+    document.getElementById("drop-down-div-one").classList.toggle("hidden");
+  }
+  function showDropDownMenutwo(el) {
+    el.target.parentElement.children[1].classList.toggle("hidden");
+  }
+  function swaptexttwo(el) {
+    const targetText = el.target.innerHTML;
+    document.getElementById("drop-down-content-setter-two").innerHTML =
+      targetText;
+    document.getElementById("drop-down-div-two").classList.toggle("hidden");
+  }
+
   return (
     <div className="bg-white rounded shadow mt-7 py-7">
       <div className="block px-6 lg:hidden md:block">
@@ -539,8 +568,9 @@ text-base font-medium leading-none text-gray-600 group-hover:text-indigo-700 mt-
           Save Changes
         </button>
       </div>
+      <Outlet />
     </div>
   );
 };
 
-export default Loginadd;
+export default LoginAdd;

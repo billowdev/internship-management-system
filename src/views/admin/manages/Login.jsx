@@ -112,7 +112,7 @@ const Login = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="py-16 px-32">
       <div className="container mx-auto px-4 wrapper">
         <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
           จัดการข้อมูลสมาชิกทั้งหมด
@@ -131,7 +131,7 @@ const Login = () => {
         />
       </div>
       <Outlet />
-    </>
+    </div>
   );
 };
 

@@ -11,7 +11,6 @@ const StudentHome = () => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    // dispatch(loadProfile);
     dispatch(loadResume);
     dispatch(loadInternship);
   }, [dispatch]);

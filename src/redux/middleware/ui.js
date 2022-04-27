@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import * as internshipActions from "../actions/student/internship"
 import * as resumeActions from "../actions/student/resume"
 import * as adminLoginActions from "../actions/admin/login"
+import * as adminProfileActions from "../actions/admin/profile"
 
 const pageLoadedFlow =
   ({ log }) =>
@@ -147,6 +148,25 @@ const adminFlow =
               draggable: true,
               progress: undefined,
             });
+          }
+          if (action.type === adminProfileActions.UPDATE_STUDENT_PROFILE_SUCCESS) {
+
+            log('delete login user')
+            var delayInMilliseconds = 3000;
+
+            toast.success('แก้ไขข้อมูลผู้ใช้สำเร็จ... กำลังกลับไปหน้าจัดการผู้ใช้ทั้งหมด', {
+              position: "top-right",
+              autoClose: delayInMilliseconds-1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
+            setTimeout(function () {
+              window.location = "/admin/manage/login";
+            }, delayInMilliseconds);
           }
         };
 export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow, adminFlow];

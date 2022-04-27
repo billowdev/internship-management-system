@@ -166,14 +166,6 @@ exports.signupController = async (req, res) => {
 
 		}
 
-
-
-
-
-
-
-
-
 	}
 };
 

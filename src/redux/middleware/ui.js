@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import * as internshipActions from "../actions/student/internship"
 import * as resumeActions from "../actions/student/resume"
+import * as adminLoginActions from "../actions/admin/login"
 
 const pageLoadedFlow =
   ({ log }) =>
@@ -91,4 +92,49 @@ const resumeFlow =
             )
           }
         };
-export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow];
+
+
+const adminFlow =
+  ({ log }) =>
+    ({ dispatch }) =>
+      (next) =>
+        (action) => {
+          next(action);
+          if (action.type === adminLoginActions.CREATE_LOGIN_SUCCESS) {
+            log('add login user')
+            toast.success('เพิ่มข้อมูลผู้ใช้สำเร็จ!', {
+              position: "top-right",
+              autoClose: 2500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          if (action.type === adminLoginActions.UPDATE_LOGIN_SUCCESS) {
+            log('update login user')
+            toast.success('แก้ไขข้อมูลผู้ใช้สำเร็จ!', {
+              position: "top-right",
+              autoClose: 2500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          if (action.type === adminLoginActions.DELETE_LOGIN_SUCCESS) {
+            log('delete login user')
+            toast.success('ลบข้อมูลผู้ใช้สำเร็จ!', {
+              position: "top-right",
+              autoClose: 2500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+        };
+export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow, adminFlow];

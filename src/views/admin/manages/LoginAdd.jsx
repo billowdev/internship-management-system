@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { loadState, saveState } from "../../../helpers/Persist";
+import { createLogin } from "../../../redux/actions/admin/login";
 
 const LoginAdd = () => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [roles, setRoles] = useState("student");
 
-  const [studentFirstName, setStudentFirstName] = useState("");
-  const [studentLastName, setStudentLastName] = useState("");
-  const [studentId, setStudentId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [program, setProgram] = useState("");
+  const [department, setDepartment] = useState("");
 
-  const [directorName, setDirectorName] = useState("");
-  const [directorPhone, setDirectorPhone] = useState("");
+  const [phone, setPhone] = useState("");
 
   function showDropDownMenu(el) {
     el.target.parentElement.children[1].classList.toggle("hidden");
@@ -38,20 +42,27 @@ const LoginAdd = () => {
     if (roles === "director") {
       saveValues = {
         login: { username, password, roles },
-        teacher: { name: directorName, phone: directorPhone },
+        director: {
+          first_name: firstName,
+          last_name: lastName,
+          phone,
+          program,
+          department,
+        },
       };
     }
     if (roles === "student") {
       saveValues = {
         login: { username, password, roles },
         student: {
-          student_id: studentId,
-          first_name: studentFirstName,
-          last_name: studentLastName,
+          first_name: firstName,
+          last_name: lastName,
+          program,
+          phone,
         },
       };
     }
-    console.log(saveValues);
+    dispatch(createLogin(saveValues));
   };
   return (
     <form
@@ -87,6 +98,7 @@ const LoginAdd = () => {
               </p>
               <input
                 required
+                maxLength={50}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -167,25 +179,10 @@ const LoginAdd = () => {
           </div>
           {roles === "student" ? (
             <>
-              {" "}
               <div className="mt-10">
                 <p className="text-xl font-semibold leading-tight text-gray-800">
                   กรอกข้อมูลเพิ่มเติมสำหรับนักศึกษา
                 </p>
-                <div className="grid w-full grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-7 mt-7 ">
-                  <div>
-                    <p className="text-base font-medium leading-none text-gray-800">
-                      รหัสนักศึกษา
-                    </p>
-                    <input
-                      onChange={(e) => {
-                        setStudentId(e.target.value);
-                      }}
-                      maxLength={13}
-                      className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                    />
-                  </div>
-                </div>
                 <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
                   <div>
                     <p className="text-base font-medium leading-none text-gray-800">
@@ -194,7 +191,7 @@ const LoginAdd = () => {
                     <input
                       maxLength={150}
                       onChange={(e) => {
-                        setStudentFirstName(e.target.value);
+                        setFirstName(e.target.value);
                       }}
                       className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                     />
@@ -209,12 +206,44 @@ const LoginAdd = () => {
                     <input
                       maxLength={150}
                       onChange={(e) => {
-                        setStudentLastName(e.target.value);
+                        setLastName(e.target.value);
                       }}
                       className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                     />
                     <p className="mt-3 text-xs leading-[15px] text-gray-600">
                       last name
+                    </p>
+                  </div>
+                </div>
+                <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+                  <div>
+                    <p className="text-base font-medium leading-none text-gray-800">
+                      สาขา
+                    </p>
+                    <input
+                      maxLength={50}
+                      onChange={(e) => {
+                        setProgram(e.target.value);
+                      }}
+                      className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                    />
+                    <p className="mt-3 text-xs leading-3 text-gray-600">
+                      fild of study
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-base font-medium leading-none text-gray-800">
+                      เบอร์โทร
+                    </p>
+                    <input
+                      maxLength={10}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                      className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                    />
+                    <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                      phone
                     </p>
                   </div>
                 </div>
@@ -233,19 +262,68 @@ const LoginAdd = () => {
                 <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
                   <div>
                     <p className="text-base font-medium leading-none text-gray-800">
-                      ชื่อ - นามสกุล
+                      ชื่อ
                     </p>
                     <input
-                      maxLength={200}
+                      maxLength={150}
                       onChange={(e) => {
-                        setDirectorName(e.target.value);
+                        setFirstName(e.target.value);
                       }}
                       className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                     />
                     <p className="mt-3 text-xs leading-3 text-gray-600">
-                      first name & last name
+                      first name
                     </p>
                   </div>
+                  <div>
+                    <p className="text-base font-medium leading-none text-gray-800">
+                      นามสกุล
+                    </p>
+                    <input
+                      maxLength={150}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
+                      className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                    />
+                    <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                      last name
+                    </p>
+                  </div>
+                </div>
+                <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+                  <div>
+                    <p className="text-base font-medium leading-none text-gray-800">
+                      สาขา
+                    </p>
+                    <input
+                      maxLength={50}
+                      onChange={(e) => {
+                        setProgram(e.target.value);
+                      }}
+                      className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                    />
+                    <p className="mt-3 text-xs leading-3 text-gray-600">
+                      fild of study
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-base font-medium leading-none text-gray-800">
+                      คณะ
+                    </p>
+                    <input
+                      maxLength={50}
+                      onChange={(e) => {
+                        setDepartment(e.target.value);
+                      }}
+                      className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                    />
+                    <p className="mt-3 text-xs leading-[15px] text-gray-600">
+                      department
+                    </p>
+                  </div>
+                </div>
+                <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
                   <div>
                     <p className="text-base font-medium leading-none text-gray-800">
                       เบอร์โทร
@@ -253,7 +331,7 @@ const LoginAdd = () => {
                     <input
                       maxLength={10}
                       onChange={(e) => {
-                        setDirectorPhone(e.target.value);
+                        setPhone(e.target.value);
                       }}
                       className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                     />

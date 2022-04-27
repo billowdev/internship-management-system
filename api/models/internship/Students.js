@@ -15,12 +15,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true
 		},
 		first_name: {
-			type: DataTypes.STRING(150),
+			type: DataTypes.STRING(100),
 			allowNull: false,
 		},
 		last_name: {
-			type: DataTypes.STRING(150),
+			type: DataTypes.STRING(100),
 			allowNull: false,
+		},
+		phone: {
+			type: DataTypes.STRING(10),
+			allowNull: true,
 		},
 		program: {
 			type: DataTypes.STRING(20),
@@ -80,10 +84,7 @@ module.exports = (sequelize, DataTypes) => {
 		status_resume: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false,
-		}, phone: {
-			type: DataTypes.STRING(10),
-			allowNull: true,
-		},
+		}
 	}, {
 		underscored: true
 	});

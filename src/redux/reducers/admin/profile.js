@@ -1,4 +1,4 @@
-import { LOAD_PROFILE_SUCCESS } from "../../actions/student/profile";
+import { LOAD_STUDENT_PROFILE_SUCCESS } from "../../actions/admin/profile";
 
 const initialState = {
   profileData: [],
@@ -7,7 +7,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_PROFILE_SUCCESS:
+    case LOAD_STUDENT_PROFILE_SUCCESS:
       return { profileData: action.payload.data, error: null };
     default:
       return state;

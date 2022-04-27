@@ -4,13 +4,28 @@ import { Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadSignout } from "../../redux/actions/auth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
-    dispatch(loadSignout);
-    navigate("/");
+    Swal.fire({
+      title: "ออกจากระบบ?",
+      text: "คุณต้องการออกจากระบบใช่หรือไม่?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(loadSignout);
+        localStorage.clear();
+        navigate("/");
+      }
+    });
   };
   const [isAuth, setIsAuth] = useState({});
   const [who, setWho] = useState({});
@@ -22,11 +37,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-sky-400 lg:hidden">
+      <nav className="bg-sky-400">
         <div className="items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-8 ">
+          <div className="flex items-center justify-between h-16 ">
             <div className="flex items-center">
-              <div className="hidden md:block lg:hidden">
+              <div className="hidden md:block">
                 {isAuth && (
                   <div className="ml-10 flex items-baseline space-x-4">
                     {isAuth?.roles === "student" ? (
@@ -78,52 +93,74 @@ const Navbar = () => {
                     {isAuth?.roles === "admin" ? (
                       <>
                         <Link
-                          to="/"
+                          to="/admin/manage/login"
                           className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          หน้าหลัก
+                          ข้อมูลสมาชิกทั้งหมด
                         </Link>
                         <Link
-                          to="/student-list"
-                          className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                        >
-                          รายชื่อนักศึกษา
-                        </Link>
-
-                        <Link
-                          to="/admin"
+                          to="/admin/manage/login/add"
                           className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          admin
+                          เพิ่มสมาชิก
                         </Link>
                       </>
                     ) : (
                       <></>
                     )}
 
-                    {!isAuth && (
+                    {/* {!isAuth && (
                       <Link
                         to="/"
                         className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
                       >
                         เข้าสู่ระบบ
                       </Link>
-                    )}
-
-                    <Link
-                      to="/"
-                      onClick={(e) => {
-                        handleLogout();
-                      }}
-                      className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
-                    >
-                      ออกจากระบบ
-                    </Link>
+                    )} */}
                   </div>
                 )}
               </div>
             </div>
 
+            <div>
+              {isAuth && isAuth?.roles === "director" ? (
+                <>
+                  <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    สถานะ : คณะกรรมการฝึกประสบการณ์วิชาชีพ
+                  </span>
+                </>
+              ) : (
+                <></>
+              )}
+              {isAuth && isAuth?.roles === "admin" ? (
+                <>
+                  <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    สถานะ : admin
+                  </span>
+                </>
+              ) : (
+                <></>
+              )}
+              {isAuth && isAuth?.roles === "student" ? (
+                <>
+                  <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    สถานะ : นักศึกษา
+                  </span>
+                </>
+              ) : (
+                <></>
+              )}
+              {isAuth && (
+                <button
+                  onClick={(e) => {
+                    handleLogout();
+                  }}
+                  className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
+                >
+                  ออกจากระบบ
+                </button>
+              )}
+            </div>
             <div className="-mr-2 flex md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}

@@ -1,6 +1,6 @@
-export const PAGE_LOADED = '[UI] page loaded';
-export const SET_LOADING_ON = '[UI] set loading on';
-export const SET_LOADING_OFF = '[UI] set loading off';
+export const PAGE_LOADED = '[UI] PAGE LOADED';
+export const SET_LOADING_ON = '[UI] set LOADING ON';
+export const SET_LOADING_OFF = '[UI] set LOADING OFF';
 
 export const pageLoaded = {
     type: PAGE_LOADED

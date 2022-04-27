@@ -18,7 +18,7 @@ const StudentHomePage = () => {
               </button>
             </div>
             <div className="flex justify-center items-center mb-3 mt-3">
-              <Link to="/internship-form">
+              <Link to="/student/internship-form">
                 <button className="w-32 px-6 py-2  text-white btn btn-sky">
                   ดู
                 </button>
@@ -35,7 +35,7 @@ const StudentHomePage = () => {
           <h3 className="text-2xl font-bold text-center">ประวัตินักศึกษา</h3>
           <div className="mt-4">
             <div className="flex justify-center items-center mb-12 mt-12">
-              <Link to="/resume">
+              <Link to="/student/resume">
                 <button className="w-32 px-6 py-2  text-white btn btn-sky">
                   ดู
                 </button>

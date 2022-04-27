@@ -12,7 +12,6 @@ const Teacher = () => {
     }, [])
     return (
        <>
-           <div>Hello student list</div>
            <Outlet />
        </>
     );

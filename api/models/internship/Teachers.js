@@ -5,8 +5,12 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			allowNull: false,
 		},
-		name: {
-			type: DataTypes.STRING(150),
+		first_name: {
+			type: DataTypes.STRING(100),
+			allowNull: false,
+		},
+		last_name: {
+			type: DataTypes.STRING(100),
 			allowNull: false,
 		},
 		phone: {

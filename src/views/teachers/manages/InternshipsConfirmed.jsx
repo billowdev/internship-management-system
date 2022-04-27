@@ -5,10 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
-import Swal from "sweetalert2";
-import { deleteLogin } from "../../../redux/actions/admin/login"
 
-const Login = () => {
+const InternshipsConfirmed = () => {
   const dispatch = useDispatch();
   const loginData = useSelector(getLogin);
 
@@ -81,75 +79,46 @@ const Login = () => {
       selector: (row) => row.id,
       sortable: true,
       cell: (row) => (
-        <div className="flex space-x-3">
-          <Link
-            to={{
-              pathname: `/admin/manage/login/update/${row.roles}/${row.id}`,
-            }}
-          >
-            <button className="w-26 text-white btn btn-sky">แก้ไขข้อมูล</button>
+        <div>
+          <Link to="/resume">
+            <button className="w-26 text-white btn btn-sky">
+              แก้ไขข้อมูล
+            </button>
           </Link>
-          <div>
-            <button
-              className="w-26 text-white btn btn-red"
-              onClick={(e) => {
-                handleDelete(row.id, row.roles);
-              }}
-            >
+        </div>
+      ),
+    },
+    {
+      name: "controllers",
+      selector: (row) => row.id,
+      sortable: true,
+      cell: (row) => (
+        <div>
+           <button className="w-26 text-white btn btn-red" onClick={(e)=>{
+             handleDelete(row.id)
+           }}>
               ลบ
             </button>
-          </div>
         </div>
       ),
     },
   ];
 
-  const handleDelete = (id, roles) => {
-    let role;
-    if (roles === "student") {
-      role = "นักศึกษา";
-    } else if (roles === "director") {
-      role = "คณะกรรมการ";
-    } else if (roles === "admin") {
-      role = "ผู้ดูแลระบบ";
-    }
-    Swal.fire({
-      title: "ลบข้อมูล?",
-      text: `คุณต้องการลบไอดี ${id} ซึ่งเป็น ${role} ใช่หรือไม่?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "ยืนยัน",
-      cancelButtonText: "ยกเลิก",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteLogin(id));
-        // console.log(id);
-      }
-    });
-  };
-
+  const handleDelete = (id)=>{
+    console.log(id)
+  }
   useEffect(() => {
     fetchData();
   }, [dispatch]);
 
   return (
-    <div className="py-16 px-32">
+    <>
       <div className="container mx-auto px-4 wrapper">
         <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
           จัดการข้อมูลสมาชิกทั้งหมด
         </h3>
-
-        <div className="flex items-end justify-end">
-          <Link to="/admin/manage/login/add">
-            {" "}
-            <button className="items-end w-26 text-white btn btn-sky">
-              เพิ่มสมาชิก
-            </button>
-          </Link>
-        </div>
         <DataTable
+          //   title="MineImages"
           columns={columns}
           data={loginData?.data}
           progressPending={loading}
@@ -162,8 +131,8 @@ const Login = () => {
         />
       </div>
       <Outlet />
-    </div>
+    </>
   );
 };
 
-export default Login;
+export default InternshipsConfirmed;

@@ -6,7 +6,7 @@ import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
 
-const Login = () => {
+const InternshipPendingConfirms = () => {
   const dispatch = useDispatch();
   const loginData = useSelector(getLogin);
 
@@ -135,4 +135,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default InternshipPendingConfirms;

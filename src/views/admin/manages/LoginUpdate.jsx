@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const LoginUpdate = () => {
-	return (
-		<div>
-			
-		</div>
-	);
-}
+  const { id } = useParams();
+  useEffect(() => {
+    console.log(id);
+  }, []);
+  return <div></div>;
+};
 
 export default LoginUpdate;

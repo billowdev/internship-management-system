@@ -11,11 +11,8 @@ const loadResumeFlow =
 						try {
 							dispatch(uiActions.setLoading(true));
 							const respReusume = await api.student.getResume();
-							const respInternship = await api.student.getInternship()
 							dispatch(studentResumeActions.loadResumeSuccess(respReusume));
 							saveState('resume', respReusume.data)
-							saveState('internship', respInternship.data)
-
 							dispatch(uiActions.setLoading(false));
 						} catch (error) {
 							dispatch(studentResumeActions.loadResumeFailure(error));

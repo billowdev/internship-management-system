@@ -72,7 +72,7 @@ const App = () => (
           <Route path="admin" element={<Admin />}>
             <Route path="manage/login" element={<Login />} />
             <Route path="manage/login/add" element={<LoginAdd />} />
-            <Route path="manage/login/update" element={<LoginUpdate />} />
+            <Route path="manage/login/update/:id" element={<LoginUpdate />} />
           </Route>
         </Route>
 

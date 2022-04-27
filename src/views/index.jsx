@@ -16,6 +16,7 @@ import Unauthorized from "./components/Unauthorized";
 import Login from "./admin/manages/Login";
 import StudentHomePage from "./students/StudentHomePage";
 import LoginAdd from "./admin/manages/LoginAdd";
+import StudentUpdate from "./admin/manages/StudentUpdate";
 import LoginUpdate from "./admin/manages/LoginUpdate";
 
 const ROLES = {
@@ -73,6 +74,7 @@ const App = () => (
             <Route path="manage/login" element={<Login />} />
             <Route path="manage/login/add" element={<LoginAdd />} />
             <Route path="manage/login/update/:role/:id" element={<LoginUpdate />} />
+            <Route path="manage/login/update/student/profile/:id" element={<StudentUpdate />} />
           </Route>
         </Route>
 

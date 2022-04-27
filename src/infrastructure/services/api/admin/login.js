@@ -29,7 +29,7 @@ export default {
 	},
 	deleteLogin: async (props) => {
 
-		const resp = await axios.post(`${BASE_URL}/admin/login/destroy`, { id: props }, {
+		const resp = await axios.delete(`${BASE_URL}/admin/login/destroy`, { id: props }, {
 			headers: {
 				"Content-Type": "application/json",
 				"Authorization": accessToken
@@ -38,4 +38,11 @@ export default {
 		);
 		return resp.data;
 	},
+	loadLoginAccount: async (props) => {
+		const resp = await axios.get(`${BASE_URL}/admin/login/get/${props}`, accessHeader
+
+		);
+	return resp.data;
+},
+	
 }

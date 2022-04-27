@@ -48,6 +48,16 @@ const loadLoginFlow =
               dispatch(loginActions.deleteLoginFailure(error));
             }
           }
+          if (action.type === loginActions.LOAD_LOGIN_ACCOUNT) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respLoginAccount = await api.adminLogin.loadLoginAccount(action.payload);
+              dispatch(loginActions.loadLoginAccountSuccess(respLoginAccount));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(loginActions.loadLoginAccountFailure(error));
+            }
+          }
         };
 
 export default [loadLoginFlow];

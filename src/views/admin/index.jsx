@@ -8,9 +8,7 @@ import { Outlet } from "react-router-dom";
 function Admin() {
   return (
     <>
-      {/* <Controllers /> */}
       <Outlet />
-      {/* <Login /> */}
     </>
   );
 }

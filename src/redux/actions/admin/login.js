@@ -75,3 +75,23 @@ export const deleteLoginFailure = error => ({
     type: DELETE_LOGIN_FAILURE,
     payload: error,
 });
+
+
+export const LOAD_LOGIN_ACCOUNT = '[LOGIN] LOAD ACCOUNT';
+export const LOAD_LOGIN_ACCOUNT_SUCCESS = '[LOGIN] LOAD ACCOUNT SUCCESS';
+export const LOAD_LOGIN_ACCOUNT_FAILURE = '[LOGIN] LOAD ACCOUNT FAILURE';
+
+export const loadLoginAccount = query => ({
+    type: LOAD_LOGIN_ACCOUNT,
+    payload: query,
+});
+
+export const loadLoginAccountSuccess = data => ({
+    type: LOAD_LOGIN_ACCOUNT_SUCCESS,
+    payload: data,
+});
+
+export const loadLoginAccountFailure = error => ({
+    type: LOAD_LOGIN_ACCOUNT_FAILURE,
+    payload: error,
+});

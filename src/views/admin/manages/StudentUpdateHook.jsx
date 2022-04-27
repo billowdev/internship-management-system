@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import * as thaiAddresses from "../../../infrastructure/services/api/thaiAddresses/thaiAddressApi";
 import { loadState, saveState } from "../../../helpers/Persist";
 
-const LoginUpdateHook = () => {
+const StudentUpdateHook = () => {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -557,4 +557,4 @@ const LoginUpdateHook = () => {
   };
 };
 
-export default LoginUpdateHook;
+export default StudentUpdateHook;

@@ -230,8 +230,21 @@ exports.updateLogin = async (req, res) => {
 	try {
 		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
 		const { username, password, roles } = req.body;
-
+		console.log(req.body)
 		if (isAdmin != null) {
+			if (req.body.roles == "student") {
+				const { student } = req.body
+				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+				await Students.update(student, { where: { login_id: req.params.id } })
+			}
+			if (req.body.roles == "director") {
+				const { director } = req.body
+				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+				await Teachers.update(director, { where: { login_id: req.params.id } })
+			}
+			if (req.body.roles == "admin") {
+				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+			}
 			await Login.update({ username, password, roles }, { where: { id: req.params.id } })
 			res.status(200).json({ success: true, msg: "update login success" })
 		} else {
@@ -305,6 +318,35 @@ exports.destroyLogin = async (req, res) => {
 			res.status(404).json({ success: false, msg: "404 Not Found" })
 		}
 
+	} catch (err) {
+		console.log({ msg: "on login controller", error: err })
+		res.status(500).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
+
+exports.getLoginAccount = async (req, res) => {
+	try {
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
+
+		if (isAdmin != null) {
+			const resp = await Login.findOne({ where: { id: req.params.id } })
+
+			if (resp != null) {
+				let data;
+				if (resp.roles === "student") {
+					data = await Students.findOne({ where: { login_id: resp.id } })
+				}
+				if (resp.roles === "director") {
+					data = await Teachers.findOne({ where: { login_id: resp.id } })
+				}
+				res.status(200).json({ success: true, msg: "get data success", data: { resp, data } })
+			} else {
+				res.status(400).json({ success: false, msg: "can't access data" })
+			}
+		} else {
+			res.status(404).json({ success: false, msg: "404 Not Found" })
+		}
 	} catch (err) {
 		console.log({ msg: "on login controller", error: err })
 		res.status(500).json({ success: false, msg: "something went wrong!" })

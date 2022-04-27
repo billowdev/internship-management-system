@@ -22,11 +22,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-sky-400 lg:hidden">
+      <nav className="bg-sky-400">
         <div className="items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-8 ">
+          <div className="flex items-center justify-between h-16 ">
             <div className="flex items-center">
-              <div className="hidden md:block lg:hidden">
+              <div className="hidden md:block">
                 {isAuth && (
                   <div className="ml-10 flex items-baseline space-x-4">
                     {isAuth?.roles === "student" ? (
@@ -101,29 +101,61 @@ const Navbar = () => {
                       <></>
                     )}
 
-                    {!isAuth && (
+                    {/* {!isAuth && (
                       <Link
                         to="/"
                         className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
                       >
                         เข้าสู่ระบบ
                       </Link>
-                    )}
-
-                    <Link
-                      to="/"
-                      onClick={(e) => {
-                        handleLogout();
-                      }}
-                      className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
-                    >
-                      ออกจากระบบ
-                    </Link>
+                    )} */}
                   </div>
                 )}
               </div>
             </div>
 
+            <div>
+              {isAuth && isAuth?.roles === "director" ? (
+                <>
+                  <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    คณะกรรมการฝึกประสบการณ์วิชาชีพ
+                  </span>
+                </>
+              ) : (
+                <></>
+              )}
+              {isAuth && isAuth?.roles === "admin" ? (
+                <>
+                  <div>
+                    <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                      admin
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+              {isAuth && isAuth?.roles === "student" ? (
+                <>
+                  <span className="items-center hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    นักศึกษา
+                  </span>
+                </>
+              ) : (
+                <></>
+              )}
+              {isAuth && (
+                <Link
+                  to="/"
+                  onClick={(e) => {
+                    handleLogout();
+                  }}
+                  className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
+                >
+                  ออกจากระบบ
+                </Link>
+              )}
+            </div>
             <div className="-mr-2 flex md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}

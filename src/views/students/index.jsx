@@ -7,7 +7,7 @@ import Controllers from "./Controllers";
 const StudentHome = () => {
   return (
     <div>
-      <Controllers />
+      {/* <Controllers /> */}
       <Outlet />
     </div>
   );

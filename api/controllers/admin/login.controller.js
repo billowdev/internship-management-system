@@ -13,7 +13,7 @@ exports.createLogin = async (req, res) => {
 				if (loginResp.roles == 'student') {
 					console.log("\n\n\n\n", loginResp, "\n\n\n\n")
 					const { first_name, last_name, program, phone } = req.body?.student
-					const respStudentData = await Students.create({ id: username, first_name, last_name, phone, program, department:"", login_id: loginResp.id })
+					const respStudentData = await Students.create({ id: username, first_name, last_name, phone, program, department: "", login_id: loginResp.id })
 					const { id } = respStudentData;
 
 					// hook education table for student
@@ -45,19 +45,19 @@ exports.createLogin = async (req, res) => {
 					await CoStudentInternships.create({ internship_id: resp.id })
 					await CoStudentInternships.create({ internship_id: resp.id })
 					await CoStudentInternships.create({ internship_id: resp.id })
-					res.status(200).json({ success: true, msg: "create login success"})
+
 				}
 
 				if (loginResp.roles == "director") {
 					const { first_name, last_name, phone, program, department } = req.body?.director
 					const { id } = loginResp
-					await Teachers.create({ id: username, first_name, last_name, phoneF, program, department, login_id: id })
-					res.status(200).json({ success: true, msg: "create login success"})
+					await Teachers.create({ id: username, first_name, last_name, phone, program, department, login_id: id })
+
 				}
 
-				res.status(200).json({ success: true, msg: "create login success"})
+				res.status(200).json({ success: true, msg: "create login success" })
 			} else {
-				res.status(400).json({ success: false, msg: "create login faild user is exist" })
+				res.status(401).json({ success: false, msg: "create login faild user is exist" })
 			}
 		} else {
 			res.status(404).json({ success: false, msg: "404 Not Found" })
@@ -94,6 +94,7 @@ exports.getLogin = async (req, res) => {
 						username: {
 							[Op.like]: `%${search}%`,
 						},
+						is_active: 1
 					},
 					order: [[sortColumn, sortDirection]],
 					raw: true,
@@ -105,6 +106,7 @@ exports.getLogin = async (req, res) => {
 						username: {
 							[Op.like]: `%${search}%`,
 						},
+						is_active: 1
 					},
 					raw: true,
 				});
@@ -113,6 +115,7 @@ exports.getLogin = async (req, res) => {
 					offset: startIndex,
 					limit: perPage,
 					attributes: { exclude: ["password"] },
+					where: { is_active: 1 },
 					order: [[sortColumn, sortDirection]],
 					raw: true,
 				});
@@ -121,6 +124,85 @@ exports.getLogin = async (req, res) => {
 					offset: startIndex,
 					limit: perPage,
 					attributes: { exclude: ["password"] },
+					where: { is_active: 1 },
+					raw: true,
+				});
+			}
+			res.status(200).json({
+				success: true,
+				msg: "get Login success",
+				data: {
+					page: page,
+					per_page: perPage,
+					total_pages: totalPages,
+					total: total,
+					data: resp,
+				},
+			});
+		} else {
+			res.status(404).json({ success: false, msg: "404 Not Found" })
+		}
+	} catch (err) {
+		console.log({ msg: "on login controller", error: err })
+		res.status(500).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
+exports.getNotActiveLogin = async (req, res) => {
+	try {
+		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
+		if (isAdmin != null) {
+			const page = parseInt(req.query.page);
+			const perPage = parseInt(req.query.per_page);
+			const sortColumn = req.query.sort_column;
+			const sortDirection = req.query.sort_direction;
+			const search = req.query.search;
+			const startIndex = (page - 1) * perPage;
+
+			const total = await Login.count();
+			let totalPages = total / perPage;
+			let resp;
+
+			if (search && sortColumn) {
+				resp = await Login.findAll({
+					offset: startIndex,
+					limit: perPage,
+					attributes: { exclude: ["password"] },
+					where: {
+						username: {
+							[Op.like]: `%${search}%`,
+						},
+						is_active: 0
+					},
+					order: [[sortColumn, sortDirection]],
+					raw: true,
+				});
+			} else if (search) {
+				resp = await Login.findAll({
+					attributes: { exclude: ["password"] },
+					where: {
+						username: {
+							[Op.like]: `%${search}%`,
+						},
+						is_active: 0
+					},
+					raw: true,
+				});
+			} else if (sortColumn) {
+				resp = await Login.findAll({
+					offset: startIndex,
+					limit: perPage,
+					attributes: { exclude: ["password"] },
+					where: { is_active: 0 },
+					order: [[sortColumn, sortDirection]],
+					raw: true,
+				});
+			} else {
+				resp = await Login.findAll({
+					offset: startIndex,
+					limit: perPage,
+					attributes: { exclude: ["password"] },
+					where: { is_active: 0 },
 					raw: true,
 				});
 			}
@@ -167,7 +249,7 @@ exports.deleteLogin = async (req, res) => {
 		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
 
 		if (isAdmin != null) {
-			await Login.update({ isActive: 0 }, { where: { id: req.params.id } })
+			await Login.update({ is_active: 0 }, { where: { id: req.params.id } })
 			res.status(200).json({ success: true, msg: `delete login id: ${req.params.id} successfuly` })
 		} else {
 			res.status(404).json({ success: false, msg: "404 Not Found" })

@@ -81,18 +81,22 @@ const Login = () => {
       sortable: true,
       cell: (row) => (
         <div className="flex space-x-3">
-          <Link to={{ pathname: `/admin/manage/login/update/${row.id}` }}>
+          <Link
+            to={{
+              pathname: `/admin/manage/login/update/${row.roles}/${row.id}`,
+            }}
+          >
             <button className="w-26 text-white btn btn-sky">แก้ไขข้อมูล</button>
           </Link>
           <div>
-            <button
+            {/* <button
               className="w-26 text-white btn btn-red"
               onClick={(e) => {
                 handleDelete(row.username, row.roles);
               }}
             >
               ลบ
-            </button>
+            </button> */}
           </div>
         </div>
       ),
@@ -133,8 +137,16 @@ const Login = () => {
         <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
           จัดการข้อมูลสมาชิกทั้งหมด
         </h3>
+
+        <div className="flex items-end justify-end">
+          <Link to="/admin/manage/login/add">
+            {" "}
+            <button className="items-end w-26 text-white btn btn-sky">
+              เพิ่มสมาชิก
+            </button>
+          </Link>
+        </div>
         <DataTable
-          //   title="MineImages"
           columns={columns}
           data={loginData?.data}
           progressPending={loading}

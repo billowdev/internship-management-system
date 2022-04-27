@@ -41,7 +41,7 @@ const loadLoginFlow =
           if (action.type === loginActions.DELETE_LOGIN) {
             try {
               dispatch(uiActions.setLoading(true));
-              const respDeleteLogin = await api.adminLogin.updateLogin(action.payload);
+              const respDeleteLogin = await api.adminLogin.deleteLogin(action.payload);
               dispatch(loginActions.deleteLoginSuccess(respDeleteLogin));
               dispatch(uiActions.setLoading(false));
             } catch (error) {

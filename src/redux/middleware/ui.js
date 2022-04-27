@@ -35,10 +35,13 @@ const authFlow =
             dispatch(authActions.loadAuth)
             log("signout success");
             Swal.fire(
-              'ออกจากระบบ!',
-              'You clicked the button!',
+              'สำเร็จ!',
+              'ออกจากระบบ...',
               'success'
-            ).then(() => window.location.reload())
+            ).then(() => {
+              localStorage.clear()
+              window.location.reload()
+            })
             dispatch(authActions.loadAuth)
           }
 

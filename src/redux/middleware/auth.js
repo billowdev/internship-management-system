@@ -31,9 +31,9 @@ const loadAuthFlow =
           }
           if (action.type === authActions.LOAD_SIGNOUT) {
             try {
+              dispatch(authActions.loadSignoutSuccess("success"));
               Cookies.remove("access-token");
               localStorage.clear();
-              dispatch(authActions.loadSignoutSuccess("success"));
             } catch (error) {
               dispatch(authActions.loadSignoutFailure(error));
             }

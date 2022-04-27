@@ -10,6 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(loadSignout);
+    localStorage.clear();
     navigate("/");
   };
   const [isAuth, setIsAuth] = useState({});

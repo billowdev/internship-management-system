@@ -34,7 +34,6 @@ const Home = () => {
         ) : isAuth?.roles === "student" ? (
           <>
            <Navigate to="/student/home" />
-        
           </>
         ) : (
           <>

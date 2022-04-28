@@ -36,11 +36,11 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		// all below can fill later initial as null value with allow null true
 		skill: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(255),
 			allowNull: true,
 		},
 		interest: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(255),
 			allowNull: true,
 		},
 		project_topic: {
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		// experience
 		exp: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(255),
 			allowNull: true,
 		},
 		religion: {
@@ -81,10 +81,6 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DECIMAL(4),
 			allowNull: true,
 		},
-		status_resume: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
-		}
 	}, {
 		underscored: true
 	});

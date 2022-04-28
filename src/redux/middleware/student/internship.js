@@ -28,6 +28,28 @@ const loadInternshipFlow =
               dispatch(studentInternshipActionsons.updateInternshipFailure(error));
             }
           }
+
+          if (action.type === studentInternshipActionsons.SEND_INTERNSHIP) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respInternship = await api.student.updateInternshipStatus("send", action.payload);
+              dispatch(studentInternshipActionsons.sendInternshipSuccess(respInternship));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(studentInternshipActionsons.sendInternshipFailure(error));
+            }
+          }
+          if (action.type === studentInternshipActionsons.UNSEND_INTERNSHIP) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respInternship = await api.student.updateInternshipStatus("unsend", action.payload);
+              dispatch(studentInternshipActionsons.unsendInternshipSuccess(respInternship));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(studentInternshipActionsons.unsendInternshipFailure(error));
+            }
+          }
+
         };
 
 export default [loadInternshipFlow];

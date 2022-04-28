@@ -10,7 +10,7 @@ exports.getInternships = async (req, res) => {
 			res.json({})
 		}
 	} catch (err) {
-		console.log({ msg: "on user controller", error: err })
+		console.log({ msg: "on internship controller", error: err })
 		res.status(400).json({ success: false, msg: "something went wrong!" })
 	}
 }
@@ -46,11 +46,30 @@ exports.getInternshipsByStudents = async (req, res) => {
 		}
 
 	} catch (err) {
-		console.log({ msg: "on user controller", error: err })
+		console.log({ msg: "on internship controller", error: err })
 		res.status(400).json({ success: false, msg: "something went wrong!" })
 	}
 }
 
+exports.sendInternship = async (req, res) => {
+	try {
+		await Internships.update({ is_send: 1 }, { where: { id: req.body.id } })
+		res.status(200).json({ success: true, msg: "send successfuly" })
+	} catch (err) {
+		console.log({ msg: "on internship controller", error: err })
+		res.status(400).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
+exports.unsendInternship = async (req, res) => {
+	try {
+		await Internships.update({ is_send: 0 }, { where: { id: req.body.id } })
+		res.status(200).json({ success: true, msg: "unsend successfuly" })
+	} catch (err) {
+		console.log({ msg: "on internship controller", error: err })
+		res.status(400).json({ success: false, msg: "something went wrong!" })
+	}
+}
 
 exports.updateInternship = async (req, res) => {
 	try {
@@ -73,19 +92,19 @@ exports.updateInternship = async (req, res) => {
 			await Companies.update(companies, { where: { id: companyId } })
 
 			const { firstPerson, secondPerson, thirdPerson, fourthPerson } = coStudent
-			
+
 			await CoStudentInternships.update(firstPerson, { where: { id: firstPerson?.id, internship_id: internshipId } })
 			await CoStudentInternships.update(secondPerson, { where: { id: secondPerson?.id, internship_id: internshipId } })
 			await CoStudentInternships.update(thirdPerson, { where: { id: thirdPerson?.id, internship_id: internshipId } })
 			await CoStudentInternships.update(fourthPerson, { where: { id: fourthPerson?.id, internship_id: internshipId } })
-		
+
 
 
 			res.status(200).json({ success: true, msg: "update internship information successfuly" });
 		}
 
 	} catch (err) {
-		console.log({ msg: "on user controller", error: err })
+		console.log({ msg: "on internship controller", error: err })
 		res.status(400).json({ success: false, msg: "something went wrong!" })
 	}
 }

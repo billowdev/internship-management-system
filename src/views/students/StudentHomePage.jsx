@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loadState } from "../../helpers/Persist";
+import { getStudentInternship } from "../../redux/selectors/student/internship";
+import { loadInternship } from "../../redux/actions/student/internship";
 const StudentHomePage = () => {
+  const dispatch = useDispatch();
+  let internship = useSelector(getStudentInternship);
+
+  useEffect(() => {
+    dispatch(loadInternship);
+  }, []);
+  useEffect(() => {
+    internship = loadState("internship");
+  }, []);
   return (
     <>
       <div className="flex md:flex-row sm0:flex-col sm1:flex-col sm3:flex-row sm3:space-x-10 md:space-x-5 lg:flex-row lg:space-x-16 items-center justify-center min-h-screen">
@@ -13,9 +26,38 @@ const StudentHomePage = () => {
           <h3 className="text-2xl font-bold text-center">การฝึกงาน</h3>
           <div className="mt-4">
             <div className="flex justify-center items-center mb-3 mt-3">
-              <button className="w-32 px-6 py-2 mt-4 text-white btn btn-green">
-                ส่งแล้ว
-              </button>
+              {internship &&
+                internship?.Internships?.is_send &&
+                internship?.Internships?.is_confirm && (
+                  <>
+                    <button className="w-32 px-6 py-2 mt-4 text-white btn btn-green">
+                      ผ่าน
+                    </button>
+                  </>
+                )}
+
+              {internship &&
+                internship?.Internships?.is_send &&
+                !internship?.Internships?.is_confirm && (
+                  <>
+                    <button className="w-32 px-6 py-2 mt-4 text-white btn btn-sky">
+                      รออนุมัติ
+                    </button>
+                  </>
+                )}
+
+              {internship &&
+                !internship?.Internships?.is_send &&
+                !internship?.Internships?.is_confirm && (
+                  <>
+                    <button
+                      className="w-32 px-6 py-2 mt-4 text-white btn btn-red"
+                      disabled
+                    >
+                      ยังไม่ส่ง
+                    </button>
+                  </>
+                )}
             </div>
             <div className="flex justify-center items-center mb-3 mt-3">
               <Link to="/student/internship-form">

@@ -1,10 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loadInternship } from "../../redux/actions/student/internship";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loadInternship,
+  sendInternship,
+  unsendInternship,
+} from "../../redux/actions/student/internship";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
 import Internshiphook from "./InternshipHook";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { getStudentInternship } from "../../redux/selectors/student/internship";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   const {
@@ -67,10 +72,13 @@ const InternshipForm = () => {
   const [coStudentMsg3, setCoStudentMsg3] = useState("");
   const [coStudentMsg4, setCoStudentMsg4] = useState("");
 
+  let intern = useSelector(getStudentInternship);
+
   useEffect(() => {
-    const intern = loadState("internship");
+    intern = loadState("internship");
     const sender = loadState("resume");
     const senderData = sender?.student;
+
     setStudentFormData({
       id: senderData?.id,
       firstName: senderData?.first_name,
@@ -135,11 +143,18 @@ const InternshipForm = () => {
 
     fetchProvinces();
   }, []);
-
+  const navigate = useNavigate();
+  const handleSend = (id) => {
+    dispatch(sendInternship(id));
+    navigate("/student/home");
+  };
+  const handleUnsend = (id) => {
+    dispatch(unsendInternship(id));
+    navigate("/student/home");
+  };
   useEffect(() => {
     dispatch(loadInternship);
   }, [dispatch]);
-
 
   const SelectType = (
     <>
@@ -675,7 +690,7 @@ const InternshipForm = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            รหัสนักศึกษา 
+            รหัสนักศึกษา
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
@@ -724,7 +739,7 @@ const InternshipForm = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            รหัสนักศึกษา 
+            รหัสนักศึกษา
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
@@ -860,27 +875,66 @@ const InternshipForm = () => {
                   {InternshipInformation}
                   {/* นักศึกษาฝึกประสบการร่วม */}
                   {coInternshipStudents}
-                  <hr className="h-[1px] bg-gray-100 my-14" />
-                  <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                    <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
-                      Cancel
-                    </button>
-
+                  {/* <hr className="h-[1px] bg-gray-100" /> */}
+                  <div className="flex flex-col my-5 px-7  flex-wrap items-center justify-center w-full lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                     <button
                       id="submit"
                       type="submit"
                       className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
                     >
-                      Save Changes
+                      บันทึก
                     </button>
                   </div>
                 </div>
               </form>
+              <div className="mt-10 mb-10 flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
+                <Link to="/student/home">
+                  <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
+                    กลับ
+                  </button>
+                </Link>
+                {intern &&
+                  !intern?.Internships?.is_send &&
+                  !intern?.Internships?.is_confirm && (
+                    <div>
+                      <button
+                        onClick={(e) => {
+                          handleSend(intern?.Internships?.id);
+                        }}
+                        className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                      >
+                        ส่ง
+                      </button>
+                    </div>
+                  )}
+
+                {intern &&
+                  intern?.Internships?.is_send &&
+                  !intern?.Internships?.is_confirm && (
+                    <button
+                      onClick={(e) => {
+                        handleUnsend(intern?.Internships?.id);
+                      }}
+                      className="btn btn-red transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      ยกเลิกการส่ง
+                    </button>
+                  )}
+
+                <Link to="/student/home">
+                  {intern &&
+                    intern?.Internships?.is_send &&
+                    intern?.Internships?.is_confirm && (
+                      <button className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
+                        ผ่านการอนุมัติแล้ว
+                      </button>
+                    )}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    
     </>
   );
 };

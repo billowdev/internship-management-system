@@ -12,7 +12,6 @@ const Home = () => {
   const [isAuth, setIsAuth] = useState({});
 
   useEffect(() => {
-    // dispatch(loadProfile);
     dispatch(loadResume);
     dispatch(loadInternship);
   }, [dispatch]);

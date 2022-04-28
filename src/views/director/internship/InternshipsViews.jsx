@@ -62,7 +62,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="ชื่อ-นามสุกล"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.first_name}
               disabled
             />
@@ -74,7 +74,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="ชื่อ-นามสุกล"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.last_name}
               disabled
             />
@@ -86,7 +86,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="รหัสนักศึกษา"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.id}
               disabled
             />
@@ -97,7 +97,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="เบอร์โทรศัพท์"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.phone}
               disabled
             />
@@ -108,7 +108,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="exsample@gmail.com"
+              placeholder="-"
               type="email"
               id="email"
               disabled
@@ -145,7 +145,7 @@ const InternshipsViews = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            placeholder="-"
             disabled
             defaultValue={internshipDetail?.Companies?.company?.name}
           />
@@ -153,12 +153,12 @@ const InternshipsViews = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ถูมิภาค
+            ภูมิภาค
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            placeholder="-"
             defaultValue={internshipDetail?.Companies?.company?.type}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
@@ -173,7 +173,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="งานที่เกี่ยวข้อง"
+            placeholder="-"
             defaultValue={internshipDetail?.Companies?.company?.activities}
           />
         </div>
@@ -184,7 +184,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="หัวหน้าฝ่ายบุคคล"
+            placeholder="-"
             defaultValue={internshipDetail?.Companies?.company?.propose_to}
           />
         </div>
@@ -197,7 +197,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ผู้ติดต่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail &&
               internshipDetail?.Companies?.company?.contact_person_name
@@ -211,7 +211,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ตำแหน่ง"
+            placeholder="-"
             defaultValue={
               internshipDetail?.Companies?.company?.contact_person_position
             }
@@ -301,7 +301,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสไปรษณีย์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.Companies?.companyAddress?.post_code
             }
@@ -382,7 +382,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.first_name
             }
@@ -396,7 +396,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.last_name
             }
@@ -410,7 +410,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.student_id
             }
@@ -423,7 +423,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.phone
             }
@@ -439,7 +439,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.first_name
             }
@@ -453,7 +453,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.last_name
             }
@@ -467,7 +467,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.student_id
             }
@@ -480,7 +480,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.phone
             }
@@ -496,7 +496,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.first_name
             }
@@ -510,7 +510,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.last_name
             }
@@ -524,7 +524,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.student_id
             }
@@ -537,7 +537,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.phone
             }

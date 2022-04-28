@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
 import { loadState } from "../../../helpers/Persist";
-import { loadInternshipDetail } from "../../../redux/actions/director/internship";
+import {
+  confirmInternship,
+  loadInternshipDetail,
+  returnInternship,
+} from "../../../redux/actions/director/internship";
 import { getInternshipDetail } from "../../../redux/selectors/director/internship";
 import { Link } from "react-router-dom";
 
@@ -22,6 +26,12 @@ const InternshipsViews = () => {
   const [presentAddr, setPresentAddr] = useState([]);
   const [student, setStudent] = useState([]);
 
+  const handleConfirm = (id) => {
+    dispatch(confirmInternship(id));
+  };
+  const handleReturn = (id) => {
+    dispatch(returnInternship(id));
+  };
   useEffect(() => {
     dispatch(loadInternshipDetail(id));
   }, [dispatch]);
@@ -189,6 +199,7 @@ const InternshipsViews = () => {
             disabled
             placeholder="ผู้ติดต่อ"
             defaultValue={
+              internshipDetail &&
               internshipDetail?.Companies?.company?.contact_person_name
             }
           />
@@ -551,49 +562,53 @@ const InternshipsViews = () => {
                   {InternshipInformation}
                   {/* นักศึกษาฝึกประสบการร่วม */}
                   {coInternshipStudents}
-                  <hr className="h-[1px] bg-gray-100 my-14" />
-                  <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                    {status === "pending" ? (
-                      <>
-                        <Link to="/director/internship/pending">
-                          <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
-                            Cancel
-                          </button>
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        <Link to="/director/internship/confirm">
-                          <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
-                            Cancel
-                          </button>
-                        </Link>
-                      </>
-                    )}
-                    {status === "pending" ? (
-                      <>
-                        <button
-                          id="submit"
-                          type="submit"
-                          className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                        >
-                          ส่งคืน
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          id="submit"
-                          type="submit"
-                          className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                        >
-                          พิจารณาใหม่
-                        </button>
-                      </>
-                    )}
-                  </div>
                 </div>
               </form>
+
+              <div className="mt-10 mb-10 flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
+                {status === "pending" ? (
+                  <>
+                    <Link to="/director/internship/pending">
+                      <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-full ">
+                        กลับ
+                      </button>
+                    </Link>
+                    <Link to="/director/internship/pending">
+                      <button className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
+                        ส่งคืน
+                      </button>
+                    </Link>
+                    <Link to="/director/internship/pending">
+                      <button
+                        onClick={(e) => {
+                          handleConfirm(internshipDetail?.Internships?.id);
+                        }}
+                        className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                      >
+                        อนุมัติ
+                      </button>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/director/internship/confirm">
+                      <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-full ">
+                        กลับ
+                      </button>
+                    </Link>
+                    <Link to="/director/internship/confirm">
+                      <button
+                        onClick={(e) => {
+                          handleReturn(internshipDetail?.Internships?.id);
+                        }}
+                        className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                      >
+                        พิจารณาใหม่
+                      </button>
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

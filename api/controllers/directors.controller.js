@@ -303,38 +303,33 @@ exports.getInternshipsByDirector = async (req, res) => {
 }
 
 
-exports.updateInternship = async (req, res) => {
+exports.confirmInternship = async (req, res) => {
 	try {
-		const reqId = req.user?.id
-		const whoLogin = await Login.findOne({ where: { id: reqId, roles: 'student' } })
-		const { id } = whoLogin
-		const student = await Students.findOne({ where: { login_id: id } })
-		if (student == null) {
-			res.status(400).json({ success: false, msg: "unauthorize" })
-		} else {
-			const { id } = student
-			const companyId = await Internships.findOne({ where: { student_id: id } }).then(resp => { return resp.company_id })
-			const internshipId = await Internships.findOne({ where: { student_id: id } }).then(resp => { return resp.id })
+		const id = req.body.id
+		await Internships.update({ is_confirm: 1 }, { where: { id: id } })
+		res.status(200).json({ success: true, msg: "confirm internship information successfuly" });
+	} catch (err) {
+		console.log({ msg: "on director controller", error: err })
+		res.status(400).json({ success: false, msg: "something went wrong!" })
+	}
+}
 
-			const companyAddressId = await Companies.findOne({ where: { id: companyId } }).then(resp => { return resp.address_id })
+exports.unConfirmInternship = async (req, res) => {
+	try {
+		const id = req.body.id
+		await Internships.update({ is_send: 1, is_confirm: 0 }, { where: { id: id } })
+		res.status(200).json({ success: true, msg: "unconfirm internship information successfuly" });
+	} catch (err) {
+		console.log({ msg: "on director controller", error: err })
+		res.status(400).json({ success: false, msg: "something went wrong!" })
+	}
+}
 
-			const { coStudent, companies, companyAddress, sender } = req.body
-			await Students.update(sender, { where: { id: sender.id } })
-			await Addresses.update(companyAddress, { where: { id: companyAddressId } })
-			await Companies.update(companies, { where: { id: companyId } })
-
-			const { firstPerson, secondPerson, thirdPerson, fourthPerson } = coStudent
-
-			await CoStudentInternships.update(firstPerson, { where: { id: firstPerson?.id, internship_id: internshipId } })
-			await CoStudentInternships.update(secondPerson, { where: { id: secondPerson?.id, internship_id: internshipId } })
-			await CoStudentInternships.update(thirdPerson, { where: { id: thirdPerson?.id, internship_id: internshipId } })
-			await CoStudentInternships.update(fourthPerson, { where: { id: fourthPerson?.id, internship_id: internshipId } })
-
-
-
-			res.status(200).json({ success: true, msg: "update internship information successfuly" });
-		}
-
+exports.returnInternship = async (req, res) => {
+	try {
+		const id = req.body.id
+		await Internships.update({ is_send: 0, is_confirm: 0 }, { where: { id: id } })
+		res.status(200).json({ success: true, msg: "return internship information successfuly" });
 	} catch (err) {
 		console.log({ msg: "on director controller", error: err })
 		res.status(400).json({ success: false, msg: "something went wrong!" })

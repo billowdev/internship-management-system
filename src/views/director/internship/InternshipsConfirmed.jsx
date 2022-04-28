@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { loadInternshipConfirm } from "../../../redux/actions/director/internship";
+import {
+  loadInternshipConfirm,
+  unConfirmInternship,
+} from "../../../redux/actions/director/internship";
 import { getInternshipConfirm } from "../../../redux/selectors/director/internship";
 
 const InternshipsConfirmed = () => {
@@ -87,12 +90,12 @@ const InternshipsConfirmed = () => {
     },
     {
       name: "controllers",
-      selector: (row) => row.id,
+      selector: (row) => row["Student.id"],
       sortable: true,
       cell: (row) => (
         <div className="flex space-x-2">
           <div>
-            <Link to={`/director/internship/view/confirm/${row.id}`}>
+            <Link to={`/director/internship/view/confirm/${row["Student.id"]}`}>
               <button className="w-24 text-white btn btn-sky">ดู</button>
             </Link>
           </div>
@@ -112,9 +115,10 @@ const InternshipsConfirmed = () => {
   ];
 
   const handleReturn = (id) => {
-    console.log(id);
+    dispatch(unConfirmInternship(id));
+    fetchData();
   };
-  
+
   useEffect(() => {
     fetchData();
   }, [dispatch]);
@@ -126,7 +130,7 @@ const InternshipsConfirmed = () => {
   return (
     <>
       <div className="container mx-auto px-4 wrapper">
-      <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+        <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
           ข้อมูลฝึกประสบการณ์วิชาชีพ ที่ยืนยันแล้ว
         </h3>
         <hr className="mt-3 mb-10" />

@@ -17,4 +17,23 @@ export default {
 		);
 		return resp.data;
 	},
+
+	updateInternshipStatus: async (status, props) => {
+		if (status == "confirm") {
+			const resp = await axios.patch(`${BASE_URL}/directors/confirm/internships`, { id: props }, accessHeader
+			);
+			return resp.data;
+		}
+		if (status == "unconfirm") {
+			const resp = await axios.patch(`${BASE_URL}/directors/unconfirm/internships`, { id: props }, accessHeader
+			);
+			return resp.data;
+		}
+		if (status == "return") {
+			const resp = await axios.patch(`${BASE_URL}/directors/return/internships`, { id: props }, accessHeader
+			);
+			return resp.data;
+		}
+
+	},
 }

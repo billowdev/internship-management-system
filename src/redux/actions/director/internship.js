@@ -77,3 +77,42 @@ export const confirmInternshipFailure = error => ({
     type: CONFIRM_INTERNSHIP_FAILURE,
     payload: error,
 });
+
+export const UN_CONFIRM_INTERNSHIP = '[DIRECTOR.INTERNSHIP] UN_CONFIRM';
+export const UN_CONFIRM_INTERNSHIP_SUCCESS = '[DIRECTOR.INTERNSHIP] UN_CONFIRM SUCCESS';
+export const UN_CONFIRM_INTERNSHIP_FAILURE = '[DIRECTOR.INTERNSHIP] UN_CONFIRM FAILURE';
+
+export const unConfirmInternship = query => ({
+    type: UN_CONFIRM_INTERNSHIP,
+    payload: query,
+});
+
+export const unConfirmInternshipSuccess = data => ({
+    type: UN_CONFIRM_INTERNSHIP_SUCCESS,
+    payload: data,
+});
+
+export const unConfirmInternshipFailure = error => ({
+    type: UN_CONFIRM_INTERNSHIP_FAILURE,
+    payload: error,
+});
+
+
+export const RETURN_INTERNSHIP = '[DIRECTOR.INTERNSHIP] RETURN';
+export const RETURN_INTERNSHIP_SUCCESS = '[DIRECTOR.INTERNSHIP] RETURN SUCCESS';
+export const RETURN_INTERNSHIP_FAILURE = '[DIRECTOR.INTERNSHIP] RETURN FAILURE';
+
+export const returnInternship = query => ({
+    type: RETURN_INTERNSHIP,
+    payload: query,
+});
+
+export const returnInternshipSuccess = data => ({
+    type: RETURN_INTERNSHIP_SUCCESS,
+    payload: data,
+});
+
+export const returnInternshipFailure = error => ({
+    type: RETURN_INTERNSHIP_FAILURE,
+    payload: error,
+});

@@ -44,11 +44,31 @@ const loadDirectorInternshipFlow =
           if (action.type === directorInternshipActionsons.CONFIRM_INTERNSHIP) {
             try {
               dispatch(uiActions.setLoading(true));
-              const respInternship = await api.director.confirmInternship(action.payload);
+              const respInternship = await api.director.updateInternshipStatus("confirm",action.payload);
               dispatch(directorInternshipActionsons.confirmInternshipSuccess(respInternship));
               dispatch(uiActions.setLoading(false));
             } catch (error) {
               dispatch(directorInternshipActionsons.confirmInternshipFailure(error));
+            }
+          }
+          if (action.type === directorInternshipActionsons.UN_CONFIRM_INTERNSHIP) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respInternship = await api.director.updateInternshipStatus("unconfirm",action.payload);
+              dispatch(directorInternshipActionsons.unConfirmInternshipSuccess(respInternship));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(directorInternshipActionsons.unConfirmInternshipFailure(error));
+            }
+          }
+          if (action.type === directorInternshipActionsons.RETURN_INTERNSHIP) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respInternship = await api.director.updateInternshipStatus("return",action.payload);
+              dispatch(directorInternshipActionsons.returnInternshipSuccess(respInternship));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(directorInternshipActionsons.returnInternshipFailure(error));
             }
           }
         };

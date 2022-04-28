@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
-import { loadInternshipPending } from "../../../redux/actions/director/internship";
+import {
+  confirmInternship,
+  loadInternshipPending,
+  returnInternship,
+} from "../../../redux/actions/director/internship";
 import { getInternshipPending } from "../../../redux/selectors/director/internship";
 
 const InternshipPendingConfirms = () => {
@@ -82,33 +86,45 @@ const InternshipPendingConfirms = () => {
       name: "ชื่อบริษัท",
       selector: (row) => row["Company.name"],
       sortable: true,
+      width: "120px",
     },
     {
       name: "ประเภทบริษัท",
       selector: (row) => row["Company.type"],
       sortable: true,
+      width: "120px",
     },
     {
       name: "controllers",
-      selector: (row) => row['Student.id'],
+      selector: (row) => row["Student.id"],
       sortable: true,
       cell: (row) => (
         <div className="flex space-x-2">
           {" "}
           <div>
-            <Link to={`/director/internship/view/pending/${row['Student.id']}`}>
-              <button className="w-24 text-white btn btn-sky">ดู</button>
-            </Link>
-          </div>
-          <div>
             <button
-              className="w-24 text-white btn btn-red"
+              className="w-18 text-white btn btn-red"
               onClick={(e) => {
                 handleReturn(row.id);
               }}
             >
               ส่งคืน
             </button>
+          </div>
+          <div>
+            <button
+              className="w-18 text-white btn btn-green"
+              onClick={(e) => {
+                handleConfirm(row.id);
+              }}
+            >
+              อนุมัติ
+            </button>
+          </div>
+          <div>
+            <Link to={`/director/internship/view/pending/${row["Student.id"]}`}>
+              <button className="w-20 text-white btn btn-sky">ดู</button>
+            </Link>
           </div>
         </div>
       ),
@@ -117,6 +133,12 @@ const InternshipPendingConfirms = () => {
 
   const handleReturn = (id) => {
     console.log(id);
+    dispatch(returnInternship(id));
+    fetchData();
+  };
+  const handleConfirm = (id) => {
+    dispatch(confirmInternship(id));
+    fetchData();
   };
 
   useEffect(() => {
@@ -124,7 +146,7 @@ const InternshipPendingConfirms = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(internshipPending?.data);
+   
   });
 
   return (

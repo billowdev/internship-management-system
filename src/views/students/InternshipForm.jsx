@@ -867,6 +867,9 @@ const InternshipForm = () => {
           <div className="w-full ">
             <div className="px-2">
               <form onSubmit={(e) => handleFormSave(e)}>
+                <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                  แบบฟอร์มฝึกประสบการณ์วิชาชีพ
+                </h3>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
                   {/* นักศึกษาผู้ส่งข้อมูลแบบฟอร์ม */}
@@ -875,7 +878,11 @@ const InternshipForm = () => {
                   {InternshipInformation}
                   {/* นักศึกษาฝึกประสบการร่วม */}
                   {coInternshipStudents}
-                  {/* <hr className="h-[1px] bg-gray-100" /> */}
+                  <hr className="mt-5 h-[1px] bg-gray-100" />
+                  <h3 class="mt-10 text-center font-medium leading-tight text-md  text-black text-xl">
+                    <span className="text-red-500 ">*</span>{" "}
+                    กรุณาตรวจสอบความถูกต้องของข้อมูล
+                  </h3>
                   <div className="flex flex-col my-5 px-7  flex-wrap items-center justify-center w-full lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                     <button
                       id="submit"

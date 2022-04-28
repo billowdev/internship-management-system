@@ -553,6 +553,9 @@ const InternshipsViews = () => {
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
             <div className="px-2">
+            <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                  แบบฟอร์มฝึกประสบการณ์วิชาชีพ
+                </h3>
               <form>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}

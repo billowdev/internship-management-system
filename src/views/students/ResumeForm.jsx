@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Resumehook from "./ResumeHook";
@@ -106,7 +106,6 @@ const Resume = () => {
     handleEducation3FormChange,
     handleFormSave,
 
-  
     educationData1,
     setEducationData1,
     educationData2,
@@ -136,7 +135,6 @@ const Resume = () => {
     presentDistricts,
     presentSubDistricts,
 
-  
     showDropDownMenuContactPersonProvinces,
     swaptextContactPersonProvinces,
     showDropDownMenuContactPersonDistricts,
@@ -160,23 +158,41 @@ const Resume = () => {
 
   const [resume, setResume] = useState(loadState("resume"));
 
-  useEffect(()=>{
-    setResume(loadState("resume"))
-  }, [])
+  useEffect(() => {
+    setResume(loadState("resume"));
+  }, []);
 
   const setStateResue = () => {
     // const resume = loadState("resume");
-    setContactPersonFirstName(resume?.contactPersonData?.contactPerson?.first_name);
-    setContactPersonLastName(resume?.contactPersonData?.contactPerson?.last_name);
-    setContactPersonRelationship(resume?.contactPersonData?.contactPerson?.relationship);
+    setContactPersonFirstName(
+      resume?.contactPersonData?.contactPerson?.first_name
+    );
+    setContactPersonLastName(
+      resume?.contactPersonData?.contactPerson?.last_name
+    );
+    setContactPersonRelationship(
+      resume?.contactPersonData?.contactPerson?.relationship
+    );
 
-    setContactPersonPhone(resume?.contactPersonData?.contactPersonAddress?.phone);
-    setContactPersonHouseNumber(resume?.contactPersonData?.contactPersonAddress?.house_number);
+    setContactPersonPhone(
+      resume?.contactPersonData?.contactPersonAddress?.phone
+    );
+    setContactPersonHouseNumber(
+      resume?.contactPersonData?.contactPersonAddress?.house_number
+    );
     setContactPersonRoad(resume?.contactPersonData?.contactPersonAddress?.road);
-    setContactPersonSubDistrict(resume?.contactPersonData?.contactPersonAddress?.sub_district);
-    setContactPersonDistrict(resume?.contactPersonData?.contactPersonAddress?.district);
-    setContactPersonProvince(resume?.contactPersonData?.contactPersonAddress?.province);
-    setContactPersonPostCode(resume?.contactPersonData?.contactPersonAddress?.post_code);
+    setContactPersonSubDistrict(
+      resume?.contactPersonData?.contactPersonAddress?.sub_district
+    );
+    setContactPersonDistrict(
+      resume?.contactPersonData?.contactPersonAddress?.district
+    );
+    setContactPersonProvince(
+      resume?.contactPersonData?.contactPersonAddress?.province
+    );
+    setContactPersonPostCode(
+      resume?.contactPersonData?.contactPersonAddress?.post_code
+    );
 
     // private student data
     setIdCard(resume?.student?.id_card);
@@ -286,7 +302,6 @@ const Resume = () => {
       </div>
     </>
   );
-
 
   const privateData = (
     <div className="mt-2 px-7">
@@ -1505,6 +1520,9 @@ const Resume = () => {
           <div className="w-full ">
             <div className="py-4 px-2">
               <form onSubmit={(e) => handleFormSave(e)}>
+                <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                  แบบฟอร์มประวัติส่วนตัว
+                </h3>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
                   {/* ข้อมูลส่วนตัว */}
@@ -1526,7 +1544,11 @@ const Resume = () => {
                   {/* บุคคลที่สามารถติดต่อได้ */}
                   {contactPersonSection}
 
-                  <hr className="h-[1px] bg-gray-100 my-14" />
+                  <hr className="mt-5 h-[1px] bg-gray-100" />
+                  <h3 class="mt-10 text-center font-medium leading-tight text-md  text-black text-xl">
+                    <span className="text-red-500 ">*</span>{" "}
+                    กรุณาตรวจสอบความถูกต้องของข้อมูล
+                  </h3>
                   <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                     <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
                       กลับ
@@ -1549,7 +1571,6 @@ const Resume = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

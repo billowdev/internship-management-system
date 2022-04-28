@@ -12,12 +12,11 @@ import { loadStudentProfile } from "../../../redux/actions/admin/profile";
 
 const LoginUpdate = () => {
   const dispatch = useDispatch();
-  const { id, role } = useParams();
+  let { id, role } = useParams();
 
   const [accountRoles, setAccountRoles] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [roles, setRoles] = useState("student");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -47,11 +46,12 @@ const LoginUpdate = () => {
     e.preventDefault();
     let saveValues;
     if (loginAccount?.resp?.roles === "admin") {
-      saveValues = { login: { username, password, roles } };
+      saveValues = { id, login: { username, password, roles: role } };
     }
     if (loginAccount?.resp?.roles === "director") {
       saveValues = {
-        login: { username, password, roles },
+        id,
+        login: {  username, password, roles: role },
         director: {
           first_name: firstName,
           last_name: lastName,
@@ -63,7 +63,8 @@ const LoginUpdate = () => {
     }
     if (loginAccount?.resp?.roles === "student") {
       saveValues = {
-        login: { username, password, roles },
+        id,
+        login: { username, password, roles: role },
         student: {
           first_name: firstName,
           last_name: lastName,
@@ -75,17 +76,17 @@ const LoginUpdate = () => {
     dispatch(updateLogin(saveValues));
   };
   useEffect(() => {
-    if (roles === "student") {
+    if (role === "student") {
       setAccountRoles("นักศึกษา");
       dispatch(loadStudentProfile(id));
     }
-    if (roles === "director") {
+    if (role === "director") {
       setAccountRoles("คณะกรรมการฝึกประสบการณ์");
     }
-    if (roles === "admin") {
+    if (role === "admin") {
       setAccountRoles("ผู้ดูแลระบบ");
     }
-
+    console.log(id);
     dispatch(loadLoginAccount(id));
   }, []);
 
@@ -204,7 +205,7 @@ const LoginUpdate = () => {
                             นามสกุล
                           </p>
                           <input
-                            defaultValue={loginAccount?.data?.lasst_name}
+                            defaultValue={loginAccount?.data?.last_name}
                             maxLength={150}
                             onChange={(e) => {
                               setLastName(e.target.value);

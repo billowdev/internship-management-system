@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { createTokens } = require("../middlewares/auth.middleware");
 const { sign, verify } = require("jsonwebtoken");
-const { Login, Students, Teachers, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations, CoStudentInternships } = require("../models/internship");
+const { Login, Students, Directors, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations, CoStudentInternships } = require("../models/internship");
 const { Op } = require("sequelize");
 
 
@@ -152,7 +152,7 @@ exports.signupController = async (req, res) => {
 				}
 				if (roles === 'director') {
 					const { id } = user
-					await Teachers.create({ id: username, name: "", login_id: id })
+					await Directors.create({ id: username, name: "", login_id: id })
 				}
 			} else {
 				return res.status(400).json({ success: true, msg: "USER REGISTER FAILED", data })

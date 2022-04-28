@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const Teachers = sequelize.define("Teachers", {
+	const Directors = sequelize.define("Directors", {
 		id: {
 			type: DataTypes.STRING(11),
 			primaryKey: true,
@@ -29,11 +29,11 @@ module.exports = (sequelize, DataTypes) => {
 		underscored: true
 	});
 
-	Teachers.associate = (models) => {
-		Teachers.belongsTo(models.Login, {
+	Directors.associate = (models) => {
+		Directors.belongsTo(models.Login, {
 			foreignKey: "login_id",
 		});
 	};
 
-	return Teachers;
+	return Directors;
 };

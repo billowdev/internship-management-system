@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
+import { loadInternshipPending } from "../../../redux/actions/director/internship";
 
 const InternshipPendingConfirms = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const InternshipPendingConfirms = () => {
     if (search) {
       url += `&search=${search}`;
     }
-    dispatch(loadLogin(url));
+    dispatch(loadInternshipPending(url));
     setLoading(false);
   };
 

@@ -29,7 +29,7 @@ const Home = () => {
           </>
         ) : isAuth?.roles === "director" ? (
           <>
-            <Navigate to="/student-list" />
+            <Navigate to="/director/internship/pending" />
           </>
         ) : isAuth?.roles === "student" ? (
           <>

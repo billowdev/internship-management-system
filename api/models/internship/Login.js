@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 		Login.hasOne(models.Students, {
 			onDelete: "cascade",
 		});
-		Login.hasOne(models.Teachers, {
+		Login.hasOne(models.Directors, {
 			onDelete: "cascade",
 		});
 	};

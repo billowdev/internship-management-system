@@ -55,12 +55,6 @@ const Login = () => {
   };
 
   const columns = [
-    // {
-    //   name: "id",
-    //   selector: (row) => row.id,
-    //   sortable: true,
-    //   width: "280px",
-    // },
     {
       name: "username",
       selector: (row) => row.username,

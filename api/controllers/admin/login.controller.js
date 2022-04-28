@@ -1,4 +1,4 @@
-const { Login, Students, Teachers, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations, CoStudentInternships } = require("../../models/internship");
+const { Login, Students, Directors, Internships, Companies, Addresses, ContactPersons, PresentAddresses, HometownAddresses, Educations, CoStudentInternships } = require("../../models/internship");
 const { Op } = require('sequelize')
 
 
@@ -51,7 +51,7 @@ exports.createLogin = async (req, res) => {
 				if (loginResp.roles == "director") {
 					const { first_name, last_name, phone, program, department } = req.body?.director
 					const { id } = loginResp
-					await Teachers.create({ id: username, first_name, last_name, phone, program, department, login_id: id })
+					await Directors.create({ id: username, first_name, last_name, phone, program, department, login_id: id })
 
 				}
 
@@ -230,19 +230,20 @@ exports.updateLogin = async (req, res) => {
 	try {
 		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
 		const { username, password, roles } = req.body;
-		console.log(req.body)
+		
 		if (isAdmin != null) {
-			if (req.body.roles == "student") {
+			if (req.body?.login?.roles == "student") {
 				const { student } = req.body
 				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+				console.log(req.body, "\n", student)
 				await Students.update(student, { where: { login_id: req.params.id } })
 			}
-			if (req.body.roles == "director") {
+			if (req.body?.login?.roles == "director") {
 				const { director } = req.body
 				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
-				await Teachers.update(director, { where: { login_id: req.params.id } })
+				await Directors.update(director, { where: { login_id: req.params.id } })
 			}
-			if (req.body.roles == "admin") {
+			if (req.body?.login?.roles == "admin") {
 				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
 			}
 			await Login.update({ username, password, roles }, { where: { id: req.params.id } })
@@ -307,7 +308,7 @@ exports.destroyLogin = async (req, res) => {
 				await Login.destroy({ where: { id: loginId } })
 			}
 			if (loginData.roles === "director") {
-				await Teachers.destroy({ where: { login_id: loginId } });
+				await Directors.destroy({ where: { login_id: loginId } });
 				await Login.destroy({ where: { id: loginId } });
 			}
 			if (loginData.rolesF === "admin") {
@@ -338,7 +339,7 @@ exports.getLoginAccount = async (req, res) => {
 					data = await Students.findOne({ where: { login_id: resp.id } })
 				}
 				if (resp.roles === "director") {
-					data = await Teachers.findOne({ where: { login_id: resp.id } })
+					data = await Directors.findOne({ where: { login_id: resp.id } })
 				}
 				res.status(200).json({ success: true, msg: "get data success", data: { resp, data } })
 			} else {

@@ -1,6 +1,6 @@
 import * as directorInternshipActionsons from "../../actions/director/internship";
 import * as uiActions from "../../actions/ui";
-import { saveState } from "../../../helpers/Persist.js";
+import { removeState, saveState } from "../../../helpers/Persist.js";
 const loadDirectorInternshipFlow =
   ({ api }) =>
     ({ dispatch }) =>
@@ -10,7 +10,7 @@ const loadDirectorInternshipFlow =
           if (action.type === directorInternshipActionsons.LOAD_INTERNSHIP_PENDING) {
             try {
               dispatch(uiActions.setLoading(true));
-              const respInternship = await api.director.getInternshipPending();
+              const respInternship = await api.director.getInternshipPending(action.payload);
               dispatch(directorInternshipActionsons.loadInternshipPendingSuccess(respInternship));
               saveState('internship', respInternship.data)
               dispatch(uiActions.setLoading(false));
@@ -28,14 +28,27 @@ const loadDirectorInternshipFlow =
               dispatch(directorInternshipActionsons.loadInternshipConfirmFailure(error));
             }
           }
-		  if (action.type === directorInternshipActionsons.CONFIRM_INTERNSHIP) {
+          if (action.type === directorInternshipActionsons.LOAD_INTERNSHIP_DETAIL) {
             try {
               dispatch(uiActions.setLoading(true));
-              const respInternship = await api.student.updateInternship(action.payload);
-              dispatch(directorInternshipActionsons.updateInternshipSuccess(respInternship));
+              const respInternship = await api.director.getInternshipDetail(action.payload);
+              dispatch(directorInternshipActionsons.loadInternshipDetailSuccess(respInternship));
+              removeState('internship-detail')
+              saveState('internship-detail', respInternship.data)
               dispatch(uiActions.setLoading(false));
             } catch (error) {
-              dispatch(directorInternshipActionsons.updateInternshipFailure(error));
+              dispatch(directorInternshipActionsons.loadInternshipDetailFailure(error));
+            }
+          }
+
+          if (action.type === directorInternshipActionsons.CONFIRM_INTERNSHIP) {
+            try {
+              dispatch(uiActions.setLoading(true));
+              const respInternship = await api.director.confirmInternship(action.payload);
+              dispatch(directorInternshipActionsons.confirmInternshipSuccess(respInternship));
+              dispatch(uiActions.setLoading(false));
+            } catch (error) {
+              dispatch(directorInternshipActionsons.confirmInternshipFailure(error));
             }
           }
         };

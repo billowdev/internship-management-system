@@ -6,10 +6,11 @@ import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
 import { loadInternshipPending } from "../../../redux/actions/director/internship";
+import { getInternshipPending } from "../../../redux/selectors/director/internship";
 
 const InternshipPendingConfirms = () => {
   const dispatch = useDispatch();
-  const loginData = useSelector(getLogin);
+  const internshipPending = useSelector(getInternshipPending);
 
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
@@ -53,6 +54,7 @@ const InternshipPendingConfirms = () => {
     setLoading(false);
   };
 
+  // console.log(internshipPending.data['Student.id'])
   const columns = [
     // {
     //   name: "id",
@@ -60,72 +62,86 @@ const InternshipPendingConfirms = () => {
     //   sortable: true,
     //   width: "280px",
     // },
+
     {
-      name: "username",
-      selector: (row) => row.username,
+      name: "รหัสนักศึกษา",
+      selector: (row) => row["Student.id"],
       sortable: true,
     },
     {
-      name: "roles",
-      selector: (row) => row.roles,
+      name: "ชื่อ",
+      selector: (row) => row["Student.first_name"],
       sortable: true,
     },
     {
-      name: "is_active",
-      selector: (row) => row.is_active,
+      name: "นามสกุล",
+      selector: (row) => row["Student.last_name"],
       sortable: true,
     },
     {
-      name: "controllers",
-      selector: (row) => row.id,
+      name: "ชื่อบริษัท",
+      selector: (row) => row["Company.name"],
       sortable: true,
-      cell: (row) => (
-        <div>
-          <Link to="/resume">
-            <button className="w-26 text-white btn btn-sky">
-              แก้ไขข้อมูล
-            </button>
-          </Link>
-        </div>
-      ),
+    },
+    {
+      name: "ประเภทบริษัท",
+      selector: (row) => row["Company.type"],
+      sortable: true,
     },
     {
       name: "controllers",
-      selector: (row) => row.id,
+      selector: (row) => row['Student.id'],
       sortable: true,
       cell: (row) => (
-        <div>
-           <button className="w-26 text-white btn btn-red" onClick={(e)=>{
-             handleDelete(row.id)
-           }}>
-              ลบ
+        <div className="flex space-x-2">
+          {" "}
+          <div>
+            <Link to={`/director/internship/view/pending/${row['Student.id']}`}>
+              <button className="w-24 text-white btn btn-sky">ดู</button>
+            </Link>
+          </div>
+          <div>
+            <button
+              className="w-24 text-white btn btn-red"
+              onClick={(e) => {
+                handleReturn(row.id);
+              }}
+            >
+              ส่งคืน
             </button>
+          </div>
         </div>
       ),
     },
   ];
 
-  const handleDelete = (id)=>{
-    console.log(id)
-  }
+  const handleReturn = (id) => {
+    console.log(id);
+  };
+
   useEffect(() => {
     fetchData();
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log(internshipPending?.data);
+  });
+
   return (
     <>
       <div className="container mx-auto px-4 wrapper">
-        <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
-          จัดการข้อมูลสมาชิกทั้งหมด
+        <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+          ข้อมูลฝึกประสบการณ์วิชาชีพรอการยืนยัน
         </h3>
+        <hr className="mt-3 mb-10" />
         <DataTable
           //   title="MineImages"
           columns={columns}
-          data={loginData?.data}
+          data={internshipPending?.data}
           progressPending={loading}
           pagination
           paginationServer
-          paginationTotalRows={loginData?.totalRows}
+          paginationTotalRows={internshipPending?.totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
           onSort={handleSort}

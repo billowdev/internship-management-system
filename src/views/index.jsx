@@ -75,10 +75,10 @@ const App = () => (
               element={<InternshipPendingConfirms />}
             />
             <Route
-              path="internship/confirmed"
+              path="internship/confirm"
               element={<InternshipsConfirmed />}
             />
-            <Route path="internship/view/:id" element={<InternshipsViews />} />
+            <Route path="internship/view/:status/:id" element={<InternshipsViews />} />
           </Route>
         </Route>
 

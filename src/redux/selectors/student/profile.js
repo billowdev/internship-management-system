@@ -1,1 +1,0 @@
-export const getProfile = state => state.studentProfile.profileData;

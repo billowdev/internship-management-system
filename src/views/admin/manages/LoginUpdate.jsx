@@ -91,7 +91,7 @@ const LoginUpdate = () => {
   }, []);
 
   return (
-    <div className="2xl:px-56 xl:px-48 lg:px-36">
+    <div className="2xl:px-56 xl:px-48 lg:px-36 mb-32 mt-10">
       <div className="flex flex-no-wrap items-center">
         <div className="w-full ">
           <div className="py-4 px-2">

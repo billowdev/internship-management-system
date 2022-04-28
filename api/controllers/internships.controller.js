@@ -23,15 +23,6 @@ exports.getInternshipsByStudents = async (req, res) => {
 		const stdId = stdData?.id
 		console.log("student id: ", stdId)
 		if (roles === 'student') {
-			// const internship = await Internships.findOne({
-			// 	where: { student_id: id }, include: [
-			// 		{
-			// 			model: Companies,
-			// 			require: true,
-
-			// 		},
-			// 	],
-			// }
 			let data;
 			const internship = await Internships.findOne({
 				where: { student_id: stdId }

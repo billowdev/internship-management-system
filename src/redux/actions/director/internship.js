@@ -39,6 +39,25 @@ export const loadInternshipConfirmFailure = error => ({
     payload: error,
 });
 
+export const LOAD_INTERNSHIP_DETAIL = '[DIRECTOR.INTERNSHIP] LOAD DETAIL';
+export const LOAD_INTERNSHIP_DETAIL_SUCCESS = '[DIRECTOR.INTERNSHIP] LOAD DETAIL SUCCESS';
+export const LOAD_INTERNSHIP_DETAIL_FAILURE = '[DIRECTOR.INTERNSHIP] LOAD DETAIL FAILURE';
+
+export const loadInternshipDetail = query => ({
+    type: LOAD_INTERNSHIP_DETAIL,
+    payload: query,
+});
+
+export const loadInternshipDetailSuccess = data => ({
+    type: LOAD_INTERNSHIP_DETAIL_SUCCESS,
+    payload: data,
+});
+
+export const loadInternshipDetailFailure = error => ({
+    type: LOAD_INTERNSHIP_DETAIL_FAILURE,
+    payload: error,
+});
+
 
 export const CONFIRM_INTERNSHIP = '[DIRECTOR.INTERNSHIP] UPDATE';
 export const CONFIRM_INTERNSHIP_SUCCESS = '[DIRECTOR.INTERNSHIP] UPDATE SUCCESS';

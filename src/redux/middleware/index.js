@@ -4,6 +4,7 @@ import adminLogin from './admin/login';
 import adminProfile from './admin/profile';
 import studentInternship from './student/internship';
 import studentResume from './student/resume';
+import director from './director/internship';
 
 export default [
     ...ui,
@@ -11,6 +12,7 @@ export default [
     ...adminLogin,
     ...adminProfile,
     ...studentInternship,
-    ...studentResume
+    ...studentResume,
+    ...director
 
 ]

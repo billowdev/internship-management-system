@@ -33,3 +33,42 @@ export const updateInternshipFailure = error => ({
     type: UPDATE_INTERNSHIP_FAILURE,
     payload: error,
 });
+
+
+export const SEND_INTERNSHIP = '[DIRECTOR.INTERNSHIP] SEND INTERNSHIP';
+export const SEND_INTERNSHIP_SUCCESS = '[DIRECTOR.INTERNSHIP] SEND INTERNSHIP SUCCESS';
+export const SEND_INTERNSHIP_FAILURE = '[DIRECTOR.INTERNSHIP] SEND INTERNSHIP FAILURE';
+
+export const sendInternship = query => ({
+    type: SEND_INTERNSHIP,
+    payload: query,
+});
+
+export const sendInternshipSuccess = data => ({
+    type: SEND_INTERNSHIP_SUCCESS,
+    payload: data,
+});
+
+export const sendInternshipFailure = error => ({
+    type: SEND_INTERNSHIP_FAILURE,
+    payload: error,
+});
+
+export const UNSEND_INTERNSHIP = '[STUDENT.INTERNSHIP] UNSEND';
+export const UNSEND_INTERNSHIP_SUCCESS = '[STUDENT.INTERNSHIP] UNSEND SUCCESS';
+export const UNSEND_INTERNSHIP_FAILURE = '[STUDENT.INTERNSHIP] UNSEND FAILURE';
+
+export const unsendInternship = query => ({
+    type: UNSEND_INTERNSHIP,
+    payload: query,
+});
+
+export const unsendInternshipSuccess = data => ({
+    type: UNSEND_INTERNSHIP_SUCCESS,
+    payload: data,
+});
+
+export const unsendInternshipFailure = error => ({
+    type: UNSEND_INTERNSHIP_FAILURE,
+    payload: error,
+});

@@ -33,4 +33,18 @@ export default {
 		);
 		return resp.data;
 	},
+	updateInternshipStatus: async (status, props) => {
+		console.log(status, props)
+		if (status == "send") {
+			const resp = await axios.patch(`${BASE_URL}/internships/send`, { id: props }, accessHeader
+			);
+			return resp.data;
+		}
+		if (status == "unsend") {
+			const resp = await axios.patch(`${BASE_URL}/internships/unsend`, { id: props }, accessHeader
+			);
+			return resp.data;
+		}
+
+	}
 }

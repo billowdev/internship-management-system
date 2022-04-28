@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const authRoute = require("./routes/auth.route");
 const studentsRoute = require("./routes/students.route");
+const directorsRoute = require("./routes/directors.route");
 const loginRoute = require("./routes/admin/login.route");
 const adminStudentRoute = require("./routes/admin/admin.students.route");
 
@@ -35,6 +36,9 @@ app.use("/api/admin/students", adminStudentRoute);
 
 //student get student data
 app.use("/api/students", studentsRoute);
+
+//director get internship data
+app.use("/api/directors", directorsRoute);
 
 //student get internship data
 app.use("/api/internships", internshipsRoute);

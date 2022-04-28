@@ -5,10 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
+import {
+  confirmInternship,
+  loadInternshipPending,
+  returnInternship,
+} from "../../../redux/actions/director/internship";
+import { getInternshipPending } from "../../../redux/selectors/director/internship";
 
-const InternshipsConfirmed = () => {
+const InternshipPendingConfirms = () => {
   const dispatch = useDispatch();
-  const loginData = useSelector(getLogin);
+  const internshipPending = useSelector(getInternshipPending);
 
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
@@ -48,10 +54,11 @@ const InternshipsConfirmed = () => {
     if (search) {
       url += `&search=${search}`;
     }
-    dispatch(loadLogin(url));
+    dispatch(loadInternshipPending(url));
     setLoading(false);
   };
 
+  // console.log(internshipPending.data['Student.id'])
   const columns = [
     // {
     //   name: "id",
@@ -59,72 +66,104 @@ const InternshipsConfirmed = () => {
     //   sortable: true,
     //   width: "280px",
     // },
+
     {
-      name: "username",
-      selector: (row) => row.username,
+      name: "รหัสนักศึกษา",
+      selector: (row) => row["Student.id"],
       sortable: true,
     },
     {
-      name: "roles",
-      selector: (row) => row.roles,
+      name: "ชื่อ",
+      selector: (row) => row["Student.first_name"],
       sortable: true,
     },
     {
-      name: "is_active",
-      selector: (row) => row.is_active,
+      name: "นามสกุล",
+      selector: (row) => row["Student.last_name"],
       sortable: true,
+    },
+    {
+      name: "ชื่อบริษัท",
+      selector: (row) => row["Company.name"],
+      sortable: true,
+      width: "120px",
+    },
+    {
+      name: "ประเภทบริษัท",
+      selector: (row) => row["Company.type"],
+      sortable: true,
+      width: "120px",
     },
     {
       name: "controllers",
-      selector: (row) => row.id,
+      selector: (row) => row["Student.id"],
       sortable: true,
       cell: (row) => (
-        <div>
-          <Link to="/resume">
-            <button className="w-26 text-white btn btn-sky">
-              แก้ไขข้อมูล
+        <div className="flex space-x-2">
+          {" "}
+          <div>
+            <button
+              className="w-18 text-white btn btn-red"
+              onClick={(e) => {
+                handleReturn(row.id);
+              }}
+            >
+              ส่งคืน
             </button>
-          </Link>
-        </div>
-      ),
-    },
-    {
-      name: "controllers",
-      selector: (row) => row.id,
-      sortable: true,
-      cell: (row) => (
-        <div>
-           <button className="w-26 text-white btn btn-red" onClick={(e)=>{
-             handleDelete(row.id)
-           }}>
-              ลบ
+          </div>
+          <div>
+            <button
+              className="w-18 text-white btn btn-green"
+              onClick={(e) => {
+                handleConfirm(row.id);
+              }}
+            >
+              อนุมัติ
             </button>
+          </div>
+          <div>
+            <Link to={`/director/internship/view/pending/${row["Student.id"]}`}>
+              <button className="w-20 text-white btn btn-sky">ดู</button>
+            </Link>
+          </div>
         </div>
       ),
     },
   ];
 
-  const handleDelete = (id)=>{
-    console.log(id)
-  }
+  const handleReturn = (id) => {
+    console.log(id);
+    dispatch(returnInternship(id));
+    fetchData();
+  };
+  const handleConfirm = (id) => {
+    dispatch(confirmInternship(id));
+    fetchData();
+  };
+
   useEffect(() => {
     fetchData();
   }, [dispatch]);
 
+  useEffect(() => {
+   
+  });
+
   return (
     <>
       <div className="container mx-auto px-4 wrapper">
-        <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
-          จัดการข้อมูลสมาชิกทั้งหมด
+        <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+          ข้อมูลฝึกประสบการณ์วิชาชีพรอการยืนยัน
         </h3>
+        <hr className="mt-3 mb-10" />
         <DataTable
           //   title="MineImages"
           columns={columns}
-          data={loginData?.data}
+          data={internshipPending?.data}
           progressPending={loading}
           pagination
           paginationServer
-          paginationTotalRows={loginData?.totalRows}
+          paginationTotalRows={internshipPending?.totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
           onSort={handleSort}
@@ -135,4 +174,4 @@ const InternshipsConfirmed = () => {
   );
 };
 
-export default InternshipsConfirmed;
+export default InternshipPendingConfirms;

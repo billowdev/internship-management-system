@@ -70,20 +70,21 @@ const Navbar = () => {
                     ) : (
                       <></>
                     )}
-
-                    {!isAuth?.roles === "director" ? (
+                    {isAuth?.roles === "director" ? (
                       <>
                         <Link
-                          to="/"
-                          className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                        >
-                          หน้าหลัก
-                        </Link>
-                        <Link
-                          to="/student-list"
+                          to="/director/internship/pending"
                           className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          รายชื่อนักศึกษา
+                          รายการฝึกประสบการณ์วิชาชีพ :
+                          <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">รอยืนยัน</span>
+                        </Link>
+                        <Link
+                          to="/director/internship/confirm"
+                          className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        >
+                          รายการฝึกประสบการณ์วิชาชีพ :
+                          <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">ยืนยันแล้ว</span>
                         </Link>
                       </>
                     ) : (
@@ -108,15 +109,6 @@ const Navbar = () => {
                     ) : (
                       <></>
                     )}
-
-                    {/* {!isAuth && (
-                      <Link
-                        to="/"
-                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
-                      >
-                        เข้าสู่ระบบ
-                      </Link>
-                    )} */}
                   </div>
                 )}
               </div>
@@ -220,7 +212,7 @@ const Navbar = () => {
           {(ref) => (
             <div className="md:hidden" id="mobile-menu">
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                {isAuth && (
+              {isAuth && (
                   <div className="ml-10 flex items-baseline space-x-4">
                     {isAuth?.roles === "student" ? (
                       <>
@@ -248,20 +240,21 @@ const Navbar = () => {
                     ) : (
                       <></>
                     )}
-
-                    {!isAuth?.roles === "director" ? (
+                    {isAuth?.roles === "director" ? (
                       <>
                         <Link
-                          to="/"
-                          className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                        >
-                          หน้าหลัก
-                        </Link>
-                        <Link
-                          to="/student-list"
+                          to="/director/internship/pending"
                           className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          รายชื่อนักศึกษา
+                          รายการฝึกประสบการณ์วิชาชีพ :
+                          <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">รอยืนยัน</span>
+                        </Link>
+                        <Link
+                          to="/director/internship/confirm"
+                          className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        >
+                          รายการฝึกประสบการณ์วิชาชีพ :
+                          <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">ยืนยันแล้ว</span>
                         </Link>
                       </>
                     ) : (
@@ -271,47 +264,21 @@ const Navbar = () => {
                     {isAuth?.roles === "admin" ? (
                       <>
                         <Link
-                          to="/"
+                          to="/admin/manage/login"
                           className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          หน้าหลัก
+                          ข้อมูลสมาชิกทั้งหมด
                         </Link>
                         <Link
-                          to="/student-list"
-                          className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                        >
-                          รายชื่อนักศึกษา
-                        </Link>
-
-                        <Link
-                          to="/admin"
+                          to="/admin/manage/login/add"
                           className=" hover:bg-sky-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
-                          admin
+                          เพิ่มสมาชิก
                         </Link>
                       </>
                     ) : (
                       <></>
                     )}
-
-                    {!isAuth && (
-                      <Link
-                        to="/"
-                        className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
-                      >
-                        เข้าสู่ระบบ
-                      </Link>
-                    )}
-
-                    <Link
-                      to="/"
-                      onClick={(e) => {
-                        handleLogout();
-                      }}
-                      className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor:pointer"
-                    >
-                      ออกจากระบบ
-                    </Link>
                   </div>
                 )}
               </div>

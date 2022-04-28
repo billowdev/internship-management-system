@@ -4,6 +4,7 @@ import adminLogin from './admin/login';
 import adminProfile from './admin/profile';
 import thaiAddresses from './thaiAddresses';
 import student from './student';
+import director from './director';
 
 export default {
     auth,
@@ -11,5 +12,6 @@ export default {
     adminLogin,
     thaiAddresses,
     student,
-    adminProfile
+    adminProfile,
+    director
 };

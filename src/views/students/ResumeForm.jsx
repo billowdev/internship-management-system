@@ -1529,7 +1529,7 @@ const Resume = () => {
                   <hr className="h-[1px] bg-gray-100 my-14" />
                   <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                     <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
-                      Cancel
+                      กลับ
                     </button>
 
                     <button
@@ -1540,7 +1540,7 @@ const Resume = () => {
                       type="submit"
                       className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
                     >
-                      Save Changes
+                      บันทึก
                     </button>
                   </div>
                 </div>

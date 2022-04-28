@@ -926,7 +926,7 @@ const InternshipForm = () => {
                     intern?.Internships?.is_send &&
                     intern?.Internships?.is_confirm && (
                       <button className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
-                        ผ่านการอนุมัติแล้ว
+                        ผ่าน
                       </button>
                     )}
                 </Link>

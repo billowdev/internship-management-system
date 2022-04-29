@@ -36,17 +36,7 @@ const InternshipsViews = () => {
     dispatch(loadInternshipDetail(id));
   }, [dispatch]);
 
-  useEffect(() => {
-    // // let internshipDetail = loadState("internship-detail");
-    // setCoStudent(internshipDetail?.CoStudentInternships);
-    // setCompany(internshipDetail?.Companies?.company);
-    // setCompanyAddress(internshipDetail?.Companies?.companyAddress);
-    // setInternship(internshipDetail?.Internships);
-    // setHometownAddr(internshipDetail?.hometownAddr);
-    // setPresentAddr(internshipDetail?.presentAddr);
-    // setStudent(internshipDetail?.student);
-    // console.log(internshipDetail);
-  }, []);
+ 
 
   const Sender = (
     <div>

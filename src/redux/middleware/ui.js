@@ -86,11 +86,15 @@ const resumeFlow =
           next(action);
           if (action.type === resumeActions.UPDATE_RESUME_SUCCESS) {
             log('update rusume')
+            dispatch(internshipActions.loadInternship)
             Swal.fire(
               'สำเร็จ!',
               'อัปเดตข้อมูลเรียบร้อย',
               'success'
-            )
+            ).then(()=>{
+              window.location = "/student/home"
+            })
+            
           }
         };
 

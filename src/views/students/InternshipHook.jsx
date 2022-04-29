@@ -57,7 +57,6 @@ const Internshiphook = () => {
   const handleFormSave = async (e) => {
     e.preventDefault();
     const program = document.getElementById("program").innerText;
-    console.log(program);
     const sender = {
       id: studentFormData.id,
       first_name: studentFormData.firstName,
@@ -131,7 +130,6 @@ const Internshiphook = () => {
       companyAddress,
       coStudent,
     };
-    console.log(updateData);
     dispatch(updateInternship(updateData));
   };
 
@@ -178,10 +176,8 @@ const Internshiphook = () => {
     setSubDistricts(resp.data);
   };
   const fetchSubDistrictData = async (subDistrictId) => {
-    console.log(subDistrictId);
     const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
     setInternPostCode(resp.data[0]?.zip_code);
-    console.log(resp.data[0]);
   };
 
   // -------- Provinces --------

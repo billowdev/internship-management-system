@@ -12,10 +12,11 @@ const StudentHomePage = () => {
 
   useEffect(() => {
     dispatch(loadInternship);
-  }, []);
-  useEffect(() => {
-    internship = loadState("internship");
-  }, []);
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   internship = loadState("internship");
+  // }, []);
   return (
     <>
       <div className="flex md:flex-row sm0:flex-col sm1:flex-col sm3:flex-row sm3:space-x-10 md:space-x-5 lg:flex-row lg:space-x-16 items-center justify-center min-h-screen">

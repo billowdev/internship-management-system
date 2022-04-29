@@ -340,8 +340,12 @@ const Resumehook = () => {
     setEducationData3({ ...educationData3, [input]: e.target.value });
   };
 
+
+ 
+
   const handleFormSave = async (e) => {
     e.preventDefault();
+   
     // const dob = e.target[3].value;
     const newDob = Moment(new Date(birthDate)).format("yyyy-MM-DD");
     const program = document.getElementById("program").innerText;
@@ -404,7 +408,7 @@ const Resumehook = () => {
     };
     const updateData = { student, hometown, present, contactPerson, education };
     dispatch(updateResume(updateData));
-    // console.log(updateData);
+   
   };
   
   return {

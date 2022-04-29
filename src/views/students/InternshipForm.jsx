@@ -896,9 +896,9 @@ const InternshipForm = () => {
               </form>
               <div className="mt-10 mb-10 flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                 <Link to="/student/home">
-                  <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
+                  <div className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
                     กลับ
-                  </button>
+                  </div>
                 </Link>
                 {intern &&
                   !intern?.Internships?.is_send &&

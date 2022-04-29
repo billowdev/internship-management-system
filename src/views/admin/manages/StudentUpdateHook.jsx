@@ -411,7 +411,7 @@ const StudentUpdateHook = () => {
       education,
     };
     dispatch(updateStudentProfile(updateData));
-    // console.log(updateData);
+ 
   };
 
   return {

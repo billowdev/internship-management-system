@@ -119,7 +119,7 @@ const Login = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteLogin(id));
-        // console.log(id);
+      
       }
     });
   };

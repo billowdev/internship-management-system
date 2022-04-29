@@ -54,7 +54,7 @@ const InternshipsConfirmed = () => {
     setLoading(false);
   };
 
-  // console.log(internshipPending.data['Student.id'])
+ 
   const columns = [
     // {
     //   name: "id",
@@ -123,9 +123,7 @@ const InternshipsConfirmed = () => {
     fetchData();
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(internshipPending?.data);
-  });
+
 
   return (
     <>

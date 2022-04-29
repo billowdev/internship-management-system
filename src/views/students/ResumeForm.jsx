@@ -5,7 +5,7 @@ import Resumehook from "./ResumeHook";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadResume } from "../../redux/actions/student/resume";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const Resume = () => {
   const dispatch = useDispatch();
@@ -151,6 +151,7 @@ const Resume = () => {
 
     fetchProvinces,
   } = Resumehook();
+
 
   useEffect(() => {
     dispatch(loadResume);
@@ -1550,9 +1551,11 @@ const Resume = () => {
                     กรุณาตรวจสอบความถูกต้องของข้อมูล
                   </h3>
                   <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                    <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
-                      กลับ
-                    </button>
+                    <Link to="/student/home">
+                      <div id="myBtn" className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
+                        กลับ
+                      </div>
+                    </Link>
 
                     <button
                       // onClick={(e) => {

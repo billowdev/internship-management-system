@@ -58,7 +58,6 @@ const InternshipPendingConfirms = () => {
     setLoading(false);
   };
 
-  // console.log(internshipPending.data['Student.id'])
   const columns = [
     // {
     //   name: "id",
@@ -132,7 +131,7 @@ const InternshipPendingConfirms = () => {
   ];
 
   const handleReturn = (id) => {
-    console.log(id);
+  
     dispatch(returnInternship(id));
     fetchData();
   };

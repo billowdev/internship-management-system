@@ -86,7 +86,7 @@ const LoginUpdate = () => {
     if (role === "admin") {
       setAccountRoles("ผู้ดูแลระบบ");
     }
-    console.log(id);
+ 
     dispatch(loadLoginAccount(id));
   }, []);
 

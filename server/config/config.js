@@ -5,31 +5,53 @@ module.exports = {
      internship_db:{
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      database: process.env.DB_DATABASE_MAIN_DEV,
       host: process.env.DB_HOST,
       dialect: "mysql",
      },
      thai_addresses_db:{
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE2,
+      database: process.env.DB_DATABASE_ADDRESS_DEV,
       host: process.env.DB_HOST,
       dialect: "mysql",
      }
    }
   },
   test: {
-    username: "root",
-    password: null,
-    database: "database_test",
-    host: "127.0.0.1",
-    dialect: "mysql",
+    databases:{
+      internship_db:{
+       username: process.env.DB_USERNAME,
+       password: process.env.DB_PASSWORD,
+       database: process.env.DB_DATABASE_MAIN_TEST,
+       host: process.env.DB_HOST,
+       dialect: "mysql",
+      },
+      thai_addresses_db:{
+       username: process.env.DB_USERNAME,
+       password: process.env.DB_PASSWORD,
+       database: process.env.DB_DATABASE_ADDRESS_TEST,
+       host: process.env.DB_HOST,
+       dialect: "mysql",
+      }
+    }
   },
   production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: "mysql",
+    databases:{
+      internship_db:{
+       username: process.env.DB_USERNAME,
+       password: process.env.DB_PASSWORD,
+       database: process.env.DB_DATABASE_MAIN_PRODUCTION,
+       host: process.env.DB_HOST,
+       dialect: "mysql",
+      },
+      thai_addresses_db:{
+       username: process.env.DB_USERNAME,
+       password: process.env.DB_PASSWORD,
+       database: process.env.DB_DATABASE_MAIN_PRODUCTION,
+       host: process.env.DB_HOST,
+       dialect: "mysql",
+      }
+    }
   },
 };

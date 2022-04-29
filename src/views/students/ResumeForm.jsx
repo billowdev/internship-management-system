@@ -239,7 +239,7 @@ const Resume = () => {
     setEducationData3(resume?.education[2]);
     fetchProvinces();
   };
-  const imageProfile = require(`../../assets/images/${resume?.student?.image_name}`)
+  const imageProfile = `/images/${resume?.student?.image_name}`
   useEffect(() => {
     setStateResue();
   }, []);

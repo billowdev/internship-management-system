@@ -35,6 +35,7 @@ const InternshipsConfirmed = () => {
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+    fetchData();
   };
 
   const handleSearchSubmit = (event) => {
@@ -56,14 +57,7 @@ const InternshipsConfirmed = () => {
 
  
   const columns = [
-    // {
-    //   name: "id",
-    //   selector: (row) => row.id,
-    //   sortable: true,
-    //   width: "280px",
-    // },
-
-    {
+      {
       name: "รหัสนักศึกษา",
       selector: (row) => row["Student.id"],
       sortable: true,
@@ -79,35 +73,43 @@ const InternshipsConfirmed = () => {
       sortable: true,
     },
     {
+      name: "สาขาวิชา",
+      selector: (row) => row["Student.program"],
+      sortable: true,
+      width: "150px",
+    },
+    {
       name: "ชื่อบริษัท",
       selector: (row) => row["Company.name"],
       sortable: true,
+      width: "120px",
     },
     {
       name: "ประเภทบริษัท",
       selector: (row) => row["Company.type"],
       sortable: true,
+      width: "120px",
     },
     {
-      name: "controllers",
+      name: "",
       selector: (row) => row["Student.id"],
       sortable: true,
       cell: (row) => (
         <div className="flex space-x-2">
           <div>
-            <Link to={`/director/internship/view/confirm/${row["Student.id"]}`}>
-              <button className="w-24 text-white btn btn-sky">ดู</button>
-            </Link>
-          </div>
-          <div>
-            <button
+            {/* <button
               className="w-32 text-white btn btn-red"
               onClick={(e) => {
                 handleReturn(row.id);
               }}
             >
               พิจารณาใหม่
-            </button>
+            </button> */}
+          </div>
+          <div>
+            <Link to={`/director/internship/view/confirm/${row["Student.id"]}`}>
+              <button className="w-18 text-white btn btn-sky">ดู</button>
+            </Link>
           </div>
         </div>
       ),
@@ -132,6 +134,28 @@ const InternshipsConfirmed = () => {
           ข้อมูลฝึกประสบการณ์วิชาชีพ ที่ยืนยันแล้ว
         </h3>
         <hr className="mt-3 mb-10" />
+        <div class="grid justify-center">
+          <div class="mb-3 xl:w-96">
+            <div class="input-group relative flex flex-row items-stretch w-full mb-4">
+              <input
+                type="search"
+                class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                placeholder="รหัสนักศึกษา"
+                aria-label="Search"
+                onChange={handleSearchChange}
+                aria-describedby="button-addon3"
+              />
+              <div
+                onClick={handleSearchSubmit}
+                class="btn cursor-pointer inline-block px-6 py-2 pointer-cursor border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                id="button-addon3"
+              >
+                ค้นหา
+              </div>
+            </div>
+          </div>
+        </div>
+
         <DataTable
           //   title="MineImages"
           columns={columns}

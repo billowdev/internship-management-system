@@ -36,8 +36,6 @@ const InternshipsViews = () => {
     dispatch(loadInternshipDetail(id));
   }, [dispatch]);
 
- 
-
   const Sender = (
     <div>
       {/* =========================== sender intern splace information  =========================== */}
@@ -315,7 +313,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.first_name
             }
@@ -329,7 +327,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.last_name
             }
@@ -343,7 +341,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.student_id
             }
@@ -356,7 +354,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.phone
             }
@@ -543,9 +541,9 @@ const InternshipsViews = () => {
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
             <div className="px-2">
-            <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
-                  แบบฟอร์มฝึกประสบการณ์วิชาชีพ
-                </h3>
+              <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                แบบฟอร์มฝึกประสบการณ์วิชาชีพ
+              </h3>
               <form>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
@@ -585,7 +583,7 @@ const InternshipsViews = () => {
                 ) : (
                   <>
                     <Link to="/director/internship/confirm">
-                      <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-full ">
+                      <button className="btn btn-sky rounded  transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-32 ">
                         กลับ
                       </button>
                     </Link>
@@ -594,9 +592,9 @@ const InternshipsViews = () => {
                         onClick={(e) => {
                           handleReturn(internshipDetail?.Internships?.id);
                         }}
-                        className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                        className="btn btn-red transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-24"
                       >
-                        พิจารณาใหม่
+                        ส่งคืน
                       </button>
                     </Link>
                   </>

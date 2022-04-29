@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, Outlet } from "react-router-dom";
-import { loadState, saveState } from "../../../helpers/Persist";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Switch } from "@headlessui/react";
 import {
   updateLogin,
   loadLoginAccount,
@@ -9,49 +9,44 @@ import {
 import { useParams } from "react-router-dom";
 import { getLoginAccount } from "../../../redux/selectors/admin/login";
 import { loadStudentProfile } from "../../../redux/actions/admin/profile";
+import { loadState, saveState } from "../../../helpers/Persist";
 
 const LoginUpdate = () => {
   const dispatch = useDispatch();
+  const loginAccount = useSelector(getLoginAccount);
   let { id, role } = useParams();
 
   const [accountRoles, setAccountRoles] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(loginAccount?.resp?.username);
+  const [password, setPassword] = useState(loginAccount?.resp?.password);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [program, setProgram] = useState("");
-  const [department, setDepartment] = useState("");
-  const [phone, setPhone] = useState("");
+  const [firstName, setFirstName] = useState(loginAccount?.data?.first_name);
+  const [lastName, setLastName] = useState(loginAccount?.data?.last_name);
+  const [program, setProgram] = useState(loginAccount?.data?.program);
+  const [department, setDepartment] = useState(loginAccount?.data?.department);
+  const [phone, setPhone] = useState(loginAccount?.data?.phone);
 
-  const loginAccount = useSelector(getLoginAccount);
-
-  //   function showDropDownMenu(el) {
-  //     el.target.parentElement.children[1].classList.toggle("hidden");
-  //   }
-  //   function swaptext(el) {
-  //     const targetText = el.target.innerText;
-  //     if (targetText === "ผู้ดูแลระบบ") {
-  //       setRoles("admin");
-  //     } else if (targetText === "คณะกรรมการ") {
-  //       setRoles("director");
-  //     } else {
-  //       setRoles("student");
-  //     }
-  //     document.getElementById("drop-down-content-setter").innerText = targetText;
-  //     document.getElementById("drop-down-div").classList.toggle("hidden");
-  //   }
-
+  const [enabled, setEnabled] = useState(false);
+  const navigate = useNavigate();
   const handleSave = (e) => {
     e.preventDefault();
     let saveValues;
+    let isActive;
+    if (enabled == true) {
+      isActive = 1;
+    } else {
+      isActive = 0;
+    }
     if (loginAccount?.resp?.roles === "admin") {
-      saveValues = { id, login: { username, password, roles: role } };
+      saveValues = {
+        id,
+        login: { username, password, roles: role, is_active: isActive },
+      };
     }
     if (loginAccount?.resp?.roles === "director") {
       saveValues = {
         id,
-        login: {  username, password, roles: role },
+        login: { username, password, roles: role, is_active: isActive },
         director: {
           first_name: firstName,
           last_name: lastName,
@@ -62,9 +57,10 @@ const LoginUpdate = () => {
       };
     }
     if (loginAccount?.resp?.roles === "student") {
+      console.log("student", isActive);
       saveValues = {
         id,
-        login: { username, password, roles: role },
+        login: { username, password, roles: role, is_active: isActive },
         student: {
           first_name: firstName,
           last_name: lastName,
@@ -74,7 +70,28 @@ const LoginUpdate = () => {
       };
     }
     dispatch(updateLogin(saveValues));
+    navigate("/admin/manage/login");
   };
+
+  const handleSetEnableToggle = () => {
+    let state = loadState("status-user");
+    if (state === 1) {
+      setEnabled(false);
+      saveState("status-user", 0);
+    } else {
+      setEnabled(true);
+      saveState("status-user", 1);
+    }
+  };
+  useEffect(() => {
+    let state = loadState("status-user");
+    if (state === 1) {
+      setEnabled(true);
+    } else {
+      setEnabled(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (role === "student") {
       setAccountRoles("นักศึกษา");
@@ -86,9 +103,9 @@ const LoginUpdate = () => {
     if (role === "admin") {
       setAccountRoles("ผู้ดูแลระบบ");
     }
- 
+
     dispatch(loadLoginAccount(id));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="2xl:px-56 xl:px-48 lg:px-36 mb-32 mt-10">
@@ -164,16 +181,21 @@ const LoginUpdate = () => {
                     <p className="text-base font-medium leading-none text-gray-800">
                       สถานะ
                     </p>
-                    <div>
-                      <input
-                        readOnly
-                        value={loginAccount && loginAccount?.resp?.roles}
-                        required
-                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-                      />
-                      <p className="mt-3 text-xs leading-3 text-gray-600">
-                        สถานะ
-                      </p>
+                    <div className="p-2 mt-2">
+                      <Switch
+                        checked={enabled}
+                        onChange={handleSetEnableToggle}
+                        className={`${
+                          enabled ? "bg-blue-600" : "bg-gray-200"
+                        } relative inline-flex h-6 w-11 items-center rounded-full`}
+                      >
+                        <span className="sr-only">Enable notifications</span>
+                        <span
+                          className={`${
+                            enabled ? "translate-x-6" : "translate-x-1"
+                          } inline-block h-4 w-4 transform rounded-full bg-white `}
+                        />
+                      </Switch>
                     </div>
                   </div>
                 </div>

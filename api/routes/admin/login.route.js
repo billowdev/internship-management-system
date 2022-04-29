@@ -8,7 +8,7 @@ const { createLogin, getLogin, updateLogin, deleteLogin, destroyLogin, getLoginA
 router.get("/get", validateToken, getLogin);
 router.get("/get/:id", validateToken, getLoginAccount);
 router.post("/create", validateToken, createLogin);
-router.post("/destroy", validateToken, destroyLogin);
+router.patch("/destroy", validateToken, destroyLogin);
 router.patch("/update/:id", validateToken, updateLogin);
 router.delete("/delete/:id", validateToken, deleteLogin);
 

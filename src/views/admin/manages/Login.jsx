@@ -7,6 +7,7 @@ import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
 import Swal from "sweetalert2";
 import { deleteLogin } from "../../../redux/actions/admin/login";
+import { saveState } from "../../../helpers/Persist";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -43,62 +44,15 @@ const Login = () => {
     fetchData();
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    var url = `?page=${page}&per_page=${perPage}&delay=1`;
-    if (sortColumn) {
-      url += `&sort_column=${sortColumn}&sort_direction=${sortColumnDirection}`;
-    }
-    if (search) {
-      url += `&search=${search}`;
-    }
-    dispatch(loadLogin(url));
-    setLoading(false);
+  const handleChangeStatus = (id, isActive) => {
+    console.log(id, isActive);
+    // let state = "inactive";
+    // if (e.target.checked) {
+    //   state = "active";
+    // }
+    // console.log(id);
+    // fetchData();
   };
-
-  const columns = [
-    {
-      name: "username",
-      selector: (row) => row.username,
-      sortable: true,
-    },
-    {
-      name: "roles",
-      selector: (row) => row.roles,
-      sortable: true,
-    },
-    {
-      name: "is_active",
-      selector: (row) => row.is_active,
-      sortable: true,
-    },
-    {
-      name: "controllers",
-      selector: (row) => row.id,
-      sortable: true,
-      cell: (row) => (
-        <div className="flex space-x-3">
-          <Link
-            to={{
-              pathname: `/admin/manage/login/update/${row.roles}/${row.id}`,
-            }}
-          >
-            <button className="w-26 text-white btn btn-sky">แก้ไขข้อมูล</button>
-          </Link>
-          <div>
-            <button
-              className="w-26 text-white btn btn-red"
-              onClick={(e) => {
-                handleDelete(row.id, row.roles);
-              }}
-            >
-              ลบ
-            </button>
-          </div>
-        </div>
-      ),
-    },
-  ];
 
   const handleDelete = (id, roles) => {
     let role;
@@ -123,6 +77,89 @@ const Login = () => {
         dispatch(deleteLogin(id));
       }
     });
+  };
+
+  const columns = [
+    {
+      name: "username",
+      selector: (row) => row.username,
+      sortable: true,
+    },
+    {
+      name: "roles",
+      selector: (row) => row.roles,
+      sortable: true,
+    },
+    {
+      name: "is_active",
+      selector: (row) => row.is_active,
+      sortable: true,
+      cell: (row) => (
+        <>
+          {row.is_active === 1 ? (
+            <>
+              {" "}
+              <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">
+                active
+              </span>{" "}
+            </>
+          ) : (
+            <>
+              {" "}
+              <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">
+                inactive
+              </span>{" "}
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      name: "controllers",
+      selector: (row) => row.id,
+      sortable: false,
+      cell: (row) => (
+        <div className="flex space-x-3">
+          <Link
+            to={{
+              pathname: `/admin/manage/login/update/${row.roles}/${row.id}`,
+            }}
+          >
+            <button
+              className="w-26 text-white btn btn-sky"
+              onClick={()=>{
+                saveState("status-user", row.is_active)
+              }}
+            >
+              แก้ไขข้อมูล
+            </button>
+          </Link>
+          <div>
+            <button
+              className="w-26 text-white btn btn-red"
+              onClick={(e) => {
+                handleDelete(row.id, row.roles);
+              }}
+            >
+              ลบ
+            </button>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  const fetchData = async () => {
+    setLoading(true);
+    var url = `?page=${page}&per_page=${perPage}&delay=1`;
+    if (sortColumn) {
+      url += `&sort_column=${sortColumn}&sort_direction=${sortColumnDirection}`;
+    }
+    if (search) {
+      url += `&search=${search}`;
+    }
+    dispatch(loadLogin(url));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -169,23 +206,6 @@ const Login = () => {
             </button>
           </Link>
         </div>
-
-        {/* <form onSubmit={handleSearchSubmit}>
-          <div class="input-group">
-            <input
-              type="search"
-              class="form-control rounded"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="search-addon"
-              onChange={handleSearchChange}
-            />
-            <button type="submit" class="btn btn-outline-primary">
-              search
-            </button>
-          </div>
-        </form> */}
-  {console.log(loginData)}
         <DataTable
           columns={columns}
           data={loginData?.data}

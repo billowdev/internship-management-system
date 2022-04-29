@@ -157,7 +157,7 @@ const Resume = () => {
     previewFile,
     PreviewSource,
   } = Resumehook();
-
+ 
   useEffect(() => {
     dispatch(loadResume);
   }, [dispatch]);
@@ -239,7 +239,7 @@ const Resume = () => {
     setEducationData3(resume?.education[2]);
     fetchProvinces();
   };
-
+  const imageProfile = require(`../../assets/images/${resume?.student?.image_name}`)
   useEffect(() => {
     setStateResue();
   }, []);
@@ -345,9 +345,9 @@ const Resume = () => {
      
           {resume?.student?.image_name && (
             <img
-              src={require("../../assets/images/" +
-                `${resume?.student?.image_name}`)}
-              alt={`$rofile-image-${resume?.student?.image_name}`}
+              src={imageProfile}
+            
+              alt="image"
               style={{ width: "200px", height: "300px" }}
             />
           )}

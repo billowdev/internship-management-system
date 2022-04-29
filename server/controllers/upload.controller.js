@@ -1,7 +1,7 @@
 const fs = require("fs")
 const { Students } = require("../models/internship");
 const path = require('path');
-
+require("dotenv").config();
 
 exports.uploadFiles = async (req, res) => {
 	try {
@@ -12,8 +12,14 @@ exports.uploadFiles = async (req, res) => {
 		let base64Image = base64ImageReq.split(';base64,').pop();
 		// let date = Date.now();
 		user_image_name = `${req.user.id}-${reqId}.jpeg`
-		
-		const pathToSave = `../public/images/${user_image_name}`;
+		let pathToSave;
+		if(process.env.NODE_ENV=='development'){
+			 pathToSave = `../public/images/${user_image_name}`;
+		}else{
+			//  /html/static/media
+			//test on /wwww/internship-management-sytem
+			pathToSave = `../html/static/media/${user_image_name}`;
+		}
 
 		fs.writeFile(pathToSave, base64Image, { encoding: 'base64' }, function (err) {
 			console.log('File created');

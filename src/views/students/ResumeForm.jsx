@@ -318,7 +318,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
             defaultValue={firstName}
-            maxLength={150}
+            maxLength={100}
             onChange={(e) => {
               setFirstName(e.target.value);
             }}
@@ -333,7 +333,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ-นามสุกล"
             defaultValue={lastName}
-            maxLength={150}
+            maxLength={100}
             onChange={(e) => {
               setLastName(e.target.value);
             }}
@@ -349,6 +349,7 @@ const Resume = () => {
             // placeholder="exsample@gmail.com"
             type="email"
             id="email"
+            maxLength={150}
             required
             defaultValue={email}
             onChange={(e) => {
@@ -367,7 +368,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสประจำตัวประชาชน"
             defaultValue={idCard}
-            maxLength={11}
+            maxLength={13}
             onChange={(e) => {
               setIdCard(e.target.value);
             }}
@@ -394,6 +395,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ศาสนา"
             defaultValue={religion}
+            maxLength={50}
             onChange={(e) => {
               setReligion(e.target.value);
             }}
@@ -409,6 +411,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อบิดา"
             defaultValue={fatherName}
+            maxLength={100}
             onChange={(e) => {
               setFatherName(e.target.value);
             }}
@@ -422,6 +425,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="อาชีพบิดา"
             defaultValue={fatherJob}
+            maxLength={50}
             onChange={(e) => {
               setFatherJob(e.target.value);
             }}
@@ -434,6 +438,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อมารดา"
+            maxLength={100}
             defaultValue={motherName}
             onChange={(e) => {
               setMotherName(e.target.value);
@@ -447,6 +452,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="อาชีพมารดา"
+            maxLength={50}
             defaultValue={motherJob}
             onChange={(e) => {
               setMotherJob(e.target.value);
@@ -460,6 +466,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="โทร"
+            maxLength={10}
             defaultValue={phone}
             onChange={(e) => {
               setPhone(e.target.value);
@@ -881,6 +888,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
             defaultValue={hometownPostCode}
             onChange={(e) => {
               setHometownPostCode(e.target.value);
@@ -896,6 +904,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ถนน / ซอย / หมู่"
+            maxLength={50}
             defaultValue={hometownRoad}
             onChange={(e) => {
               setHometownRoad(e.target.value);
@@ -910,6 +919,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={10}
             defaultValue={hometownHouseNumber}
             onChange={(e) => {
               setHometownHouseNumber(e.target.value);
@@ -934,6 +944,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
             defaultValue={presentPostCode}
             onChange={(e) => {
               setPresentPostCode(e.target.value);
@@ -948,6 +959,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ถนน / ซอย / หมู่"
+            maxLength={50}
             defaultValue={presentRoad}
             onChange={(e) => {
               setPresentRoad(e.target.value);
@@ -962,6 +974,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={10}
             defaultValue={presentHouseNumber}
             onChange={(e) => {
               setPresentHouseNumber(e.target.value);
@@ -986,6 +999,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ปริญญาตรี"
+            maxLength={100}
             defaultValue={educationData1?.level}
             onChange={handleEducation1FormChange("level")}
           />
@@ -998,6 +1012,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="มหาวิทยาลัยราชภัฏสกลนคร"
+            maxLength={100}
             defaultValue={educationData1?.academy}
             onChange={handleEducation1FormChange("academy")}
           />
@@ -1009,7 +1024,8 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="4.00"
+            maxLength={4}
             defaultValue={educationData1?.gpa}
             onChange={handleEducation1FormChange("gpa")}
           />
@@ -1024,6 +1040,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ปริญญาตรี"
+            maxLength={100}
             defaultValue={educationData2?.level}
             onChange={handleEducation2FormChange("level")}
           />
@@ -1036,6 +1053,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อสถานศึกษา"
+            maxLength={100}
             defaultValue={educationData2?.academy}
             onChange={handleEducation2FormChange("academy")}
           />
@@ -1047,7 +1065,8 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="4.00"
+            maxLength={4}
             defaultValue={educationData2?.gpa}
             onChange={handleEducation2FormChange("gpa")}
           />
@@ -1061,7 +1080,8 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ปริญญาตรี"
+          
+            maxLength={100}
             defaultValue={educationData3?.level}
             onChange={handleEducation3FormChange("level")}
           />
@@ -1074,6 +1094,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อสถานศึกษา"
+            maxLength={100}
             defaultValue={educationData3?.academy}
             onChange={handleEducation3FormChange("academy")}
           />
@@ -1085,7 +1106,8 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="4.00"
+            maxLength={4}
             defaultValue={educationData3?.gpa}
             onChange={handleEducation3FormChange("gpa")}
           />
@@ -1106,7 +1128,8 @@ const Resume = () => {
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="มีประสบการณ์การเขียนโปรแกรมบนเว็บ ด้วย MERN STACK"
+            maxLength={100}
             defaultValue={exp}
             onChange={(e) => {
               setExp(e.target.value);
@@ -1127,7 +1150,6 @@ const Resume = () => {
           </p>
           <input
             className="w-24 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
             defaultValue={presentGpa}
             onChange={(e) => {
               setPresentGpa(e.target.value);
@@ -1144,6 +1166,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="หัวข้อโครงงาน"
+            maxLength={50}
             defaultValue={projectTopic}
             onChange={(e) => {
               setProjectTopic(e.target.value);
@@ -1172,6 +1195,7 @@ const Resume = () => {
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ความสามารถพิเศษ"
+            maxLength={255}
             defaultValue={skill}
             onChange={(e) => {
               setSkill(e.target.value);
@@ -1189,6 +1213,7 @@ const Resume = () => {
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={255}
             defaultValue={interest}
             onChange={(e) => {
               setInterest(e.target.value);
@@ -1221,7 +1246,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-provinces-setter"
                 >
-                  {contactPersonProvince == "" ? (
+                  {contactPersonProvince === ""||contactPersonProvince === null ? (
                     <>- กรุณาเลือกจังหวัด -</>
                   ) : (
                     <>{`${contactPersonProvince}`}</>
@@ -1284,7 +1309,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-districts-setter"
                 >
-                  {contactPersonDistrict == "" ? (
+                  {contactPersonDistrict === ""||contactPersonDistrict===null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     contactPersonDistrict
@@ -1347,7 +1372,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-subdistricts-setter"
                 >
-                  {contactPersonSubDistrict == "" ? (
+                  {contactPersonSubDistrict === ""||contactPersonSubDistrict==null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     contactPersonSubDistrict
@@ -1413,6 +1438,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={100}
             defaultValue={contactPersonFirstName}
             onChange={(e) => {
               setContactPersonFirstName(e.target.value);
@@ -1427,6 +1453,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสกุล"
+            maxLength={100}
             defaultValue={contactPersonLastName}
             onChange={(e) => {
               setContactPersonLastName(e.target.value);
@@ -1441,6 +1468,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ผู้ปกครอง"
+            maxLength={20}
             defaultValue={contactPersonRelationship}
             onChange={(e) => {
               setContactPersonRelationship(e.target.value);
@@ -1459,6 +1487,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
             defaultValue={contactPersonPostCode}
             onChange={(e) => {
               setContactPersonPostCode(e.target.value);
@@ -1474,6 +1503,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ถนน / ซอย / หมู่"
+            maxLength={100}
             defaultValue={contactPersonRoad}
             onChange={(e) => {
               setContactPersonRoad(e.target.value);
@@ -1488,6 +1518,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={10}
             defaultValue={contactPersonHouseNumber}
             onChange={(e) => {
               setContactPersonHouseNumber(e.target.value);
@@ -1504,6 +1535,7 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="โทร"
+            maxLength={10}
             defaultValue={contactPersonPhone}
             onChange={(e) => {
               setContactPersonPhone(e.target.value);

@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		},
 		present_gpa: {
-			type: DataTypes.DECIMAL(4),
+			type: DataTypes.FLOAT(4),
 			allowNull: true,
 		},
 	}, {

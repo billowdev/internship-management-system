@@ -67,10 +67,10 @@ const InternshipForm = () => {
     showDropDownMenu,
   } = Internshiphook();
 
-  const [coStudentMsg1, setCoStudentMsg1] = useState("");
-  const [coStudentMsg2, setCoStudentMsg2] = useState("");
-  const [coStudentMsg3, setCoStudentMsg3] = useState("");
-  const [coStudentMsg4, setCoStudentMsg4] = useState("");
+  // const [coStudentMsg1, setCoStudentMsg1] = useState("");
+  // const [coStudentMsg2, setCoStudentMsg2] = useState("");
+  // const [coStudentMsg3, setCoStudentMsg3] = useState("");
+  // const [coStudentMsg4, setCoStudentMsg4] = useState("");
 
   let intern = useSelector(getStudentInternship);
 
@@ -249,11 +249,13 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-provinces-setter"
                 >
-                  {internProvince == "" ? (
+                 
+                  {internProvince === ""||internProvince===null ? (
                     <> - กรุณาเลือกจังหวัด - </>
                   ) : (
-                    internProvince
+                     <>{internProvince}</>
                   )}
+
                 </span>
                 <svg
                   id="rotate"
@@ -312,7 +314,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-districts-setter"
                 >
-                  {internDistrict == "" ? (
+                  {internDistrict === "" ||internDistrict===null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     internDistrict
@@ -375,7 +377,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-subdistricts-setter"
                 >
-                  {internSubDistrict == "" ? (
+                  {internSubDistrict === "" ||internSubDistrict===null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     internSubDistrict
@@ -442,6 +444,7 @@ const InternshipForm = () => {
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               // placeholder="ชื่อ"
+              maxLength={100}
               defaultValue={studentFormData.firstName}
               onChange={handleStudentFormChange("firstName")}
               disabled
@@ -455,6 +458,7 @@ const InternshipForm = () => {
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               // placeholder="นามสุกล"
+              maxLength={100}
               defaultValue={studentFormData.lastName}
               onChange={handleStudentFormChange("lastName")}
               disabled
@@ -468,6 +472,7 @@ const InternshipForm = () => {
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               // placeholder="รหัสนักศึกษา"
+              maxLength={11}
               defaultValue={studentFormData.id}
               disabled
               onChange={handleStudentFormChange("id")}
@@ -480,6 +485,7 @@ const InternshipForm = () => {
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
               // placeholder="เบอร์โทรศัพท์"
+              maxLength={20}
               defaultValue={studentFormData.phone}
               onChange={handleStudentFormChange("phone")}
               disabled
@@ -494,6 +500,7 @@ const InternshipForm = () => {
               // placeholder="exsample@gmail.com"
               type="email"
               id="email"
+              maxLength={150}
               disabled
               defaultValue={studentFormData.email}
               onChange={handleStudentFormChange("email")}
@@ -509,6 +516,7 @@ const InternshipForm = () => {
               // placeholder="exsample@gmail.com"
               type="text"
               id="program"
+              maxLength={50}
               disabled
               defaultValue={studentFormData.program}
               onChange={handleStudentFormChange("program")}
@@ -532,6 +540,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            maxLength={100}
             defaultValue={internCompanyName}
             onChange={(e) => {
               setInternCompanyName(e.target.value);
@@ -551,6 +560,7 @@ const InternshipForm = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="งานที่เกี่ยวข้อง"
             defaultValue={internWork}
+            maxLength={100}
             onChange={(e) => {
               setInternWork(e.target.value);
             }}
@@ -564,6 +574,7 @@ const InternshipForm = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="หัวหน้าฝ่ายบุคคล"
             defaultValue={internProposeTo}
+            maxLength={10}
             onChange={(e) => {
               setInternProposeTo(e.target.value);
             }}
@@ -578,6 +589,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ผู้ติดต่อ"
+            maxLength={100}
             defaultValue={internContactWithName}
             onChange={(e) => {
               setInternContactWithName(e.target.value);
@@ -591,6 +603,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ตำแหน่ง"
+            maxLength={50}
             defaultValue={internContactWithPosition}
             onChange={(e) => {
               setInternContactWithPosition(e.target.value);
@@ -604,6 +617,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เบอร์ติดต่อ"
+            maxLength={10}
             defaultValue={internPhone}
             onChange={(e) => {
               setInternPhone(e.target.value);
@@ -620,6 +634,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เลขที่"
+            maxLength={10}
             defaultValue={internHouseNumber}
             onChange={(e) => {
               setInternHouseNumber(e.target.value);
@@ -647,6 +662,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
+            // disabled
             defaultValue={internPostCode}
             onChange={(e) => {
               setInternPostCode(e.target.value);
@@ -671,6 +688,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.firstPerson?.firstName}
             onChange={handleCoStudentFormChange("firstPerson", "firstName")}
           />
@@ -683,6 +701,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.firstPerson?.lastName}
             onChange={handleCoStudentFormChange("firstPerson", "lastName")}
           />
@@ -695,6 +714,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.firstPerson?.studentId}
             onChange={handleCoStudentFormChange("firstPerson", "studentId")}
           />
@@ -706,6 +726,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.firstPerson?.phone}
             onChange={handleCoStudentFormChange("firstPerson", "phone")}
           />
@@ -720,6 +741,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.secondPerson?.firstName}
             onChange={handleCoStudentFormChange("secondPerson", "firstName")}
           />
@@ -732,6 +754,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.secondPerson?.lastName}
             onChange={handleCoStudentFormChange("secondPerson", "lastName")}
           />
@@ -744,6 +767,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.secondPerson?.studentId}
             onChange={handleCoStudentFormChange("secondPerson", "studentId")}
           />
@@ -755,6 +779,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.secondPerson?.phone}
             onChange={handleCoStudentFormChange("secondPerson", "phone")}
           />
@@ -769,6 +794,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.thirdPerson?.firstName}
             onChange={handleCoStudentFormChange("thirdPerson", "firstName")}
           />
@@ -781,6 +807,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.thirdPerson?.lastName}
             onChange={handleCoStudentFormChange("thirdPerson", "lastName")}
           />
@@ -793,6 +820,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.thirdPerson?.studentId}
             onChange={handleCoStudentFormChange("thirdPerson", "studentId")}
           />
@@ -804,6 +832,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.thirdPerson?.phone}
             onChange={handleCoStudentFormChange("thirdPerson", "phone")}
           />
@@ -818,6 +847,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.fourthPerson?.firstName}
             onChange={handleCoStudentFormChange("fourthPerson", "firstName")}
           />
@@ -830,6 +860,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.fourthPerson?.lastName}
             onChange={handleCoStudentFormChange("fourthPerson", "lastName")}
           />
@@ -842,6 +873,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.fourthPerson?.studentId}
             onChange={handleCoStudentFormChange("fourthPerson", "studentId")}
           />
@@ -853,6 +885,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.fourthPerson?.phone}
             onChange={handleCoStudentFormChange("fourthPerson", "phone")}
           />

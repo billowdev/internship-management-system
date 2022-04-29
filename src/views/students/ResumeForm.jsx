@@ -150,8 +150,13 @@ const Resume = () => {
     swaptextProgram,
 
     fetchProvinces,
-  } = Resumehook();
 
+    handleFileInputChange,
+    fileInputState,
+    handleSubmitFile,
+    previewFile,
+    PreviewSource,
+  } = Resumehook();
 
   useEffect(() => {
     dispatch(loadResume);
@@ -309,7 +314,46 @@ const Resume = () => {
       <p className="text-lg font-semibold leading-tight text-gray-800">
         1. ข้อมูลส่วนตัว
       </p>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <div>
+            <input
+              id="fileInput"
+              type="file"
+              name="image"
+              onChange={handleFileInputChange}
+              value={fileInputState}
+              className="custom-file-input"
+            />
+
+            <label className="custom-file-label" htmlFor="customFile">
+              เลือกรูปภาพ
+            </label>
+          </div>
+
+          {PreviewSource && (
+            <div className="items-center">
+              <img
+                className="mt-3"
+                src={PreviewSource}
+                alt="chosen"
+                style={{ width: "200px", height: "300px" }}
+              />
+            </div>
+          )}
+     
+          {resume?.student?.image_name && (
+            <img
+              src={require("../resources/assets/uploads/" +
+                `${resume?.student?.image_name}`)}
+              alt={`$rofile-image-${resume?.student?.image_name}`}
+              style={{ width: "200px", height: "300px" }}
+            />
+          )}
+
+          <hr className="mb-10 mt-5" />
+        </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ชื่อ
@@ -1080,7 +1124,6 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-          
             maxLength={100}
             defaultValue={educationData3?.level}
             onChange={handleEducation3FormChange("level")}
@@ -1246,7 +1289,8 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-provinces-setter"
                 >
-                  {contactPersonProvince === ""||contactPersonProvince === null ? (
+                  {contactPersonProvince === "" ||
+                  contactPersonProvince === null ? (
                     <>- กรุณาเลือกจังหวัด -</>
                   ) : (
                     <>{`${contactPersonProvince}`}</>
@@ -1309,7 +1353,8 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-districts-setter"
                 >
-                  {contactPersonDistrict === ""||contactPersonDistrict===null ? (
+                  {contactPersonDistrict === "" ||
+                  contactPersonDistrict === null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     contactPersonDistrict
@@ -1372,7 +1417,8 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-subdistricts-setter"
                 >
-                  {contactPersonSubDistrict === ""||contactPersonSubDistrict==null ? (
+                  {contactPersonSubDistrict === "" ||
+                  contactPersonSubDistrict == null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     contactPersonSubDistrict
@@ -1556,6 +1602,7 @@ const Resume = () => {
                 <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
                   แบบฟอร์มประวัติส่วนตัว
                 </h3>
+
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
                   {/* ข้อมูลส่วนตัว */}
@@ -1576,7 +1623,6 @@ const Resume = () => {
                   {interestSection}
                   {/* บุคคลที่สามารถติดต่อได้ */}
                   {contactPersonSection}
-
                   <hr className="mt-5 h-[1px] bg-gray-100" />
                   <h3 class="mt-10 text-center font-medium leading-tight text-md  text-black text-xl">
                     <span className="text-red-500 ">*</span>{" "}
@@ -1584,15 +1630,15 @@ const Resume = () => {
                   </h3>
                   <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                     <Link to="/student/home">
-                      <div id="myBtn" className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
+                      <div
+                        id="myBtn"
+                        className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full "
+                      >
                         กลับ
                       </div>
                     </Link>
 
                     <button
-                      // onClick={(e) => {
-                      //   handleFormSave(e);
-                      // }}
                       id="submit"
                       type="submit"
                       className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "

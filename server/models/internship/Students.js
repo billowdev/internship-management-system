@@ -81,9 +81,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.FLOAT(4),
 			allowNull: true,
 		},
-		image:{
-			type: DataTypes.BLOB("long"),
-			allowNull: true
+		image_name: {
+			type: DataTypes.STRING,
+			allowNull: true,
 		}
 	}, {
 		underscored: true

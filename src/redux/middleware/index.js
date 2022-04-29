@@ -5,6 +5,7 @@ import adminProfile from './admin/profile';
 import studentInternship from './student/internship';
 import studentResume from './student/resume';
 import director from './director/internship';
+import upload from './upload';
 
 export default [
     ...ui,
@@ -13,6 +14,7 @@ export default [
     ...adminProfile,
     ...studentInternship,
     ...studentResume,
-    ...director
+    ...director,
+    ...upload
 
 ]

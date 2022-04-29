@@ -12,7 +12,7 @@ exports.uploadFiles = async (req, res) => {
 		// let date = Date.now();
 		user_image_name = `${req.user.id}-${reqId}.jpeg`
 
-		fs.writeFile(`../src/views/resources/assets/uploads/${user_image_name}`, base64Image, { encoding: 'base64' }, function (err) {
+		fs.writeFile(`../src/assets/images/${user_image_name}`, base64Image, { encoding: 'base64' }, function (err) {
 			console.log('File created');
 		})
 		

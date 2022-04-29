@@ -345,7 +345,7 @@ const Resume = () => {
      
           {resume?.student?.image_name && (
             <img
-              src={require("../resources/assets/uploads/" +
+              src={require("../../assets/images/" +
                 `${resume?.student?.image_name}`)}
               alt={`$rofile-image-${resume?.student?.image_name}`}
               style={{ width: "200px", height: "300px" }}

@@ -4,9 +4,46 @@ import Moment from "moment";
 import { useDispatch } from "react-redux";
 import * as thaiAddresses from "../../../infrastructure/services/api/thaiAddresses/thaiAddressApi";
 import { loadState, saveState } from "../../../helpers/Persist";
+import { uploadImage } from "../../../redux/actions/upload";
 
 const StudentUpdateHook = () => {
   const dispatch = useDispatch();
+
+  const [fileInputState, setFileInputState] = useState("");
+  const [PreviewSource, setPreviewSource] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const [fileData, setFileData] = useState("");
+  
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const handleFileInputChange = (event, id) => {
+    const file = event.target.files[0];
+    previewFile(file);
+    // setSelectedFile(file);
+    setFileInputState(event.target.value);
+
+    if (!file) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFileData(reader.result);
+      dispatch(uploadImage({ file: reader.result, id:id }));
+      setFileInputState("");
+      setPreviewSource("");
+    };
+    reader.onerror = () => {
+      console.log("Error");
+    };
+
+  };
+
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -554,6 +591,12 @@ const StudentUpdateHook = () => {
     contactPersonSubDistricts,
     setStudentId,
     fetchProvinces,
+
+
+    handleFileInputChange,
+    fileInputState,
+    PreviewSource,
+
   };
 };
 

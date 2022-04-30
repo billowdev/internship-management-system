@@ -153,9 +153,8 @@ const Resume = () => {
 
     handleFileInputChange,
     fileInputState,
-    handleSubmitFile,
-    previewFile,
     PreviewSource,
+    
   } = Resumehook();
 
   useEffect(() => {

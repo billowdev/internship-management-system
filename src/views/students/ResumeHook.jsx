@@ -36,10 +36,6 @@ const Resumehook = () => {
 
   };
 
-  const handleSubmitFile = () => {
-   
-  };
-
   const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -592,8 +588,6 @@ const Resumehook = () => {
 
     handleFileInputChange,
     fileInputState,
-    handleSubmitFile,
-    previewFile,
     PreviewSource,
   };
 };

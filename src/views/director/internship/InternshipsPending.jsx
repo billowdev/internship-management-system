@@ -11,6 +11,7 @@ import {
   returnInternship,
 } from "../../../redux/actions/director/internship";
 import { getInternshipPending } from "../../../redux/selectors/director/internship";
+import Swal from "sweetalert2";
 
 const InternshipPendingConfirms = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const InternshipPendingConfirms = () => {
 
   const handlePerRowsChange = async (newPerPage, page) => {
     setPerPage(newPerPage);
-    setPage(page)
+    setPage(page);
   };
 
   // const handleSort = (column, sortDirection) => {
@@ -139,12 +140,39 @@ const InternshipPendingConfirms = () => {
   ];
 
   const handleReturn = (id) => {
-    dispatch(returnInternship(id));
-    fetchData();
+    Swal.fire({
+      title: "ส่งคืน?",
+      text: `แบบฟอร์มจะถูกส่งคืนนักศึกษา`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(returnInternship(id));
+        fetchData();
+      }
+    });
   };
   const handleConfirm = (id) => {
-    dispatch(confirmInternship(id));
+    Swal.fire({
+      title: "อนุมัติ ?",
+      text: `แบบฟอร์มจะถูกเปลี่ยนสถานะเป็น "อนุมัติแล้ว"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(confirmInternship(id));
     fetchData();
+      }
+    });
+  
   };
 
   useEffect(() => {
@@ -157,7 +185,7 @@ const InternshipPendingConfirms = () => {
     <>
       <div className="container mx-auto px-4 wrapper">
         <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
-          ข้อมูลฝึกประสบการณ์วิชาชีพรอการยืนยัน
+          ข้อมูลฝึกประสบการณ์วิชาชีพ รออนุมัติ
         </h3>
         <hr className="mt-3 mb-10" />
 

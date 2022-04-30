@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
+import Swal from "sweetalert2";
 import {
   loadInternshipConfirm,
   unConfirmInternship,
@@ -55,9 +56,8 @@ const InternshipsConfirmed = () => {
     setLoading(false);
   };
 
- 
   const columns = [
-      {
+    {
       name: "รหัสนักศึกษา",
       selector: (row) => row["Student.id"],
       sortable: true,
@@ -97,14 +97,14 @@ const InternshipsConfirmed = () => {
       cell: (row) => (
         <div className="flex space-x-2">
           <div>
-            {/* <button
+            <button
               className="w-32 text-white btn btn-red"
               onClick={(e) => {
                 handleReturn(row.id);
               }}
             >
               พิจารณาใหม่
-            </button> */}
+            </button>
           </div>
           <div>
             <Link to={`/director/internship/view/confirm/${row["Student.id"]}`}>
@@ -117,21 +117,32 @@ const InternshipsConfirmed = () => {
   ];
 
   const handleReturn = (id) => {
-    dispatch(unConfirmInternship(id));
-    fetchData();
+    Swal.fire({
+      title: "พิจารณาใหม่ ?",
+      text: `แบบฟอร์มจะถูกเปลี่ยนสถานะเป็น "รออนุมัติ"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(unConfirmInternship(id));
+        fetchData();
+      }
+    });
   };
 
   useEffect(() => {
     fetchData();
   }, [dispatch]);
 
-
-
   return (
     <>
       <div className="container mx-auto px-4 wrapper">
         <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
-          ข้อมูลฝึกประสบการณ์วิชาชีพ ที่ยืนยันแล้ว
+          ข้อมูลฝึกประสบการณ์วิชาชีพ ที่อนุมัติแล้ว
         </h3>
         <hr className="mt-3 mb-10" />
         <div class="grid justify-center">

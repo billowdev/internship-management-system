@@ -10,6 +10,7 @@ import { loadState, removeState, saveState } from "../../helpers/Persist";
 import Internshiphook from "./InternshipHook";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { getStudentInternship } from "../../redux/selectors/student/internship";
+import Swal from "sweetalert2";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   const {
@@ -145,12 +146,39 @@ const InternshipForm = () => {
   }, []);
   const navigate = useNavigate();
   const handleSend = (id) => {
-    dispatch(sendInternship(id));
-    navigate("/student/home");
+    Swal.fire({
+      title: "ยืนยันการส่ง?",
+      text: `กรุณาตรวจสอบข้อมูลให้ครบถ้วนก่อนส่ง`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(sendInternship(id));
+        navigate("/student/home");
+      }
+    });
   };
+
   const handleUnsend = (id) => {
-    dispatch(unsendInternship(id));
-    navigate("/student/home");
+    Swal.fire({
+      title: "ยกเลิก?",
+      text: `คุณต้องการยกเลิกการส่งแบบฟอร์มใช่หรือไม่?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(unsendInternship(id));
+        navigate("/student/home");
+      }
+    });
   };
   useEffect(() => {
     dispatch(loadInternship);
@@ -249,13 +277,11 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-provinces-setter"
                 >
-                 
-                  {internProvince === ""||internProvince===null ? (
+                  {internProvince === "" || internProvince === null ? (
                     <> - กรุณาเลือกจังหวัด - </>
                   ) : (
-                     <>{internProvince}</>
+                    <>{internProvince}</>
                   )}
-
                 </span>
                 <svg
                   id="rotate"
@@ -314,7 +340,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-districts-setter"
                 >
-                  {internDistrict === "" ||internDistrict===null ? (
+                  {internDistrict === "" || internDistrict === null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     internDistrict
@@ -377,7 +403,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-subdistricts-setter"
                 >
-                  {internSubDistrict === "" ||internSubDistrict===null ? (
+                  {internSubDistrict === "" || internSubDistrict === null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     internSubDistrict
@@ -443,7 +469,6 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              // placeholder="ชื่อ"
               maxLength={100}
               defaultValue={studentFormData.firstName}
               onChange={handleStudentFormChange("firstName")}
@@ -457,7 +482,6 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              // placeholder="นามสุกล"
               maxLength={100}
               defaultValue={studentFormData.lastName}
               onChange={handleStudentFormChange("lastName")}
@@ -471,7 +495,6 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              // placeholder="รหัสนักศึกษา"
               maxLength={11}
               defaultValue={studentFormData.id}
               disabled
@@ -484,7 +507,6 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              // placeholder="เบอร์โทรศัพท์"
               maxLength={20}
               defaultValue={studentFormData.phone}
               onChange={handleStudentFormChange("phone")}
@@ -497,7 +519,7 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              // placeholder="exsample@gmail.com"
+              placeholder="exsample@gmail.com"
               type="email"
               id="email"
               maxLength={150}
@@ -539,8 +561,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
             maxLength={100}
+            required
             defaultValue={internCompanyName}
             onChange={(e) => {
               setInternCompanyName(e.target.value);
@@ -558,8 +581,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="งานที่เกี่ยวข้อง"
+            placeholder="งานที่เกี่ยวข้องกับคอมพิวเตอร์"
             defaultValue={internWork}
+            required
             maxLength={100}
             onChange={(e) => {
               setInternWork(e.target.value);
@@ -572,7 +596,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="หัวหน้าฝ่ายบุคคล"
+            placeholder="เช่น หัวหน้างานฝ่ายบุคคล"
+            required
             defaultValue={internProposeTo}
             maxLength={10}
             onChange={(e) => {
@@ -588,7 +613,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ผู้ติดต่อ"
+            placeholder="ผู้ติดต่อ"
+            required
             maxLength={100}
             defaultValue={internContactWithName}
             onChange={(e) => {
@@ -602,8 +628,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ตำแหน่ง"
+            placeholder="ผู้จัดการฝ่ายพัฒนาซอฟต์แวร์"
             maxLength={50}
+            required
             defaultValue={internContactWithPosition}
             onChange={(e) => {
               setInternContactWithPosition(e.target.value);
@@ -617,6 +644,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เบอร์ติดต่อ"
+            required
             maxLength={10}
             defaultValue={internPhone}
             onChange={(e) => {
@@ -634,6 +662,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="เลขที่"
+            required
             maxLength={10}
             defaultValue={internHouseNumber}
             onChange={(e) => {
@@ -648,6 +677,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ตำแหน่ง"
+            required
             defaultValue={internRoad}
             onChange={(e) => {
               setInternRoad(e.target.value);
@@ -663,7 +693,7 @@ const InternshipForm = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
             maxLength={10}
-            // disabled
+            required
             defaultValue={internPostCode}
             onChange={(e) => {
               setInternPostCode(e.target.value);
@@ -688,6 +718,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
+            required
             maxLength={100}
             defaultValue={coStudentFormData?.firstPerson?.firstName}
             onChange={handleCoStudentFormChange("firstPerson", "firstName")}
@@ -701,6 +732,7 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสุกล"
+
             maxLength={100}
             defaultValue={coStudentFormData?.firstPerson?.lastName}
             onChange={handleCoStudentFormChange("firstPerson", "lastName")}
@@ -917,13 +949,16 @@ const InternshipForm = () => {
                     กรุณาตรวจสอบความถูกต้องของข้อมูล
                   </h3>
                   <div className="flex flex-col my-5 px-7  flex-wrap items-center justify-center w-full lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                    <button
-                      id="submit"
-                      type="submit"
-                      className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                    >
-                      บันทึก
-                    </button>
+                    {!intern?.Internships?.is_send && (
+                      <button
+                        id="submit"
+                        type="submit"
+                        className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                      >
+                        บันทึก
+                      </button>
+                    )}
+
                   </div>
                 </div>
               </form>
@@ -961,15 +996,13 @@ const InternshipForm = () => {
                     </button>
                   )}
 
-                <Link to="/student/home">
-                  {intern &&
-                    intern?.Internships?.is_send &&
-                    intern?.Internships?.is_confirm && (
-                      <button className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
-                        ผ่าน
-                      </button>
-                    )}
-                </Link>
+                {intern &&
+                  intern?.Internships?.is_send &&
+                  intern?.Internships?.is_confirm && (
+                    <button className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
+                      ผ่าน
+                    </button>
+                  )}
               </div>
             </div>
           </div>

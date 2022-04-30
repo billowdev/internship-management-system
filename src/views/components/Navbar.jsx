@@ -77,14 +77,18 @@ const Navbar = () => {
                           className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
                           รายการฝึกประสบการณ์วิชาชีพ :
-                          <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">รอยืนยัน</span>
+                          <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">
+                            รอยืนยัน
+                          </span>
                         </Link>
                         <Link
                           to="/director/internship/confirm"
                           className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
                           รายการฝึกประสบการณ์วิชาชีพ :
-                          <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">ยืนยันแล้ว</span>
+                          <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">
+                            ยืนยันแล้ว
+                          </span>
                         </Link>
                       </>
                     ) : (
@@ -212,7 +216,7 @@ const Navbar = () => {
           {(ref) => (
             <div className="md:hidden" id="mobile-menu">
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {isAuth && (
+                {isAuth && (
                   <div className="ml-10 flex items-baseline space-x-4">
                     {isAuth?.roles === "student" ? (
                       <>
@@ -247,14 +251,18 @@ const Navbar = () => {
                           className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
                           รายการฝึกประสบการณ์วิชาชีพ :
-                          <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">รอยืนยัน</span>
+                          <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">
+                            รออนุมัติ
+                          </span>
                         </Link>
                         <Link
                           to="/director/internship/confirm"
                           className="text-white hover:bg-sky-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         >
                           รายการฝึกประสบการณ์วิชาชีพ :
-                          <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">ยืนยันแล้ว</span>
+                          <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">
+                            อนุมัติแล้ว
+                          </span>
                         </Link>
                       </>
                     ) : (

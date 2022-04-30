@@ -1,37 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { loadState } from "../../../helpers/Persist";
 import {
   confirmInternship,
   loadInternshipDetail,
   returnInternship,
+  unConfirmInternship,
 } from "../../../redux/actions/director/internship";
 import { getInternshipDetail } from "../../../redux/selectors/director/internship";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const InternshipsViews = () => {
   const dispatch = useDispatch();
   const { id, status } = useParams();
+  const navigate = useNavigate();
+
   let internshipDetail = useSelector(getInternshipDetail);
-  // internshipDetail = internshipDetail?.resp
-  // const [internshipDetail, setInternshipDetail] = useState(
-  //   loadState("internship-detail")
-  // );
-  const [coStudent, setCoStudent] = useState([]);
-  const [company, setCompany] = useState([]);
-  const [companyAddress, setCompanyAddress] = useState([]);
-  const [internship, setInternship] = useState([]);
-  const [hometownAddr, setHometownAddr] = useState([]);
-  const [presentAddr, setPresentAddr] = useState([]);
-  const [student, setStudent] = useState([]);
 
   const handleConfirm = (id) => {
-    dispatch(confirmInternship(id));
+    Swal.fire({
+      title: "อนุมัติ ?",
+      text: `แบบฟอร์มจะถูกเปลี่ยนสถานะเป็น "ยืนยันแล้ว"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(confirmInternship(id));
+        navigate("/director/internship/confirm");
+      }
+    });
+  };
+
+  const handleUnConfirm = (id) => {
+    Swal.fire({
+      title: "พิจารณาใหม่ ?",
+      text: `แบบฟอร์มจะถูกเปลี่ยนสถานะเป็น "รอการยืนยัน"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(unConfirmInternship(id));
+        navigate("/director/internship/confirm");
+      }
+    });
   };
   const handleReturn = (id) => {
-    dispatch(returnInternship(id));
+    Swal.fire({
+      title: "ส่งคืน?",
+      text: `แบบฟอร์มจะถูกส่งคืนนักศึกษา`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(returnInternship(id));
+        if (status === "pending") {
+          navigate("/director/internship/pending");
+        } else {
+          navigate("/director/internship/confirm");
+        }
+      }
+    });
   };
+
   useEffect(() => {
     dispatch(loadInternshipDetail(id));
   }, [dispatch]);
@@ -559,42 +603,52 @@ const InternshipsViews = () => {
               <div className="mt-10 mb-10 flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                 {status === "pending" ? (
                   <>
+                    <button
+                      onClick={(e) => {
+                        handleReturn(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn bg-red-400 hover:bg-red-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      ส่งคืน
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        handleConfirm(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      อนุมัติ
+                    </button>
+
                     <Link to="/director/internship/pending">
-                      <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-full ">
+                      <button className="btn btn-sky rounded  transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-32 ">
                         กลับ
-                      </button>
-                    </Link>
-                    <Link to="/director/internship/pending">
-                      <button className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
-                        ส่งคืน
-                      </button>
-                    </Link>
-                    <Link to="/director/internship/pending">
-                      <button
-                        onClick={(e) => {
-                          handleConfirm(internshipDetail?.Internships?.id);
-                        }}
-                        className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                      >
-                        อนุมัติ
                       </button>
                     </Link>
                   </>
                 ) : (
                   <>
+                    <button
+                      onClick={(e) => {
+                        handleReturn(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn btn-red transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-24"
+                    >
+                      ส่งคืน
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        handleUnConfirm(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn bg-yellow-400 hover:bg-yellow-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      พิจารณาใหม่
+                    </button>
+
                     <Link to="/director/internship/confirm">
                       <button className="btn btn-sky rounded  transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-32 ">
                         กลับ
-                      </button>
-                    </Link>
-                    <Link to="/director/internship/confirm">
-                      <button
-                        onClick={(e) => {
-                          handleReturn(internshipDetail?.Internships?.id);
-                        }}
-                        className="btn btn-red transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-24"
-                      >
-                        ส่งคืน
                       </button>
                     </Link>
                   </>

@@ -1,5 +1,5 @@
 const { Students, Login, Internships, Companies, CoStudentInternships, Addresses, Directors, PresentAddresses, HometownAddresses, Educations } = require("../models/internship");
-
+const { Op } = require("sequelize")
 
 exports.getInternshipsPending = async (req, res) => {
 	try {
@@ -7,7 +7,7 @@ exports.getInternshipsPending = async (req, res) => {
 		if (isDirector != null) {
 			const page = parseInt(req.query.page);
 			const perPage = parseInt(req.query.per_page);
-			const sortColumn = req.query.sort_column;
+			let sortColumn = req.query.sort_column;
 			const sortDirection = req.query.sort_direction;
 			const search = req.query.search;
 			const startIndex = (page - 1) * perPage;
@@ -24,7 +24,25 @@ exports.getInternshipsPending = async (req, res) => {
 						{
 							model: Students,
 							require: true,
-
+							where: {
+								[Op.or]: [
+									{
+										id: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										first_name: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										last_name: {
+											[Op.like]: `%${search}%`,
+										},
+									}
+								]
+							}
 						},
 						{
 							model: Companies,
@@ -33,7 +51,8 @@ exports.getInternshipsPending = async (req, res) => {
 					],
 					where: {
 						is_confirm: 0,
-						is_send: 1, id: {
+						is_send: 1,
+						student_id: {
 							[Op.like]: `%${search}%`,
 						},
 					},
@@ -46,7 +65,26 @@ exports.getInternshipsPending = async (req, res) => {
 						{
 							model: Students,
 							require: true,
+							where: {
 
+								[Op.or]: [
+									{
+										id: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										first_name: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										last_name: {
+											[Op.like]: `%${search}%`,
+										},
+									}
+								]
+							}
 						},
 						{
 							model: Companies,
@@ -54,9 +92,7 @@ exports.getInternshipsPending = async (req, res) => {
 						},
 					],
 					where: {
-						is_confirm: 0, is_send: 1, id: {
-							[Op.like]: `%${search}%`,
-						},
+						is_confirm: 0, is_send: 1
 					},
 					raw: true,
 				});
@@ -150,7 +186,25 @@ exports.getInternshipsConfirm = async (req, res) => {
 						{
 							model: Students,
 							require: true,
-
+							where: {
+								[Op.or]: [
+									{
+										id: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										first_name: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										last_name: {
+											[Op.like]: `%${search}%`,
+										},
+									}
+								]
+							}
 						},
 						{
 							model: Companies,
@@ -159,9 +213,7 @@ exports.getInternshipsConfirm = async (req, res) => {
 					],
 					where: {
 						is_confirm: 1,
-						is_send: 1, id: {
-							[Op.like]: `%${search}%`,
-						},
+						is_send: 1
 					},
 					order: [[sortColumn, sortDirection]],
 					raw: true,
@@ -172,7 +224,25 @@ exports.getInternshipsConfirm = async (req, res) => {
 						{
 							model: Students,
 							require: true,
-
+							where: {
+								[Op.or]: [
+									{
+										id: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										first_name: {
+											[Op.like]: `%${search}%`,
+										},
+									},
+									{
+										last_name: {
+											[Op.like]: `%${search}%`,
+										},
+									}
+								]
+							}
 						},
 						{
 							model: Companies,
@@ -180,9 +250,7 @@ exports.getInternshipsConfirm = async (req, res) => {
 						},
 					],
 					where: {
-						is_confirm: 1, is_send: 1, id: {
-							[Op.like]: `%${search}%`,
-						},
+						is_confirm: 1, is_send: 1
 					},
 					raw: true,
 				});

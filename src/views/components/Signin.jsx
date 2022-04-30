@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loadAuth, loadSignin } from "../../redux/actions/auth";
+import { loadState } from "../../helpers/Persist";
 import { loginApi } from "../../infrastructure/services/api/auth/login";
 
 const Signin = () => {
@@ -17,7 +17,6 @@ const Signin = () => {
   const userRef = useRef();
   const errRef = useRef();
   const handleLogin = async (e) => {
-    // dispatch(loadSignin({ username, password }));
     try {
       const response = await loginApi({ username, password });
       setUsername("");
@@ -32,11 +31,9 @@ const Signin = () => {
         draggable: true,
         progress: undefined,
       });
-     
-      // dispatch(loadAuth);
       window.location.reload();
     } catch (err) {
-     if (err.response?.status === 400) {
+      if (err.response?.status === 400) {
         toast.error("ลงชื่อเข้าใช้ผิดพลาด กรุณาลองใหม่อีกครั้ง!", {
           position: "top-right",
           autoClose: 2500,
@@ -54,6 +51,12 @@ const Signin = () => {
       errRef.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (loadState("auth-state")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <>

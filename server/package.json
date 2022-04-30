@@ -1,5 +1,5 @@
 {
-  "name": "internship-management-system-api",
+  "name": "internship-management-system-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -21,8 +21,10 @@
     "gradient-string": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "multer": "^1.4.4",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.19.0"
+    "sequelize": "^6.19.0",
+    "sharp": "^0.30.4"
   },
   "devDependencies": {
     "eslint": "^8.13.0",

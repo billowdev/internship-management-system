@@ -10,6 +10,7 @@ import { loadState, removeState, saveState } from "../../helpers/Persist";
 import Internshiphook from "./InternshipHook";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { getStudentInternship } from "../../redux/selectors/student/internship";
+import Swal from "sweetalert2";
 const InternshipForm = () => {
   const dispatch = useDispatch();
   const {
@@ -67,10 +68,10 @@ const InternshipForm = () => {
     showDropDownMenu,
   } = Internshiphook();
 
-  const [coStudentMsg1, setCoStudentMsg1] = useState("");
-  const [coStudentMsg2, setCoStudentMsg2] = useState("");
-  const [coStudentMsg3, setCoStudentMsg3] = useState("");
-  const [coStudentMsg4, setCoStudentMsg4] = useState("");
+  // const [coStudentMsg1, setCoStudentMsg1] = useState("");
+  // const [coStudentMsg2, setCoStudentMsg2] = useState("");
+  // const [coStudentMsg3, setCoStudentMsg3] = useState("");
+  // const [coStudentMsg4, setCoStudentMsg4] = useState("");
 
   let intern = useSelector(getStudentInternship);
 
@@ -145,12 +146,39 @@ const InternshipForm = () => {
   }, []);
   const navigate = useNavigate();
   const handleSend = (id) => {
-    dispatch(sendInternship(id));
-    navigate("/student/home");
+    Swal.fire({
+      title: "ยืนยันการส่ง?",
+      text: `กรุณาตรวจสอบข้อมูลให้ครบถ้วนก่อนส่ง`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(sendInternship(id));
+        navigate("/student/home");
+      }
+    });
   };
+
   const handleUnsend = (id) => {
-    dispatch(unsendInternship(id));
-    navigate("/student/home");
+    Swal.fire({
+      title: "ยกเลิก?",
+      text: `คุณต้องการยกเลิกการส่งแบบฟอร์มใช่หรือไม่?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(unsendInternship(id));
+        navigate("/student/home");
+      }
+    });
   };
   useEffect(() => {
     dispatch(loadInternship);
@@ -249,10 +277,10 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-provinces-setter"
                 >
-                  {internProvince == "" ? (
+                  {internProvince === "" || internProvince === null ? (
                     <> - กรุณาเลือกจังหวัด - </>
                   ) : (
-                    internProvince
+                    <>{internProvince}</>
                   )}
                 </span>
                 <svg
@@ -312,7 +340,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-districts-setter"
                 >
-                  {internDistrict == "" ? (
+                  {internDistrict === "" || internDistrict === null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     internDistrict
@@ -375,7 +403,7 @@ const InternshipForm = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-subdistricts-setter"
                 >
-                  {internSubDistrict == "" ? (
+                  {internSubDistrict === "" || internSubDistrict === null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     internSubDistrict
@@ -441,7 +469,7 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="ชื่อ-นามสุกล"
+              maxLength={100}
               defaultValue={studentFormData.firstName}
               onChange={handleStudentFormChange("firstName")}
               disabled
@@ -454,7 +482,7 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="ชื่อ-นามสุกล"
+              maxLength={100}
               defaultValue={studentFormData.lastName}
               onChange={handleStudentFormChange("lastName")}
               disabled
@@ -467,7 +495,7 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="รหัสนักศึกษา"
+              maxLength={11}
               defaultValue={studentFormData.id}
               disabled
               onChange={handleStudentFormChange("id")}
@@ -479,7 +507,7 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="เบอร์โทรศัพท์"
+              maxLength={20}
               defaultValue={studentFormData.phone}
               onChange={handleStudentFormChange("phone")}
               disabled
@@ -494,6 +522,7 @@ const InternshipForm = () => {
               placeholder="exsample@gmail.com"
               type="email"
               id="email"
+              maxLength={150}
               disabled
               defaultValue={studentFormData.email}
               onChange={handleStudentFormChange("email")}
@@ -506,9 +535,10 @@ const InternshipForm = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="exsample@gmail.com"
+              // placeholder="exsample@gmail.com"
               type="text"
               id="program"
+              maxLength={50}
               disabled
               defaultValue={studentFormData.program}
               onChange={handleStudentFormChange("program")}
@@ -532,6 +562,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            maxLength={100}
+            required
             defaultValue={internCompanyName}
             onChange={(e) => {
               setInternCompanyName(e.target.value);
@@ -549,8 +581,10 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="งานที่เกี่ยวข้อง"
+            placeholder="งานที่เกี่ยวข้องกับคอมพิวเตอร์"
             defaultValue={internWork}
+            required
+            maxLength={100}
             onChange={(e) => {
               setInternWork(e.target.value);
             }}
@@ -562,8 +596,10 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="หัวหน้าฝ่ายบุคคล"
+            placeholder="เช่น หัวหน้างานฝ่ายบุคคล"
+            required
             defaultValue={internProposeTo}
+            maxLength={10}
             onChange={(e) => {
               setInternProposeTo(e.target.value);
             }}
@@ -578,6 +614,8 @@ const InternshipForm = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             placeholder="ผู้ติดต่อ"
+            required
+            maxLength={100}
             defaultValue={internContactWithName}
             onChange={(e) => {
               setInternContactWithName(e.target.value);
@@ -590,7 +628,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ตำแหน่ง"
+            placeholder="ผู้จัดการฝ่ายพัฒนาซอฟต์แวร์"
+            maxLength={50}
+            required
             defaultValue={internContactWithPosition}
             onChange={(e) => {
               setInternContactWithPosition(e.target.value);
@@ -603,7 +643,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เบอร์ติดต่อ"
+            // placeholder="เบอร์ติดต่อ"
+            required
+            maxLength={10}
             defaultValue={internPhone}
             onChange={(e) => {
               setInternPhone(e.target.value);
@@ -619,7 +661,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เลขที่"
+            // placeholder="เลขที่"
+            required
+            maxLength={10}
             defaultValue={internHouseNumber}
             onChange={(e) => {
               setInternHouseNumber(e.target.value);
@@ -632,7 +676,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ตำแหน่ง"
+            // placeholder="ตำแหน่ง"
+            required
             defaultValue={internRoad}
             onChange={(e) => {
               setInternRoad(e.target.value);
@@ -646,7 +691,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสไปรษณีย์"
+            // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
+            required
             defaultValue={internPostCode}
             onChange={(e) => {
               setInternPostCode(e.target.value);
@@ -670,7 +717,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ"
+            // placeholder="ชื่อ"
+            required
+            maxLength={100}
             defaultValue={coStudentFormData?.firstPerson?.firstName}
             onChange={handleCoStudentFormChange("firstPerson", "firstName")}
           />
@@ -682,7 +731,9 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ-นามสุกล"
+            // placeholder="นามสุกล"
+
+            maxLength={100}
             defaultValue={coStudentFormData?.firstPerson?.lastName}
             onChange={handleCoStudentFormChange("firstPerson", "lastName")}
           />
@@ -694,7 +745,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสนักศึกษา"
+            // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.firstPerson?.studentId}
             onChange={handleCoStudentFormChange("firstPerson", "studentId")}
           />
@@ -705,7 +757,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เบอร์โทรศัพท์"
+            // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.firstPerson?.phone}
             onChange={handleCoStudentFormChange("firstPerson", "phone")}
           />
@@ -719,7 +772,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ"
+            // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.secondPerson?.firstName}
             onChange={handleCoStudentFormChange("secondPerson", "firstName")}
           />
@@ -731,7 +785,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ-นามสุกล"
+            // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.secondPerson?.lastName}
             onChange={handleCoStudentFormChange("secondPerson", "lastName")}
           />
@@ -743,7 +798,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสนักศึกษา"
+            // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.secondPerson?.studentId}
             onChange={handleCoStudentFormChange("secondPerson", "studentId")}
           />
@@ -754,7 +810,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เบอร์โทรศัพท์"
+            // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.secondPerson?.phone}
             onChange={handleCoStudentFormChange("secondPerson", "phone")}
           />
@@ -768,7 +825,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ"
+            // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.thirdPerson?.firstName}
             onChange={handleCoStudentFormChange("thirdPerson", "firstName")}
           />
@@ -780,7 +838,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ-นามสุกล"
+            // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.thirdPerson?.lastName}
             onChange={handleCoStudentFormChange("thirdPerson", "lastName")}
           />
@@ -792,7 +851,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสนักศึกษา"
+            // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.thirdPerson?.studentId}
             onChange={handleCoStudentFormChange("thirdPerson", "studentId")}
           />
@@ -803,7 +863,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เบอร์โทรศัพท์"
+            // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.thirdPerson?.phone}
             onChange={handleCoStudentFormChange("thirdPerson", "phone")}
           />
@@ -817,7 +878,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ"
+            // placeholder="ชื่อ"
+            maxLength={100}
             defaultValue={coStudentFormData?.fourthPerson?.firstName}
             onChange={handleCoStudentFormChange("fourthPerson", "firstName")}
           />
@@ -829,7 +891,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="ชื่อ-นามสุกล"
+            // placeholder="นามสุกล"
+            maxLength={100}
             defaultValue={coStudentFormData?.fourthPerson?.lastName}
             onChange={handleCoStudentFormChange("fourthPerson", "lastName")}
           />
@@ -841,7 +904,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="รหัสนักศึกษา"
+            // placeholder="รหัสนักศึกษา"
+            maxLength={11}
             defaultValue={coStudentFormData?.fourthPerson?.studentId}
             onChange={handleCoStudentFormChange("fourthPerson", "studentId")}
           />
@@ -852,7 +916,8 @@ const InternshipForm = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="เบอร์โทรศัพท์"
+            // placeholder="เบอร์โทรศัพท์"
+            maxLength={10}
             defaultValue={coStudentFormData?.fourthPerson?.phone}
             onChange={handleCoStudentFormChange("fourthPerson", "phone")}
           />
@@ -867,6 +932,9 @@ const InternshipForm = () => {
           <div className="w-full ">
             <div className="px-2">
               <form onSubmit={(e) => handleFormSave(e)}>
+                <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                  แบบฟอร์มฝึกประสบการณ์วิชาชีพ
+                </h3>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
                   {/* นักศึกษาผู้ส่งข้อมูลแบบฟอร์ม */}
@@ -875,23 +943,30 @@ const InternshipForm = () => {
                   {InternshipInformation}
                   {/* นักศึกษาฝึกประสบการร่วม */}
                   {coInternshipStudents}
-                  {/* <hr className="h-[1px] bg-gray-100" /> */}
+                  <hr className="mt-5 h-[1px] bg-gray-100" />
+                  <h3 class="mt-10 text-center font-medium leading-tight text-md  text-black text-xl">
+                    <span className="text-red-500 ">*</span>{" "}
+                    กรุณาตรวจสอบความถูกต้องของข้อมูล
+                  </h3>
                   <div className="flex flex-col my-5 px-7  flex-wrap items-center justify-center w-full lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                    <button
-                      id="submit"
-                      type="submit"
-                      className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                    >
-                      บันทึก
-                    </button>
+                    {!intern?.Internships?.is_send && (
+                      <button
+                        id="submit"
+                        type="submit"
+                        className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                      >
+                        บันทึก
+                      </button>
+                    )}
+
                   </div>
                 </div>
               </form>
               <div className="mt-10 mb-10 flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                 <Link to="/student/home">
-                  <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
+                  <div className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
                     กลับ
-                  </button>
+                  </div>
                 </Link>
                 {intern &&
                   !intern?.Internships?.is_send &&
@@ -921,15 +996,13 @@ const InternshipForm = () => {
                     </button>
                   )}
 
-                <Link to="/student/home">
-                  {intern &&
-                    intern?.Internships?.is_send &&
-                    intern?.Internships?.is_confirm && (
-                      <button className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
-                        ผ่านการอนุมัติแล้ว
-                      </button>
-                    )}
-                </Link>
+                {intern &&
+                  intern?.Internships?.is_send &&
+                  intern?.Internships?.is_confirm && (
+                    <button className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
+                      ผ่าน
+                    </button>
+                  )}
               </div>
             </div>
           </div>

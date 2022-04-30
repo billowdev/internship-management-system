@@ -27,20 +27,20 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		},
 		program: {
-			type: DataTypes.STRING(20),
+			type: DataTypes.STRING(50),
 			allowNull: false,
 		},
 		department: {
-			type: DataTypes.STRING(20),
+			type: DataTypes.STRING(50),
 			allowNull: false,
 		},
 		// all below can fill later initial as null value with allow null true
 		skill: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(255),
 			allowNull: true,
 		},
 		interest: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(255),
 			allowNull: true,
 		},
 		project_topic: {
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		// experience
 		exp: {
-			type: DataTypes.STRING(100),
+			type: DataTypes.STRING(255),
 			allowNull: true,
 		},
 		religion: {
@@ -78,12 +78,12 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		},
 		present_gpa: {
-			type: DataTypes.DECIMAL(4),
+			type: DataTypes.FLOAT(4),
 			allowNull: true,
 		},
-		status_resume: {
-			type: DataTypes.BOOLEAN,
-			defaultValue: false,
+		image_name: {
+			type: DataTypes.STRING,
+			allowNull: true,
 		}
 	}, {
 		underscored: true

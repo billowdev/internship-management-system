@@ -57,7 +57,6 @@ const Internshiphook = () => {
   const handleFormSave = async (e) => {
     e.preventDefault();
     const program = document.getElementById("program").innerText;
-    console.log(program);
     const sender = {
       id: studentFormData.id,
       first_name: studentFormData.firstName,
@@ -131,7 +130,6 @@ const Internshiphook = () => {
       companyAddress,
       coStudent,
     };
-    console.log(updateData);
     dispatch(updateInternship(updateData));
   };
 
@@ -142,6 +140,8 @@ const Internshiphook = () => {
   const swaptext = (el) => {
     const targetText = el.target.innerText;
     setInternType(targetText);
+   
+
     document.getElementById("drop-down-content-setter").innerText = targetText;
     document.getElementById("drop-down-div").classList.toggle("hidden");
   };
@@ -178,10 +178,8 @@ const Internshiphook = () => {
     setSubDistricts(resp.data);
   };
   const fetchSubDistrictData = async (subDistrictId) => {
-    console.log(subDistrictId);
     const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
     setInternPostCode(resp.data[0]?.zip_code);
-    console.log(resp.data[0]);
   };
 
   // -------- Provinces --------
@@ -195,11 +193,13 @@ const Internshiphook = () => {
     setInternProvince(targetText);
     saveState("provinceId", provinceId);
     fetchDistricts(provinceId);
-    document.getElementById("drop-down-provinces-setter").innerText =
-      targetText;
-    document
-      .getElementById("drop-down-div-provinces")
-      .classList.toggle("hidden");
+    setTimeout(function(){ 
+      document.getElementById("drop-down-provinces-setter").innerText =
+        targetText;
+      document
+        .getElementById("drop-down-div-provinces")
+        .classList.toggle("hidden");
+    }, 500);
   };
 
   // -------- Districts --------
@@ -214,11 +214,14 @@ const Internshiphook = () => {
     const districtId = Object.values(el.target)[0].key;
     saveState("districtId", districtId);
     fetchSubDistricts(districtId);
-    document.getElementById("drop-down-districts-setter").innerText =
+    setTimeout(function(){ 
+      document.getElementById("drop-down-districts-setter").innerText =
       targetText;
     document
       .getElementById("drop-down-div-districts")
       .classList.toggle("hidden");
+  }, 500);
+    
   };
   // -------- Sub districts --------
   const showDropDownMenuSubDistricts = (el) => {
@@ -231,11 +234,15 @@ const Internshiphook = () => {
     setInternSubDistrict(targetText);
     const subDistrictId = Object.values(el.target)[0].key;
     fetchSubDistrictData(subDistrictId);
-    document.getElementById("drop-down-subdistricts-setter").innerText =
-      targetText;
-    document
-      .getElementById("drop-down-div-subdistricts")
-      .classList.toggle("hidden");
+
+    setTimeout(function(){ 
+      document.getElementById("drop-down-subdistricts-setter").innerText =
+        targetText;
+      document
+        .getElementById("drop-down-div-subdistricts")
+        .classList.toggle("hidden");
+   
+    }, 500);
   };
 
   return {

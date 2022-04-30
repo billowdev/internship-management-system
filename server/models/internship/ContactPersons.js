@@ -7,16 +7,18 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: DataTypes.UUIDV4,
 		},
 		first_name: {
-			type: DataTypes.STRING(50),
-			allowNull: false,
+			type: DataTypes.STRING(100),
+			allowNull: true,
 		},
 		last_name: {
-			type: DataTypes.STRING(50),
-			allowNull: false,
+			type: DataTypes.STRING(100),
+			allowNull: true,
 		},
 		relationship: {
-			type: DataTypes.ENUM(["บิดา", "มารดา", "ผู้ปกครอง"]),
-			defaultValue: "ผู้ปกครอง",
+			type: DataTypes.STRING(20),
+			allowNull: true,
+			// type: DataTypes.ENUM(["บิดา", "มารดา", "ผู้ปกครอง"]),
+			// defaultValue: "ผู้ปกครอง",
 		},
 	}, {
 		underscored: true

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(100),
 		},
 		gpa: {
-			type: DataTypes.DECIMAL(4),
+			type: DataTypes.FLOAT(4),
 		},
 	}, {
 		underscored: true

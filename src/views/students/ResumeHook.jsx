@@ -4,9 +4,46 @@ import Moment from "moment";
 import { useDispatch } from "react-redux";
 import * as thaiAddresses from "../../infrastructure/services/api/thaiAddresses/thaiAddressApi";
 import { loadState, removeState, saveState } from "../../helpers/Persist";
+import Swal from "sweetalert2";
+import { uploadImage } from "../../redux/actions/upload";
 
 const Resumehook = () => {
   const dispatch = useDispatch();
+
+  const [fileInputState, setFileInputState] = useState("");
+  const [PreviewSource, setPreviewSource] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const [fileData, setFileData] = useState("");
+
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    previewFile(file);
+    // setSelectedFile(file);
+    setFileInputState(event.target.value);
+
+    if (!file) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFileData(reader.result);
+      dispatch(uploadImage({ file: reader.result }));
+      setFileInputState("");
+      setPreviewSource("");
+    };
+    reader.onerror = () => {
+      console.log("Error");
+    };
+
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -184,7 +221,7 @@ const Resumehook = () => {
     setHometownDistrict(targetText);
     const districtId = Object.values(el.target)[0].key;
     saveState("hometown-district-id", districtId);
-    fetchSubDistricts("hometown",districtId);
+    fetchSubDistricts("hometown", districtId);
     document.getElementById("drop-down-hometown-districts-setter").innerText =
       targetText;
     document
@@ -195,7 +232,7 @@ const Resumehook = () => {
   // -------- Sub districts --------
   const showDropDownMenuHometownSubDistricts = (el) => {
     el.target.parentElement.children[1].classList.toggle("hidden");
-    fetchSubDistricts("hometown",loadState("hometown-district-id"));
+    fetchSubDistricts("hometown", loadState("hometown-district-id"));
     // removeState("hometown-district-id");
   };
   const swaptextHometownSubDistricts = (el) => {
@@ -264,7 +301,6 @@ const Resumehook = () => {
       .getElementById("drop-down-div-present-subdistricts")
       .classList.toggle("hidden");
   };
-
 
   // ======================== contact Person Hook Section   ========================
   // -------- Provinces --------
@@ -342,6 +378,7 @@ const Resumehook = () => {
 
   const handleFormSave = async (e) => {
     e.preventDefault();
+
     // const dob = e.target[3].value;
     const newDob = Moment(new Date(birthDate)).format("yyyy-MM-DD");
     const program = document.getElementById("program").innerText;
@@ -403,10 +440,11 @@ const Resumehook = () => {
       educationData3,
     };
     const updateData = { student, hometown, present, contactPerson, education };
-    dispatch(updateResume(updateData));
-    // console.log(updateData);
-  };
   
+
+    dispatch(updateResume(updateData));
+  };
+
   return {
     firstName,
     setFirstName,
@@ -503,7 +541,6 @@ const Resumehook = () => {
     handleEducation3FormChange,
     handleFormSave,
 
-
     educationData1,
     setEducationData1,
     educationData2,
@@ -536,7 +573,6 @@ const Resumehook = () => {
     presentDistricts,
     presentSubDistricts,
 
-  
     showDropDownMenuContactPersonProvinces,
     swaptextContactPersonProvinces,
     showDropDownMenuContactPersonDistricts,
@@ -549,6 +585,10 @@ const Resumehook = () => {
     contactPersonSubDistricts,
 
     fetchProvinces,
+
+    handleFileInputChange,
+    fileInputState,
+    PreviewSource,
   };
 };
 

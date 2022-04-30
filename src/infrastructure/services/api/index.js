@@ -5,6 +5,7 @@ import adminProfile from './admin/profile';
 import thaiAddresses from './thaiAddresses';
 import student from './student';
 import director from './director';
+import upload from './upload';
 
 export default {
     auth,
@@ -13,5 +14,6 @@ export default {
     thaiAddresses,
     student,
     adminProfile,
-    director
+    director,
+    upload
 };

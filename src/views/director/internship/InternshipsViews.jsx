@@ -1,52 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { loadState } from "../../../helpers/Persist";
 import {
   confirmInternship,
   loadInternshipDetail,
   returnInternship,
+  unConfirmInternship,
 } from "../../../redux/actions/director/internship";
 import { getInternshipDetail } from "../../../redux/selectors/director/internship";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const InternshipsViews = () => {
   const dispatch = useDispatch();
   const { id, status } = useParams();
+  const navigate = useNavigate();
+
   let internshipDetail = useSelector(getInternshipDetail);
-  // internshipDetail = internshipDetail?.resp
-  // const [internshipDetail, setInternshipDetail] = useState(
-  //   loadState("internship-detail")
-  // );
-  const [coStudent, setCoStudent] = useState([]);
-  const [company, setCompany] = useState([]);
-  const [companyAddress, setCompanyAddress] = useState([]);
-  const [internship, setInternship] = useState([]);
-  const [hometownAddr, setHometownAddr] = useState([]);
-  const [presentAddr, setPresentAddr] = useState([]);
-  const [student, setStudent] = useState([]);
 
   const handleConfirm = (id) => {
-    dispatch(confirmInternship(id));
+    Swal.fire({
+      title: "อนุมัติ ?",
+      text: `แบบฟอร์มจะถูกเปลี่ยนสถานะเป็น "ยืนยันแล้ว"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(confirmInternship(id));
+        navigate("/director/internship/confirm");
+      }
+    });
+  };
+
+  const handleUnConfirm = (id) => {
+    Swal.fire({
+      title: "พิจารณาใหม่ ?",
+      text: `แบบฟอร์มจะถูกเปลี่ยนสถานะเป็น "รอการยืนยัน"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(unConfirmInternship(id));
+        navigate("/director/internship/confirm");
+      }
+    });
   };
   const handleReturn = (id) => {
-    dispatch(returnInternship(id));
+    Swal.fire({
+      title: "ส่งคืน?",
+      text: `แบบฟอร์มจะถูกส่งคืนนักศึกษา`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ยืนยัน",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(returnInternship(id));
+        if (status === "pending") {
+          navigate("/director/internship/pending");
+        } else {
+          navigate("/director/internship/confirm");
+        }
+      }
+    });
   };
+
   useEffect(() => {
     dispatch(loadInternshipDetail(id));
   }, [dispatch]);
-
-  useEffect(() => {
-    // // let internshipDetail = loadState("internship-detail");
-    // setCoStudent(internshipDetail?.CoStudentInternships);
-    // setCompany(internshipDetail?.Companies?.company);
-    // setCompanyAddress(internshipDetail?.Companies?.companyAddress);
-    // setInternship(internshipDetail?.Internships);
-    // setHometownAddr(internshipDetail?.hometownAddr);
-    // setPresentAddr(internshipDetail?.presentAddr);
-    // setStudent(internshipDetail?.student);
-    // console.log(internshipDetail);
-  }, []);
 
   const Sender = (
     <div>
@@ -62,7 +94,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="ชื่อ-นามสุกล"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.first_name}
               disabled
             />
@@ -74,7 +106,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="ชื่อ-นามสุกล"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.last_name}
               disabled
             />
@@ -86,7 +118,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="รหัสนักศึกษา"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.id}
               disabled
             />
@@ -97,7 +129,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="เบอร์โทรศัพท์"
+              placeholder="-"
               defaultValue={internshipDetail?.student?.phone}
               disabled
             />
@@ -108,7 +140,7 @@ const InternshipsViews = () => {
             </p>
             <input
               className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-              placeholder="exsample@gmail.com"
+              placeholder="-"
               type="email"
               id="email"
               disabled
@@ -145,7 +177,7 @@ const InternshipsViews = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            placeholder="-"
             disabled
             defaultValue={internshipDetail?.Companies?.company?.name}
           />
@@ -153,12 +185,12 @@ const InternshipsViews = () => {
         </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
-            ถูมิภาค
+            ภูมิภาค
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="บริษัท โค้ดทูแพนด้า จำกัด"
+            placeholder="-"
             defaultValue={internshipDetail?.Companies?.company?.type}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
@@ -173,7 +205,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="งานที่เกี่ยวข้อง"
+            placeholder="-"
             defaultValue={internshipDetail?.Companies?.company?.activities}
           />
         </div>
@@ -184,7 +216,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="หัวหน้าฝ่ายบุคคล"
+            placeholder="-"
             defaultValue={internshipDetail?.Companies?.company?.propose_to}
           />
         </div>
@@ -197,7 +229,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ผู้ติดต่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail &&
               internshipDetail?.Companies?.company?.contact_person_name
@@ -211,7 +243,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ตำแหน่ง"
+            placeholder="-"
             defaultValue={
               internshipDetail?.Companies?.company?.contact_person_position
             }
@@ -301,7 +333,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสไปรษณีย์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.Companies?.companyAddress?.post_code
             }
@@ -325,7 +357,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.first_name
             }
@@ -339,7 +371,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.last_name
             }
@@ -353,7 +385,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.student_id
             }
@@ -366,7 +398,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.firstPerson?.phone
             }
@@ -382,7 +414,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.first_name
             }
@@ -396,7 +428,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.last_name
             }
@@ -410,7 +442,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.student_id
             }
@@ -423,7 +455,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.secondPerson?.phone
             }
@@ -439,7 +471,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.first_name
             }
@@ -453,7 +485,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.last_name
             }
@@ -467,7 +499,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.student_id
             }
@@ -480,7 +512,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.thirdPerson?.phone
             }
@@ -496,7 +528,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.first_name
             }
@@ -510,7 +542,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="ชื่อ-นามสุกล"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.last_name
             }
@@ -524,7 +556,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="รหัสนักศึกษา"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.student_id
             }
@@ -537,7 +569,7 @@ const InternshipsViews = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             disabled
-            placeholder="เบอร์โทรศัพท์"
+            placeholder="-"
             defaultValue={
               internshipDetail?.CoStudentInternships?.fourthPerson?.phone
             }
@@ -553,6 +585,9 @@ const InternshipsViews = () => {
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
             <div className="px-2">
+              <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                แบบฟอร์มฝึกประสบการณ์วิชาชีพ
+              </h3>
               <form>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
@@ -568,42 +603,52 @@ const InternshipsViews = () => {
               <div className="mt-10 mb-10 flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
                 {status === "pending" ? (
                   <>
+                    <button
+                      onClick={(e) => {
+                        handleReturn(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn bg-red-400 hover:bg-red-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      ส่งคืน
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        handleConfirm(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      อนุมัติ
+                    </button>
+
                     <Link to="/director/internship/pending">
-                      <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-full ">
+                      <button className="btn btn-sky rounded  transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-32 ">
                         กลับ
-                      </button>
-                    </Link>
-                    <Link to="/director/internship/pending">
-                      <button className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full ">
-                        ส่งคืน
-                      </button>
-                    </Link>
-                    <Link to="/director/internship/pending">
-                      <button
-                        onClick={(e) => {
-                          handleConfirm(internshipDetail?.Internships?.id);
-                        }}
-                        className="btn btn-green transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                      >
-                        อนุมัติ
                       </button>
                     </Link>
                   </>
                 ) : (
                   <>
+                    <button
+                      onClick={(e) => {
+                        handleReturn(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn btn-red transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-24"
+                    >
+                      ส่งคืน
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        handleUnConfirm(internshipDetail?.Internships?.id);
+                      }}
+                      className="btn bg-yellow-400 hover:bg-yellow-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
+                    >
+                      พิจารณาใหม่
+                    </button>
+
                     <Link to="/director/internship/confirm">
-                      <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-full ">
+                      <button className="btn btn-sky rounded  transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[144px]  w-32 ">
                         กลับ
-                      </button>
-                    </Link>
-                    <Link to="/director/internship/confirm">
-                      <button
-                        onClick={(e) => {
-                          handleReturn(internshipDetail?.Internships?.id);
-                        }}
-                        className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                      >
-                        พิจารณาใหม่
                       </button>
                     </Link>
                   </>

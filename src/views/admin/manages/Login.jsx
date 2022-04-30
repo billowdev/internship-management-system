@@ -6,14 +6,15 @@ import { loadLogin } from "../../../redux/actions/admin/login";
 import { getLogin } from "../../../redux/selectors/admin/login";
 import { Link, Outlet } from "react-router-dom";
 import Swal from "sweetalert2";
-import { deleteLogin } from "../../../redux/actions/admin/login"
+import { deleteLogin } from "../../../redux/actions/admin/login";
+import { saveState } from "../../../helpers/Persist";
 
 const Login = () => {
   const dispatch = useDispatch();
   const loginData = useSelector(getLogin);
 
   const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
+  const [total, setTotal] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const [sortColumn, setSortColumn] = useState("");
@@ -26,6 +27,7 @@ const Login = () => {
 
   const handlePerRowsChange = async (newPerPage, page) => {
     setPerPage(newPerPage);
+    setPage(page);
   };
 
   const handleSort = (column, sortDirection) => {
@@ -35,68 +37,14 @@ const Login = () => {
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+    fetchData();
   };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     fetchData();
   };
-  const fetchData = async () => {
-    setLoading(true);
-    var url = `?page=${page}&per_page=${perPage}&delay=1`;
-    if (sortColumn) {
-      url += `&sort_column=${sortColumn}&sort_direction=${sortColumnDirection}`;
-    }
-    if (search) {
-      url += `&search=${search}`;
-    }
-    dispatch(loadLogin(url));
-    setLoading(false);
-  };
 
-  const columns = [
-    {
-      name: "username",
-      selector: (row) => row.username,
-      sortable: true,
-    },
-    {
-      name: "roles",
-      selector: (row) => row.roles,
-      sortable: true,
-    },
-    {
-      name: "is_active",
-      selector: (row) => row.is_active,
-      sortable: true,
-    },
-    {
-      name: "controllers",
-      selector: (row) => row.id,
-      sortable: true,
-      cell: (row) => (
-        <div className="flex space-x-3">
-          <Link
-            to={{
-              pathname: `/admin/manage/login/update/${row.roles}/${row.id}`,
-            }}
-          >
-            <button className="w-26 text-white btn btn-sky">แก้ไขข้อมูล</button>
-          </Link>
-          <div>
-            <button
-              className="w-26 text-white btn btn-red"
-              onClick={(e) => {
-                handleDelete(row.id, row.roles);
-              }}
-            >
-              ลบ
-            </button>
-          </div>
-        </div>
-      ),
-    },
-  ];
 
   const handleDelete = (id, roles) => {
     let role;
@@ -119,26 +67,133 @@ const Login = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteLogin(id));
-        // console.log(id);
       }
     });
   };
 
+  const columns = [
+    {
+      name: "username",
+      selector: (row) => row.username,
+      sortable: true,
+    },
+    {
+      name: "roles",
+      selector: (row) => row.roles,
+      sortable: true,
+    },
+    {
+      name: "is_active",
+      selector: (row) => row.is_active,
+      sortable: true,
+      cell: (row) => (
+        <>
+          {row.is_active === 1 ? (
+            <>
+              {" "}
+              <span className="ml-2 bg-green-200 text-black rounded-lg px-2 py-1">
+                active
+              </span>{" "}
+            </>
+          ) : (
+            <>
+              {" "}
+              <span className="ml-2 bg-yellow-200 text-black rounded-lg px-2 py-1">
+                inactive
+              </span>{" "}
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      name: "controllers",
+      selector: (row) => row.id,
+      sortable: false,
+      cell: (row) => (
+        <div className="flex space-x-3">
+          <Link
+            to={{
+              pathname: `/admin/manage/login/update/${row.roles}/${row.id}`,
+            }}
+          >
+            <button
+              className="w-26 text-white btn btn-sky"
+              onClick={()=>{
+                saveState("status-user", row.is_active)
+              }}
+            >
+              แก้ไขข้อมูล
+            </button>
+          </Link>
+          <div>
+            <button
+              className="w-26 text-white btn btn-red"
+              onClick={(e) => {
+                handleDelete(row.id, row.roles);
+              }}
+            >
+              ลบ
+            </button>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  const fetchData = async () => {
+    setLoading(true);
+    var url = `?page=${page}&per_page=${perPage}&delay=1`;
+    if (sortColumn) {
+      url += `&sort_column=${sortColumn}&sort_direction=${sortColumnDirection}`;
+    }
+    if (search) {
+      url += `&search=${search}`;
+    }
+    dispatch(loadLogin(url));
+    setLoading(false);
+  };
+
   useEffect(() => {
     fetchData();
-  }, [dispatch]);
+  }, [page, sortColumn, sortColumnDirection, perPage, dispatch]);
 
   return (
-    <div className="py-16 px-32">
-      <div className="container mx-auto px-4 wrapper">
+    <div className="py-16 px-32 mb-32">
+      <div className="container mx-auto px-4 ">
         <h3 class="text-center font-medium leading-tight text-4xl mt-0 mb-5 text-sky-600">
           จัดการข้อมูลสมาชิกทั้งหมด
         </h3>
 
+        {/* <form onSubmit={handleSearchSubmit}>
+         
+        </form> */}
+
+        <div class="grid justify-center">
+          <div class="mb-3 xl:w-96">
+            <div class="input-group relative flex flex-row items-stretch w-full mb-4">
+              <input
+                type="search"
+                class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                placeholder="รหัสนักศึกษา"
+                aria-label="Search"
+                onChange={handleSearchChange}
+                aria-describedby="button-addon3"
+              />
+              <div
+                onClick={handleSearchSubmit}
+                class="btn cursor-pointer inline-block px-6 py-2 pointer-cursor border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                id="button-addon3"
+              >
+                ค้นหา
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="flex items-end justify-end">
           <Link to="/admin/manage/login/add">
-            {" "}
-            <button className="items-end w-26 text-white btn btn-sky">
+            <button className="items-end w-32 text-white btn btn-sky">
               เพิ่มสมาชิก
             </button>
           </Link>
@@ -149,7 +204,7 @@ const Login = () => {
           progressPending={loading}
           pagination
           paginationServer
-          paginationTotalRows={loginData?.totalRows}
+          paginationTotalRows={loginData?.total}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
           onSort={handleSort}

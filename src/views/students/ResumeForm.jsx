@@ -1,11 +1,11 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Resumehook from "./ResumeHook";
 import { useDispatch } from "react-redux";
 import { loadState } from "../../helpers/Persist";
 import { loadResume } from "../../redux/actions/student/resume";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const Resume = () => {
   const dispatch = useDispatch();
@@ -106,7 +106,6 @@ const Resume = () => {
     handleEducation3FormChange,
     handleFormSave,
 
-  
     educationData1,
     setEducationData1,
     educationData2,
@@ -136,7 +135,6 @@ const Resume = () => {
     presentDistricts,
     presentSubDistricts,
 
-  
     showDropDownMenuContactPersonProvinces,
     swaptextContactPersonProvinces,
     showDropDownMenuContactPersonDistricts,
@@ -152,6 +150,11 @@ const Resume = () => {
     swaptextProgram,
 
     fetchProvinces,
+
+    handleFileInputChange,
+    fileInputState,
+    PreviewSource,
+
   } = Resumehook();
 
   useEffect(() => {
@@ -160,23 +163,41 @@ const Resume = () => {
 
   const [resume, setResume] = useState(loadState("resume"));
 
-  useEffect(()=>{
-    setResume(loadState("resume"))
-  }, [])
+  useEffect(() => {
+    setResume(loadState("resume"));
+  }, []);
 
   const setStateResue = () => {
     // const resume = loadState("resume");
-    setContactPersonFirstName(resume?.contactPersonData?.contactPerson?.first_name);
-    setContactPersonLastName(resume?.contactPersonData?.contactPerson?.last_name);
-    setContactPersonRelationship(resume?.contactPersonData?.contactPerson?.relationship);
+    setContactPersonFirstName(
+      resume?.contactPersonData?.contactPerson?.first_name
+    );
+    setContactPersonLastName(
+      resume?.contactPersonData?.contactPerson?.last_name
+    );
+    setContactPersonRelationship(
+      resume?.contactPersonData?.contactPerson?.relationship
+    );
 
-    setContactPersonPhone(resume?.contactPersonData?.contactPersonAddress?.phone);
-    setContactPersonHouseNumber(resume?.contactPersonData?.contactPersonAddress?.house_number);
+    setContactPersonPhone(
+      resume?.contactPersonData?.contactPersonAddress?.phone
+    );
+    setContactPersonHouseNumber(
+      resume?.contactPersonData?.contactPersonAddress?.house_number
+    );
     setContactPersonRoad(resume?.contactPersonData?.contactPersonAddress?.road);
-    setContactPersonSubDistrict(resume?.contactPersonData?.contactPersonAddress?.sub_district);
-    setContactPersonDistrict(resume?.contactPersonData?.contactPersonAddress?.district);
-    setContactPersonProvince(resume?.contactPersonData?.contactPersonAddress?.province);
-    setContactPersonPostCode(resume?.contactPersonData?.contactPersonAddress?.post_code);
+    setContactPersonSubDistrict(
+      resume?.contactPersonData?.contactPersonAddress?.sub_district
+    );
+    setContactPersonDistrict(
+      resume?.contactPersonData?.contactPersonAddress?.district
+    );
+    setContactPersonProvince(
+      resume?.contactPersonData?.contactPersonAddress?.province
+    );
+    setContactPersonPostCode(
+      resume?.contactPersonData?.contactPersonAddress?.post_code
+    );
 
     // private student data
     setIdCard(resume?.student?.id_card);
@@ -217,6 +238,8 @@ const Resume = () => {
     setEducationData3(resume?.education[2]);
     fetchProvinces();
   };
+  const imageProfile = `/images/${resume?.student?.image_name}`;
+  const imageNotFound = `/images/student_picture.png`;
 
   useEffect(() => {
     setStateResue();
@@ -287,13 +310,58 @@ const Resume = () => {
     </>
   );
 
-
   const privateData = (
     <div className="mt-2 px-7">
       <p className="text-lg font-semibold leading-tight text-gray-800">
         1. ข้อมูลส่วนตัว
       </p>
-      <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
+
+      <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
+        <div>
+          <div>
+            <input
+              id="fileInput"
+              type="file"
+              name="image"
+              onChange={handleFileInputChange}
+              value={fileInputState}
+              className="custom-file-input"
+            />
+
+            <label className="custom-file-label" htmlFor="customFile">
+              เลือกรูปภาพ
+            </label>
+          </div>
+
+          {PreviewSource && (
+            <div className="items-center">
+              <img
+                className="mt-3"
+                src={PreviewSource}
+                alt="chosen"
+                style={{ width: "180px"}}
+              />
+            </div>
+          )}
+
+          {resume?.student?.image_name && (
+            <img
+              src={imageProfile}
+              alt="image"
+              style={{ width: "180px"}}
+            />
+          )}
+
+          {resume?.student?.image_name === null && (
+            <img
+              src={imageNotFound}
+              alt="image"
+              style={{ width: "200px", height: "300px" }}
+            />
+          )}
+
+          <hr className="mb-10 mt-5" />
+        </div>
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
             ชื่อ
@@ -302,7 +370,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ"
             defaultValue={firstName}
-            maxLength={150}
+            maxLength={100}
             onChange={(e) => {
               setFirstName(e.target.value);
             }}
@@ -317,7 +385,7 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อ-นามสุกล"
             defaultValue={lastName}
-            maxLength={150}
+            maxLength={100}
             onChange={(e) => {
               setLastName(e.target.value);
             }}
@@ -330,9 +398,10 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="exsample@gmail.com"
+            placeholder="exsample@gmail.com"
             type="email"
             id="email"
+            maxLength={150}
             required
             defaultValue={email}
             onChange={(e) => {
@@ -349,9 +418,10 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="รหัสประจำตัวประชาชน"
+            // placeholder=""
+            required
             defaultValue={idCard}
-            maxLength={11}
+            maxLength={13}
             onChange={(e) => {
               setIdCard(e.target.value);
             }}
@@ -377,7 +447,9 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ศาสนา"
+            required
             defaultValue={religion}
+            maxLength={50}
             onChange={(e) => {
               setReligion(e.target.value);
             }}
@@ -393,6 +465,8 @@ const Resume = () => {
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ชื่อบิดา"
             defaultValue={fatherName}
+            required
+            maxLength={100}
             onChange={(e) => {
               setFatherName(e.target.value);
             }}
@@ -404,8 +478,10 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="อาชีพบิดา"
+            placeholder="เกษตรกร"
+            required
             defaultValue={fatherJob}
+            maxLength={50}
             onChange={(e) => {
               setFatherJob(e.target.value);
             }}
@@ -417,7 +493,8 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ชื่อมารดา"
+            maxLength={100}
+            required
             defaultValue={motherName}
             onChange={(e) => {
               setMotherName(e.target.value);
@@ -430,7 +507,9 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="อาชีพมารดา"
+            placeholder="เกษตรกร"
+            maxLength={50}
+            required
             defaultValue={motherJob}
             onChange={(e) => {
               setMotherJob(e.target.value);
@@ -444,6 +523,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="โทร"
+            maxLength={10}
+            required
             defaultValue={phone}
             onChange={(e) => {
               setPhone(e.target.value);
@@ -475,7 +556,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-hometown-provinces-setter"
                 >
-                  {hometownProvince == "" ? (
+                  {hometownProvince === null ? (
                     <>- กรุณาเลือกจังหวัด -</>
                   ) : (
                     <>{`${hometownProvince}`}</>
@@ -538,7 +619,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-hometown-districts-setter"
                 >
-                  {hometownDistrict == "" ? (
+                  {hometownDistrict === null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     hometownDistrict
@@ -601,7 +682,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-hometown-subdistricts-setter"
                 >
-                  {hometownSubDistrict === "" ? (
+                  {hometownSubDistrict === null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     hometownSubDistrict
@@ -673,7 +754,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-present-provinces-setter"
                 >
-                  {presentProvince === "" ? (
+                  {presentProvince === null ? (
                     <> - กรุณาเลือกจังหวัด - </>
                   ) : (
                     presentProvince
@@ -736,7 +817,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-present-districts-setter"
                 >
-                  {presentDistrict === "" ? (
+                  {presentDistrict === null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     presentDistrict
@@ -799,7 +880,7 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-present-subdistricts-setter"
                 >
-                  {presentSubDistrict === "" ? (
+                  {presentSubDistrict === null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     presentSubDistrict
@@ -865,6 +946,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
+            required
             defaultValue={hometownPostCode}
             onChange={(e) => {
               setHometownPostCode(e.target.value);
@@ -880,6 +963,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ถนน / ซอย / หมู่"
+            maxLength={50}
+            required
             defaultValue={hometownRoad}
             onChange={(e) => {
               setHometownRoad(e.target.value);
@@ -894,6 +979,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            required
+            maxLength={10}
             defaultValue={hometownHouseNumber}
             onChange={(e) => {
               setHometownHouseNumber(e.target.value);
@@ -918,6 +1005,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            required
+            maxLength={10}
             defaultValue={presentPostCode}
             onChange={(e) => {
               setPresentPostCode(e.target.value);
@@ -932,6 +1021,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ถนน / ซอย / หมู่"
+            maxLength={50}
+            required
             defaultValue={presentRoad}
             onChange={(e) => {
               setPresentRoad(e.target.value);
@@ -946,6 +1037,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={10}
+            required
             defaultValue={presentHouseNumber}
             onChange={(e) => {
               setPresentHouseNumber(e.target.value);
@@ -969,7 +1062,9 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ปริญญาตรี"
+            placeholder="มัธยมศึกษาตอนต้น"
+            maxLength={100}
+            required
             defaultValue={educationData1?.level}
             onChange={handleEducation1FormChange("level")}
           />
@@ -981,7 +1076,9 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="มหาวิทยาลัยราชภัฏสกลนคร"
+            placeholder="โรงเรียนเอ"
+            maxLength={100}
+            required
             defaultValue={educationData1?.academy}
             onChange={handleEducation1FormChange("academy")}
           />
@@ -993,7 +1090,12 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="4.00"
+            type="number"
+            step="0.01"
+            maxLength={4}
+            max={4}
+            required
             defaultValue={educationData1?.gpa}
             onChange={handleEducation1FormChange("gpa")}
           />
@@ -1007,7 +1109,9 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ปริญญาตรี"
+            placeholder="มัธยมศึกษาตอนปลาย"
+            maxLength={100}
+            required
             defaultValue={educationData2?.level}
             onChange={handleEducation2FormChange("level")}
           />
@@ -1019,7 +1123,9 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ชื่อสถานศึกษา"
+            placeholder="โรงเรียนบี"
+            maxLength={100}
+            required
             defaultValue={educationData2?.academy}
             onChange={handleEducation2FormChange("academy")}
           />
@@ -1031,12 +1137,18 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="4.00"
+            type="number"
+            step="0.01"
+            maxLength={4}
+            max={4}
+            required
             defaultValue={educationData2?.gpa}
             onChange={handleEducation2FormChange("gpa")}
           />
           <p className="mt-3 text-xs leading-3 text-gray-600"></p>
         </div>
+        
       </div>
       <div className="grid w-full grid-cols-1 lg:grid-cols-3 md:grid-cols-1 gap-7 mt-7 ">
         <div>
@@ -1045,7 +1157,9 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ปริญญาตรี"
+            maxLength={100}
+            placeholder="ปริญญาตรี"
+            required
             defaultValue={educationData3?.level}
             onChange={handleEducation3FormChange("level")}
           />
@@ -1057,7 +1171,8 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ชื่อสถานศึกษา"
+            placeholder="มหาวิทยาลัยราชภัฏสกลนคร"
+            maxLength={100}
             defaultValue={educationData3?.academy}
             onChange={handleEducation3FormChange("academy")}
           />
@@ -1069,7 +1184,12 @@ const Resume = () => {
           </p>
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="4.00"
+            type="number"
+            step="0.01"
+            maxLength={4}
+            max={4}
+            required
             defaultValue={educationData3?.gpa}
             onChange={handleEducation3FormChange("gpa")}
           />
@@ -1090,7 +1210,9 @@ const Resume = () => {
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
+            placeholder="มีประสบการณ์การเขียนโปรแกรมบนเว็บ ด้วย MERN STACK"
+            maxLength={100}
+            required
             defaultValue={exp}
             onChange={(e) => {
               setExp(e.target.value);
@@ -1111,8 +1233,12 @@ const Resume = () => {
           </p>
           <input
             className="w-24 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="บ้านเลขที่"
             defaultValue={presentGpa}
+            type="number"
+            step="0.01"
+            maxLength={4}
+            max={4}
+            required
             onChange={(e) => {
               setPresentGpa(e.target.value);
             }}
@@ -1128,6 +1254,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="หัวข้อโครงงาน"
+            required
+            maxLength={50}
             defaultValue={projectTopic}
             onChange={(e) => {
               setProjectTopic(e.target.value);
@@ -1155,8 +1283,9 @@ const Resume = () => {
           </p>
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-            // placeholder="ความสามารถพิเศษ"
+            maxLength={255}
             defaultValue={skill}
+            required
             onChange={(e) => {
               setSkill(e.target.value);
             }}
@@ -1173,6 +1302,8 @@ const Resume = () => {
           <textarea
             className="w-full h-48 p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={255}
+            required
             defaultValue={interest}
             onChange={(e) => {
               setInterest(e.target.value);
@@ -1205,7 +1336,8 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-provinces-setter"
                 >
-                  {contactPersonProvince == "" ? (
+                  {contactPersonProvince === "" ||
+                  contactPersonProvince === null ? (
                     <>- กรุณาเลือกจังหวัด -</>
                   ) : (
                     <>{`${contactPersonProvince}`}</>
@@ -1268,7 +1400,8 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-districts-setter"
                 >
-                  {contactPersonDistrict == "" ? (
+                  {contactPersonDistrict === "" ||
+                  contactPersonDistrict === null ? (
                     <> - กรุณาเลือกอำเภอ -</>
                   ) : (
                     contactPersonDistrict
@@ -1331,7 +1464,8 @@ const Resume = () => {
                   className="pr-4 text-sm font-medium text-gray-600"
                   id="drop-down-contact-person-subdistricts-setter"
                 >
-                  {contactPersonSubDistrict == "" ? (
+                  {contactPersonSubDistrict === "" ||
+                  contactPersonSubDistrict == null ? (
                     <> - กรุณาเลือกตำบล - </>
                   ) : (
                     contactPersonSubDistrict
@@ -1397,6 +1531,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={100}
+            required
             defaultValue={contactPersonFirstName}
             onChange={(e) => {
               setContactPersonFirstName(e.target.value);
@@ -1411,6 +1547,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="นามสกุล"
+            maxLength={100}
+            required
             defaultValue={contactPersonLastName}
             onChange={(e) => {
               setContactPersonLastName(e.target.value);
@@ -1425,6 +1563,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ผู้ปกครอง"
+            maxLength={20}
+            required
             defaultValue={contactPersonRelationship}
             onChange={(e) => {
               setContactPersonRelationship(e.target.value);
@@ -1443,6 +1583,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="รหัสไปรษณีย์"
+            maxLength={10}
+            required
             defaultValue={contactPersonPostCode}
             onChange={(e) => {
               setContactPersonPostCode(e.target.value);
@@ -1458,6 +1600,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="ถนน / ซอย / หมู่"
+            maxLength={100}
+            required
             defaultValue={contactPersonRoad}
             onChange={(e) => {
               setContactPersonRoad(e.target.value);
@@ -1472,6 +1616,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="บ้านเลขที่"
+            maxLength={10}
+            required
             defaultValue={contactPersonHouseNumber}
             onChange={(e) => {
               setContactPersonHouseNumber(e.target.value);
@@ -1488,6 +1634,8 @@ const Resume = () => {
           <input
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
             // placeholder="โทร"
+            maxLength={10}
+            required
             defaultValue={contactPersonPhone}
             onChange={(e) => {
               setContactPersonPhone(e.target.value);
@@ -1505,6 +1653,9 @@ const Resume = () => {
           <div className="w-full ">
             <div className="py-4 px-2">
               <form onSubmit={(e) => handleFormSave(e)}>
+                <h3 class="mt-10 text-center font-medium leading-tight text-4xl  text-sky-600">
+                  แบบฟอร์มประวัติส่วนตัว
+                </h3>
                 <div className="bg-white rounded shadow mt-7 py-7">
                   {/* end */}
                   {/* ข้อมูลส่วนตัว */}
@@ -1525,22 +1676,27 @@ const Resume = () => {
                   {interestSection}
                   {/* บุคคลที่สามารถติดต่อได้ */}
                   {contactPersonSection}
-
-                  <hr className="h-[1px] bg-gray-100 my-14" />
+                  <hr className="mt-5 h-[1px] bg-gray-100" />
+                  <h3 class="mt-10 text-center font-medium leading-tight text-md  text-black text-xl">
+                    <span className="text-red-500 ">*</span>{" "}
+                    กรุณาตรวจสอบความถูกต้องของข้อมูล
+                  </h3>
                   <div className="flex flex-col flex-wrap items-center justify-center w-full px-7 lg:flex-row lg:justify-end md:justify-end gap-x-4 gap-y-4">
-                    <button className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full ">
-                      Cancel
-                    </button>
+                    <Link to="/student/home">
+                      <div
+                        id="myBtn"
+                        className="btn btn-cancel rounded transform duration-300 ease-in-out text-sm font-medium px-6 py-4 border lg:max-w-[95px]  w-full "
+                      >
+                        กลับ
+                      </div>
+                    </Link>
 
                     <button
-                      // onClick={(e) => {
-                      //   handleFormSave(e);
-                      // }}
                       id="submit"
                       type="submit"
                       className="btn btn-sky transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
                     >
-                      Save Changes
+                      บันทึก
                     </button>
                   </div>
                 </div>
@@ -1549,7 +1705,6 @@ const Resume = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

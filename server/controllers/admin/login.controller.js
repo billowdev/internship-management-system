@@ -94,7 +94,7 @@ exports.getLogin = async (req, res) => {
 						username: {
 							[Op.like]: `%${search}%`,
 						},
-						is_active: 1
+						// is_active: 1
 					},
 					order: [[sortColumn, sortDirection]],
 					raw: true,
@@ -106,7 +106,7 @@ exports.getLogin = async (req, res) => {
 						username: {
 							[Op.like]: `%${search}%`,
 						},
-						is_active: 1
+						// is_active: 1
 					},
 					raw: true,
 				});
@@ -115,7 +115,7 @@ exports.getLogin = async (req, res) => {
 					offset: startIndex,
 					limit: perPage,
 					attributes: { exclude: ["password"] },
-					where: { is_active: 1 },
+					// where: { is_active: 1 },
 					order: [[sortColumn, sortDirection]],
 					raw: true,
 				});
@@ -124,7 +124,7 @@ exports.getLogin = async (req, res) => {
 					offset: startIndex,
 					limit: perPage,
 					attributes: { exclude: ["password"] },
-					where: { is_active: 1 },
+					// where: { is_active: 1 },
 					raw: true,
 				});
 			}
@@ -229,24 +229,27 @@ exports.getNotActiveLogin = async (req, res) => {
 exports.updateLogin = async (req, res) => {
 	try {
 		const isAdmin = await Login.findOne({ where: { id: req.user.id, roles: 'admin' } })
-		const { username, password, roles } = req.body;
 		
 		if (isAdmin != null) {
 			if (req.body?.login?.roles == "student") {
+				// console.log({ username, password, roles, is_active})
 				const { student } = req.body
-				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
-				console.log(req.body, "\n", student)
+				const { login } = req.body
+				// console.log(req.body, "\n", login)
+				await Login.update(login, { where: { id: req.params.id } })
 				await Students.update(student, { where: { login_id: req.params.id } })
 			}
 			if (req.body?.login?.roles == "director") {
 				const { director } = req.body
-				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+				const { login } = req.body
+				await Login.update(login, { where: { id: req.params.id } })
 				await Directors.update(director, { where: { login_id: req.params.id } })
 			}
 			if (req.body?.login?.roles == "admin") {
-				await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+				const { login } = req.body
+				await Login.update(login, { where: { id: req.params.id } })
 			}
-			await Login.update({ username, password, roles }, { where: { id: req.params.id } })
+			// await Login.update({ username, password, roles }, { where: { id: req.params.id } })
 			res.status(200).json({ success: true, msg: "update login success" })
 		} else {
 			res.status(404).json({ success: false, msg: "404 Not Found" })

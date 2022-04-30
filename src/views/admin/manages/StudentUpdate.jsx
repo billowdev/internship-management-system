@@ -8,7 +8,9 @@ import { useDispatch } from "react-redux";
 import { loadState } from "../../../helpers/Persist";
 import { loadStudentProfile } from "../../../redux/actions/admin/profile";
 
+
 const StudentUpdate = () => {
+  
   const {
     firstName,
     setFirstName,
@@ -150,6 +152,10 @@ const StudentUpdate = () => {
     swaptextProgram,
 
     fetchProvinces,
+
+    handleFileInputChange,
+    fileInputState,
+    PreviewSource,
   } = StudentUpdateHook();
 
   const { id, role } = useParams();
@@ -162,6 +168,9 @@ const StudentUpdate = () => {
   const [studentProfile, setStudentProfile] = useState(
     loadState("student-profile")
   );
+
+  const imageProfile = `/images/${studentProfile?.student?.image_name}`;
+  const imageNotFound = `/images/student_picture.png`;
 
   const setStateResue = () => {
     // const studentProfile = loadState("studentProfile");
@@ -316,6 +325,49 @@ const StudentUpdate = () => {
       <p className="text-lg font-semibold leading-tight text-gray-800">
         1. ข้อมูลส่วนตัว
       </p>
+      <div>
+        <div>
+          <input
+            id="fileInput"
+            type="file"
+            name="image"
+            onChange={(e) => {
+              handleFileInputChange(e, id);
+            }}
+            value={fileInputState}
+            className="custom-file-input"
+          />
+
+          <label className="custom-file-label" htmlFor="customFile">
+            เลือกรูปภาพ
+          </label>
+        </div>
+
+        {PreviewSource && (
+          <div className="items-center">
+            <img
+              className="mt-3"
+              src={PreviewSource}
+              alt="chosen"
+              style={{ width: "180px" }}
+            />
+          </div>
+        )}
+
+        {studentProfile?.student?.image_name && (
+          <img src={imageProfile} alt="image" style={{ width: "180px" }} />
+        )}
+
+        {studentProfile?.student?.image_name === null && (
+          <img
+            src={imageNotFound}
+            alt="image"
+            style={{ width: "200px", height: "300px" }}
+          />
+        )}
+      </div>
+      <hr className="mb-10 mt-5" />
+
       <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
         <div>
           <p className="text-base font-medium leading-none text-gray-800">
@@ -1531,21 +1583,20 @@ const StudentUpdate = () => {
         <div className="flex flex-no-wrap items-center">
           <div className="w-full ">
             <div className="py-4 px-2">
-            <div className="">
-                    <Link to={`/admin/manage/login/update/student/${id}`}>
-                      {" "}
-                      <button
-                        onCLick={(e) => navigate(-1)}
-                        id="back"
-                        className="items-end w-32 text-white btn btn-sky cursor-pointer"
-                      >
-                        กลับ
-                      </button>
-                    </Link>
-                  </div>
+              <div className="">
+                <Link to={`/admin/manage/login/update/student/${id}`}>
+                  {" "}
+                  <button
+                    onCLick={(e) => navigate(-1)}
+                    id="back"
+                    className="items-end w-32 text-white btn btn-sky cursor-pointer"
+                  >
+                    กลับ
+                  </button>
+                </Link>
+              </div>
               <form onSubmit={(e) => handleFormSave(e)}>
                 <div className="bg-white rounded shadow mt-7 py-7">
-                 
                   {/* end */}
                   {/* ข้อมูลส่วนตัว */}
                   {privateData}

@@ -6,6 +6,7 @@ import * as internshipActions from "../actions/student/internship"
 import * as resumeActions from "../actions/student/resume"
 import * as adminLoginActions from "../actions/admin/login"
 import * as adminProfileActions from "../actions/admin/profile"
+import * as directorActions from "../actions/director/internship"
 
 const pageLoadedFlow =
   ({ log }) =>
@@ -76,6 +77,31 @@ const internshipFlow =
               'success'
             )
           }
+
+          if (action.type === internshipActions.SEND_INTERNSHIP_SUCCESS) {
+            dispatch(internshipActions.loadInternship)
+            toast.success('ส่งแบบฟอร์มแล้ว', {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          if (action.type === internshipActions.UNSEND_INTERNSHIP_SUCCESS) {
+            dispatch(internshipActions.loadInternship)
+            toast.success('ยกเลิกการส่งแบบฟอร์มแล้ว', {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
         };
 
 const resumeFlow =
@@ -86,11 +112,59 @@ const resumeFlow =
           next(action);
           if (action.type === resumeActions.UPDATE_RESUME_SUCCESS) {
             log('update rusume')
+            dispatch(internshipActions.loadInternship)
             Swal.fire(
               'สำเร็จ!',
               'อัปเดตข้อมูลเรียบร้อย',
               'success'
-            )
+            ).then(() => {
+              window.location = "/student/home"
+            })
+
+          }
+        };
+
+const directorFlow =
+  ({ log }) =>
+    ({ dispatch }) =>
+      (next) =>
+        (action) => {
+          next(action);
+          if (action.type === directorActions.CONFIRM_INTERNSHIP_SUCCESS) {
+            dispatch(internshipActions.loadInternship)
+            toast.success('อนุมัติแบบฟอร์มแล้ว', {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          if (action.type === directorActions.UN_CONFIRM_INTERNSHIP_SUCCESS) {
+            dispatch(internshipActions.loadInternship)
+            toast.success('เปลี่ยนสถานะแบบฟอร์มเป็นรออนุมัติ', {
+              position: "top-right",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          if (action.type === directorActions.RETURN_INTERNSHIP_SUCCESS) {
+            dispatch(internshipActions.loadInternship)
+            toast.success('ส่งแบบฟอร์มกลับไปยังนักศึกษาแล้ว', {
+              position: "top-right",
+              autoClose: 1700,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         };
 
@@ -139,24 +213,22 @@ const adminFlow =
           }
           if (action.type === adminLoginActions.DELETE_LOGIN_SUCCESS) {
             log('delete login user')
-            toast.success('ลบข้อมูลผู้ใช้สำเร็จ!', {
-              position: "top-right",
-              autoClose: 2500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+            Swal.fire(
+              'สำเร็จ!',
+              'ลบข้อมูลเรียบร้อย',
+              'success'
+            ).then(() => {
+              window.location.reload()
+            })
           }
           if (action.type === adminProfileActions.UPDATE_STUDENT_PROFILE_SUCCESS) {
 
             log('delete login user')
-            var delayInMilliseconds = 3000;
+            var delayInMilliseconds = 2000;
 
             toast.success('แก้ไขข้อมูลผู้ใช้สำเร็จ... กำลังกลับไปหน้าจัดการผู้ใช้ทั้งหมด', {
               position: "top-right",
-              autoClose: delayInMilliseconds-1000,
+              autoClose: delayInMilliseconds - 1000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -169,4 +241,4 @@ const adminFlow =
             }, delayInMilliseconds);
           }
         };
-export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow, adminFlow];
+export default [pageLoadedFlow, authFlow, internshipFlow, resumeFlow, adminFlow, directorFlow];

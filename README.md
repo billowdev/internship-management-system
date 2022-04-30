@@ -131,20 +131,19 @@
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/lacakp/internship-management-system.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `/server/infrastructure/services/config/index.js`
+3. Enter your API in `/server/infrastructure/services/config/index.js`
    ```js
     const BASE_URL = "http://localhost:5000/api";
    ```
-5. DOT ENV `/src/.env`
+4. DOT ENV `/src/.env`
    ```env
     NODE_ENV=development
     CLIENT_URL= "http://localhost"

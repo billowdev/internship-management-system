@@ -157,7 +157,7 @@ const Resume = () => {
     previewFile,
     PreviewSource,
   } = Resumehook();
- 
+
   useEffect(() => {
     dispatch(loadResume);
   }, [dispatch]);
@@ -239,7 +239,9 @@ const Resume = () => {
     setEducationData3(resume?.education[2]);
     fetchProvinces();
   };
-  const imageProfile = `/images/${resume?.student?.image_name}`
+  const imageProfile = `/images/${resume?.student?.image_name}`;
+  const imageNotFound = `/images/student_picture.png`;
+
   useEffect(() => {
     setStateResue();
   }, []);
@@ -338,15 +340,22 @@ const Resume = () => {
                 className="mt-3"
                 src={PreviewSource}
                 alt="chosen"
-                style={{ width: "200px", height: "300px" }}
+                style={{ width: "180px"}}
               />
             </div>
           )}
-     
+
           {resume?.student?.image_name && (
             <img
               src={imageProfile}
-            
+              alt="image"
+              style={{ width: "180px"}}
+            />
+          )}
+
+          {resume?.student?.image_name === null && (
+            <img
+              src={imageNotFound}
               alt="image"
               style={{ width: "200px", height: "300px" }}
             />

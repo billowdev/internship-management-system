@@ -254,7 +254,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@lacakkarapon](https://twitter.com/lacakkarapon) - lacakp.contact@gmail.com
+Akkarapon Phikulsri - [@lacakkarapon](https://twitter.com/lacakkarapon) - lacakp.contact@gmail.com
 
 Project Link: [https://github.com/lacakp/internship-management-system](https://github.com/lacakp/internship-management-system)
 

@@ -184,6 +184,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Make code cleaner
+- [ ] keep images with another option
+
 ## Release version 1.0.0
 
 ### นักศึกษา
@@ -215,6 +218,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] สามารถแก้ไขข้อมูลการเข้าสู่ระบบของสมาชิกได้
 - [x] สามารถแก้ไขประวัติส่วนตัวของนักศึกษาได้
 - [x] สามารถออกจากระบบได้
+
+
 
 
 

@@ -29,23 +29,23 @@
 <!-- PROJECT LOGO -->
 <!-- <br />
 <div align="center">
-  <a href="https://github.com/lacakp/internship-management-system">
+  <a href="https://github.com/lacakira/internship-management-system">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
 <h3 align="center">ระบบสารสนเทศเพื่อจัดการสถานที่ฝึกประสบการณ์วิชาชีพสาขาวิชาคอมพิวเตอร์</h3>
 
   <p align="center">
-    project_description
+    ระบบนี้ได้ถูกพัฒนาขึ้นเพื่อแก้ไขปัญหาความล่าช้าในการส่งแบบฟอร์มฝึกประสบการณ์วิชาชีพของนักศึกษา โดยพัฒนาด้วย React.js Redux Node.js Express MySQL Sequelize
     <br />
-    <a href="https://github.com/lacakp/internship-management-system"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/lacakira/internship-management-system"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/lacakp/internship-management-system">View Demo</a>
+    <a href="https://github.com/lacakira/internship-management-system">View Demo</a>
     ·
-    <a href="https://github.com/lacakp/internship-management-system/issues">Report Bug</a>
+    <a href="https://github.com/lacakira/internship-management-system/issues">Report Bug</a>
     ·
-    <a href="https://github.com/lacakp/internship-management-system/issues">Request Feature</a>
+    <a href="https://github.com/lacakira/internship-management-system/issues">Request Feature</a>
   </p>
 </div>
 
@@ -84,7 +84,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `lacakp`, `internship-management-system`, `lacakkarapon`, `lacakp`, `gmail`, `lacakp.contact`, `internship-management-system`, `project_description` -->
+<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `lacakira`, `internship-management-system`, `lacakkarapon`, `lacakira`, `gmail`, `lacakira.contact`, `internship-management-system`, `project_description` -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -133,7 +133,7 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/lacakp/internship-management-system.git
+   git clone https://github.com/lacakira/internship-management-system.git
    ```
 2. Install NPM packages
    ```sh
@@ -223,7 +223,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
-See the [open issues](https://github.com/lacakp/internship-management-system/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/lacakira/internship-management-system/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -259,9 +259,9 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Akkarapon Phikulsri - [@lacakkarapon](https://twitter.com/lacakkarapon) - lacakp.contact@gmail.com
+Akkarapon Phikulsri - [@lacakkarapon](https://twitter.com/lacakkarapon) - lacakira.contact@gmail.com
 
-Project Link: [https://github.com/lacakp/internship-management-system](https://github.com/lacakp/internship-management-system)
+Project Link: [https://github.com/lacakira/internship-management-system](https://github.com/lacakira/internship-management-system)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -280,16 +280,16 @@ Project Link: [https://github.com/lacakp/internship-management-system](https://g
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/lacakp/internship-management-system.svg?style=for-the-badge
-[contributors-url]: https://github.com/lacakp/internship-management-system/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lacakp/internship-management-system.svg?style=for-the-badge
-[forks-url]: https://github.com/lacakp/internship-management-system/network/members
-[stars-shield]: https://img.shields.io/github/stars/lacakp/internship-management-system.svg?style=for-the-badge
-[stars-url]: https://github.com/lacakp/internship-management-system/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lacakp/internship-management-system.svg?style=for-the-badge
-[issues-url]: https://github.com/lacakp/internship-management-system/issues
-[license-shield]: https://img.shields.io/github/license/lacakp/internship-management-system.svg?style=for-the-badge
-[license-url]: https://github.com/lacakp/internship-management-system/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/lacakira/internship-management-system.svg?style=for-the-badge
+[contributors-url]: https://github.com/lacakira/internship-management-system/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/lacakira/internship-management-system.svg?style=for-the-badge
+[forks-url]: https://github.com/lacakira/internship-management-system/network/members
+[stars-shield]: https://img.shields.io/github/stars/lacakira/internship-management-system.svg?style=for-the-badge
+[stars-url]: https://github.com/lacakira/internship-management-system/stargazers
+[issues-shield]: https://img.shields.io/github/issues/lacakira/internship-management-system.svg?style=for-the-badge
+[issues-url]: https://github.com/lacakira/internship-management-system/issues
+[license-shield]: https://img.shields.io/github/license/lacakira/internship-management-system.svg?style=for-the-badge
+[license-url]: https://github.com/lacakira/internship-management-system/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/lacakp
+[linkedin-url]: https://linkedin.com/in/lacakira
 [product-screenshot]: images/screenshot.png

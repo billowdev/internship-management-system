@@ -33,7 +33,6 @@ const Resumehook = () => {
     reader.onerror = () => {
       console.log("Error");
     };
-
   };
 
   const previewFile = (file) => {
@@ -203,11 +202,13 @@ const Resumehook = () => {
     setHometownProvince(targetText);
     saveState("hometown-province-id", provinceId);
     fetchDistricts("hometown", provinceId);
-    document.getElementById("drop-down-hometown-provinces-setter").innerText =
-      targetText;
-    document
-      .getElementById("drop-down-div-hometown-provinces")
-      .classList.toggle("hidden");
+    setTimeout(function () {
+      document.getElementById("drop-down-hometown-provinces-setter").innerText =
+        targetText;
+      document
+        .getElementById("drop-down-div-hometown-provinces")
+        .classList.toggle("hidden");
+    }, 500);
   };
 
   // -------- Districts --------
@@ -227,6 +228,7 @@ const Resumehook = () => {
     document
       .getElementById("drop-down-div-hometown-districts")
       .classList.toggle("hidden");
+    setTimeout(function () {}, 500);
   };
 
   // -------- Sub districts --------
@@ -240,12 +242,15 @@ const Resumehook = () => {
     setHometownSubDistrict(targetText);
     const subDistrictId = Object.values(el.target)[0].key;
     fetchSubDistrictData("hometown", subDistrictId);
-    document.getElementById(
-      "drop-down-hometown-subdistricts-setter"
-    ).innerText = targetText;
-    document
-      .getElementById("drop-down-div-hometown-subdistricts")
-      .classList.toggle("hidden");
+
+    setTimeout(function () {
+      document.getElementById(
+        "drop-down-hometown-subdistricts-setter"
+      ).innerText = targetText;
+      document
+        .getElementById("drop-down-div-hometown-subdistricts")
+        .classList.toggle("hidden");
+    }, 500);
   };
 
   // Present Hook Section
@@ -261,11 +266,14 @@ const Resumehook = () => {
     setPresentProvince(targetText);
     saveState("present-province-id", provinceId);
     fetchDistricts("present", provinceId);
-    document.getElementById("drop-down-present-provinces-setter").innerText =
-      targetText;
-    document
-      .getElementById("drop-down-div-present-provinces")
-      .classList.toggle("hidden");
+
+    setTimeout(function () {
+      document.getElementById("drop-down-present-provinces-setter").innerText =
+        targetText;
+      document
+        .getElementById("drop-down-div-present-provinces")
+        .classList.toggle("hidden");
+    }, 500);
   };
 
   // -------- Districts --------
@@ -279,11 +287,14 @@ const Resumehook = () => {
     const districtId = Object.values(el.target)[0].key;
     saveState("present-district-id", districtId);
     fetchSubDistricts("present", districtId);
-    document.getElementById("drop-down-present-districts-setter").innerText =
-      targetText;
-    document
-      .getElementById("drop-down-div-present-districts")
-      .classList.toggle("hidden");
+    setTimeout(function() {
+
+      document.getElementById("drop-down-present-districts-setter").innerText =
+        targetText;
+      document
+        .getElementById("drop-down-div-present-districts")
+        .classList.toggle("hidden");
+    }, 500)
   };
   // -------- Sub districts --------
   const showDropDownMenuPresentSubDistricts = (el) => {
@@ -295,11 +306,13 @@ const Resumehook = () => {
     setPresentSubDistrict(targetText);
     const subDistrictId = Object.values(el.target)[0].key;
     fetchSubDistrictData("present", subDistrictId);
-    document.getElementById("drop-down-present-subdistricts-setter").innerText =
-      targetText;
-    document
-      .getElementById("drop-down-div-present-subdistricts")
-      .classList.toggle("hidden");
+    setTimeout(function() {
+      document.getElementById("drop-down-present-subdistricts-setter").innerText =
+        targetText;
+      document
+        .getElementById("drop-down-div-present-subdistricts")
+        .classList.toggle("hidden");
+    }, 500)
   };
 
   // ======================== contact Person Hook Section   ========================
@@ -313,12 +326,14 @@ const Resumehook = () => {
     setContactPersonProvince(targetText);
     saveState("contact-person-province-id", provinceId);
     fetchDistricts("contactPerson", provinceId);
-    document.getElementById(
-      "drop-down-contact-person-provinces-setter"
-    ).innerText = targetText;
-    document
-      .getElementById("drop-down-div-contact-person-provinces")
-      .classList.toggle("hidden");
+    setTimeout(function() {
+      document.getElementById(
+        "drop-down-contact-person-provinces-setter"
+      ).innerText = targetText;
+      document
+        .getElementById("drop-down-div-contact-person-provinces")
+        .classList.toggle("hidden");
+    }, 500)
   };
 
   // -------- Districts --------
@@ -339,7 +354,7 @@ const Resumehook = () => {
       document
         .getElementById("drop-down-div-contact-person-districts")
         .classList.toggle("hidden");
-    }, 100);
+    }, 500);
   };
   // -------- Sub districts --------
   const showDropDownMenuContactPersonSubDistricts = (el) => {
@@ -359,7 +374,7 @@ const Resumehook = () => {
       document
         .getElementById("drop-down-div-contact-person-subdistricts")
         .classList.toggle("hidden");
-    }, 100);
+    }, 500);
   };
   // ======================== Addresses API  ========================
 
@@ -440,7 +455,6 @@ const Resumehook = () => {
       educationData3,
     };
     const updateData = { student, hometown, present, contactPerson, education };
-  
 
     dispatch(updateResume(updateData));
   };

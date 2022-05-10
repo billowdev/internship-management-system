@@ -70,6 +70,7 @@
     </li>
     <!-- <li><a href="#usage">Usage</a></li> -->
     <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#project-stucture">Project Stucture</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <!-- <li><a href="#license">License</a></li> -->
     <li><a href="#contact">Contact</a></li>
@@ -218,6 +219,209 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] สามารถออกจากระบบได้
 
 
+## Project Stucture
+
+```
+
+📦internship-management-system
+ ┣ 📂public
+ ┃ ┣ 📂images
+ ┃ ┣ 📜favicon.ico
+ ┃ ┣ 📜index.html
+ ┃ ┣ 📜logo192.png
+ ┃ ┣ 📜logo512.png
+ ┃ ┣ 📜manifest.json
+ ┃ ┗ 📜robots.txt
+ ┣ 📂README
+ ┃ ┗ 📂system-analysis
+ ┃ ┃ ┗ 📜ER-Diagram.png
+ ┣ 📂server
+ ┃ ┣ 📂config
+ ┃ ┃ ┗ 📜config.js
+ ┃ ┣ 📂controllers
+ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┣ 📜admin.students.controller.js
+ ┃ ┃ ┃ ┗ 📜login.controller.js
+ ┃ ┃ ┣ 📜addresses.controller.js
+ ┃ ┃ ┣ 📜auth.controllers.js
+ ┃ ┃ ┣ 📜directors.controller.js
+ ┃ ┃ ┣ 📜internships.controller.js
+ ┃ ┃ ┣ 📜students.controller.js
+ ┃ ┃ ┣ 📜thaiAddresses.controller.js
+ ┃ ┃ ┗ 📜upload.controller.js
+ ┃ ┣ 📂database
+ ┃ ┃ ┣ 📜internship_db.sql
+ ┃ ┃ ┗ 📜thai_addresses_db.sql
+ ┃ ┣ 📂middlewares
+ ┃ ┃ ┗ 📜auth.middleware.js
+ ┃ ┣ 📂models
+ ┃ ┃ ┣ 📂internship
+ ┃ ┃ ┃ ┣ 📜Addresses.js
+ ┃ ┃ ┃ ┣ 📜Companies.js
+ ┃ ┃ ┃ ┣ 📜ContactPersons.js
+ ┃ ┃ ┃ ┣ 📜CoStudentInternships.js
+ ┃ ┃ ┃ ┣ 📜Directors.js
+ ┃ ┃ ┃ ┣ 📜Educations.js
+ ┃ ┃ ┃ ┣ 📜HometownAddresses.js
+ ┃ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┃ ┣ 📜Internships.js
+ ┃ ┃ ┃ ┣ 📜Login.js
+ ┃ ┃ ┃ ┣ 📜PresentAddresses.js
+ ┃ ┃ ┃ ┗ 📜Students.js
+ ┃ ┃ ┗ 📂thaiAddresses
+ ┃ ┃ ┃ ┣ 📜Districts.js
+ ┃ ┃ ┃ ┣ 📜Geographies.js
+ ┃ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┃ ┣ 📜Provinces.js
+ ┃ ┃ ┃ ┗ 📜SubDistricts.js
+ ┃ ┣ 📂routes
+ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┣ 📜admin.students.route.js
+ ┃ ┃ ┃ ┗ 📜login.route.js
+ ┃ ┃ ┣ 📜addresses.route.js
+ ┃ ┃ ┣ 📜auth.route.js
+ ┃ ┃ ┣ 📜directors.route.js
+ ┃ ┃ ┣ 📜internships.route.js
+ ┃ ┃ ┣ 📜students.route.js
+ ┃ ┃ ┣ 📜thaiAddresses.route.js
+ ┃ ┃ ┗ 📜upload.route.js
+ ┃ ┣ 📜.env
+ ┃ ┣ 📜.eslintrc.js
+ ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜app.js
+ ┃ ┣ 📜Copy.env
+ ┃ ┣ 📜index.js
+ ┃ ┣ 📜package.json
+ ┃ ┣ 📜README.md
+ ┃ ┣ 📜server.zip
+ ┃ ┗ 📜yarn.lock
+ ┣ 📂src
+ ┃ ┣ 📂helpers
+ ┃ ┃ ┗ 📜Persist.js
+ ┃ ┣ 📂infrastructure
+ ┃ ┃ ┗ 📂services
+ ┃ ┃ ┃ ┣ 📂api
+ ┃ ┃ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜login.js
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜profile.js
+ ┃ ┃ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜login.js
+ ┃ ┃ ┃ ┃ ┣ 📂director
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┃ ┃ ┣ 📂student
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┃ ┃ ┣ 📂thaiAddresses
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜thaiAddressApi.js
+ ┃ ┃ ┃ ┃ ┣ 📂upload
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┃ ┃ ┣ 📂users
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┃ ┣ 📂config
+ ┃ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┃ ┃ ┣ 📂logger
+ ┃ ┃ ┃ ┃ ┣ 📜console.js
+ ┃ ┃ ┃ ┃ ┗ 📜elastic-search.js
+ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂redux
+ ┃ ┃ ┣ 📂actions
+ ┃ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┃ ┣ 📜login.js
+ ┃ ┃ ┃ ┃ ┗ 📜profile.js
+ ┃ ┃ ┃ ┣ 📂director
+ ┃ ┃ ┃ ┃ ┗ 📜internship.js
+ ┃ ┃ ┃ ┣ 📂student
+ ┃ ┃ ┃ ┃ ┣ 📜internship.js
+ ┃ ┃ ┃ ┃ ┗ 📜resume.js
+ ┃ ┃ ┃ ┣ 📜auth.js
+ ┃ ┃ ┃ ┣ 📜ui.js
+ ┃ ┃ ┃ ┣ 📜upload.js
+ ┃ ┃ ┃ ┗ 📜users.js
+ ┃ ┃ ┣ 📂middleware
+ ┃ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┃ ┣ 📜login.js
+ ┃ ┃ ┃ ┃ ┗ 📜profile.js
+ ┃ ┃ ┃ ┣ 📂director
+ ┃ ┃ ┃ ┃ ┗ 📜internship.js
+ ┃ ┃ ┃ ┣ 📂student
+ ┃ ┃ ┃ ┃ ┣ 📜internship.js
+ ┃ ┃ ┃ ┃ ┗ 📜resume.js
+ ┃ ┃ ┃ ┣ 📜auth.js
+ ┃ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┃ ┣ 📜ui.js
+ ┃ ┃ ┃ ┣ 📜upload.js
+ ┃ ┃ ┃ ┗ 📜users.js
+ ┃ ┃ ┣ 📂reducers
+ ┃ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┃ ┣ 📜login.js
+ ┃ ┃ ┃ ┃ ┗ 📜profile.js
+ ┃ ┃ ┃ ┣ 📂director
+ ┃ ┃ ┃ ┃ ┗ 📜internship.js
+ ┃ ┃ ┃ ┣ 📂student
+ ┃ ┃ ┃ ┃ ┗ 📜internship.js
+ ┃ ┃ ┃ ┣ 📜auth.js
+ ┃ ┃ ┃ ┣ 📜index.js
+ ┃ ┃ ┃ ┗ 📜ui.js
+ ┃ ┃ ┣ 📂selectors
+ ┃ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┃ ┣ 📜login.js
+ ┃ ┃ ┃ ┃ ┗ 📜profile.js
+ ┃ ┃ ┃ ┣ 📂director
+ ┃ ┃ ┃ ┃ ┗ 📜internship.js
+ ┃ ┃ ┃ ┣ 📂student
+ ┃ ┃ ┃ ┃ ┗ 📜internship.js
+ ┃ ┃ ┃ ┣ 📜auth.js
+ ┃ ┃ ┃ ┣ 📜ui.js
+ ┃ ┃ ┃ ┗ 📜users.js
+ ┃ ┃ ┗ 📜store.js
+ ┃ ┣ 📂views
+ ┃ ┃ ┣ 📂admin
+ ┃ ┃ ┃ ┣ 📂manages
+ ┃ ┃ ┃ ┃ ┣ 📜Login.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜LoginAdd.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜LoginUpdate.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜StudentUpdate.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜StudentUpdateHook.jsx
+ ┃ ┃ ┃ ┣ 📜Controllers.jsx
+ ┃ ┃ ┃ ┗ 📜index.jsx
+ ┃ ┃ ┣ 📂components
+ ┃ ┃ ┃ ┣ 📜Footer.jsx
+ ┃ ┃ ┃ ┣ 📜Layout.jsx
+ ┃ ┃ ┃ ┣ 📜Missing.jsx
+ ┃ ┃ ┃ ┣ 📜Navbar.jsx
+ ┃ ┃ ┃ ┣ 📜RequireAuth.jsx
+ ┃ ┃ ┃ ┣ 📜Signin.jsx
+ ┃ ┃ ┃ ┗ 📜Unauthorized.jsx
+ ┃ ┃ ┣ 📂director
+ ┃ ┃ ┃ ┣ 📂internship
+ ┃ ┃ ┃ ┃ ┣ 📜InternshipsConfirmed.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜InternshipsPending.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜InternshipsViews.jsx
+ ┃ ┃ ┃ ┗ 📜index.jsx
+ ┃ ┃ ┣ 📂students
+ ┃ ┃ ┃ ┣ 📜Controllers.jsx
+ ┃ ┃ ┃ ┣ 📜index.jsx
+ ┃ ┃ ┃ ┣ 📜InternshipForm.jsx
+ ┃ ┃ ┃ ┣ 📜InternshipHook.jsx
+ ┃ ┃ ┃ ┣ 📜ResumeForm.jsx
+ ┃ ┃ ┃ ┣ 📜ResumeHook.jsx
+ ┃ ┃ ┃ ┗ 📜StudentHomePage.jsx
+ ┃ ┃ ┣ 📜Home.jsx
+ ┃ ┃ ┗ 📜index.jsx
+ ┃ ┣ 📜index.css
+ ┃ ┗ 📜index.js
+ ┣ 📜.gitignore
+ ┣ 📜package-lock.json
+ ┣ 📜package.json
+ ┣ 📜postcss.config.js
+ ┣ 📜README.md
+ ┣ 📜tailwind.config.js
+ ┣ 📜webpack.config.js
+ ┗ 📜yarn.lock
+
+```
 
 See the [open issues](https://github.com/lacakp/internship-management-system/issues) for a full list of proposed features (and known issues).
 

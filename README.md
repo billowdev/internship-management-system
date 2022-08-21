@@ -111,7 +111,7 @@
 ### Prerequisites
 
 #### BACK END - Node.js
-###### หลังบ้านจัดการฐานข้อมูลด้วย sequelize รูปแบบการเขียนรองรับทั้ง NoSQL และ SQL แบ่งเป็น 3 ส่วนหลักๆ
+###### หลังบ้านจัดการฐานข้อมูลด้วย sequelize
 
 - models
 - routes

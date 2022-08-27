@@ -29,7 +29,7 @@
 <!-- PROJECT LOGO -->
 <!-- <br />
 <div align="center">
-  <a href="https://github.com/lacakira/internship-management-system">
+  <a href="https://github.com/billowdev/internship-management-system">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
@@ -38,14 +38,14 @@
   <p align="center">
     ระบบนี้ได้ถูกพัฒนาขึ้นเพื่อแก้ไขปัญหาความล่าช้าในการส่งแบบฟอร์มฝึกประสบการณ์วิชาชีพของนักศึกษา โดยพัฒนาด้วย React.js Redux Node.js Express MySQL Sequelize
     <br />
-    <a href="https://github.com/lacakira/internship-management-system"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/billowdev/internship-management-system"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/lacakira/internship-management-system">View Demo</a>
+    <a href="https://github.com/billowdev/internship-management-system">View Demo</a>
     ·
-    <a href="https://github.com/lacakira/internship-management-system/issues">Report Bug</a>
+    <a href="https://github.com/billowdev/internship-management-system/issues">Report Bug</a>
     ·
-    <a href="https://github.com/lacakira/internship-management-system/issues">Request Feature</a>
+    <a href="https://github.com/billowdev/internship-management-system/issues">Request Feature</a>
   </p>
 </div>
 
@@ -82,10 +82,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-
-<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `lacakira`, `internship-management-system`, `lacakkarapon`, `lacakira`, `gmail`, `lacakira.contact`, `internship-management-system`, `project_description` -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -463,9 +459,9 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Akkarapon Phikulsri - [@lacakkarapon](https://twitter.com/lacakkarapon) - lacakira.contact@gmail.com
+Akkarapon Phikulsri - lacakira@gmail.com
 
-Project Link: [https://github.com/lacakira/internship-management-system](https://github.com/lacakira/internship-management-system)
+Project Link: [https://github.com/billowdev/internship-management-system](https://github.com/billowdev/internship-management-system)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -484,16 +480,16 @@ Project Link: [https://github.com/lacakira/internship-management-system](https:/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/lacakira/internship-management-system.svg?style=for-the-badge
-[contributors-url]: https://github.com/lacakira/internship-management-system/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lacakira/internship-management-system.svg?style=for-the-badge
-[forks-url]: https://github.com/lacakira/internship-management-system/network/members
-[stars-shield]: https://img.shields.io/github/stars/lacakira/internship-management-system.svg?style=for-the-badge
-[stars-url]: https://github.com/lacakira/internship-management-system/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lacakira/internship-management-system.svg?style=for-the-badge
-[issues-url]: https://github.com/lacakira/internship-management-system/issues
-[license-shield]: https://img.shields.io/github/license/lacakira/internship-management-system.svg?style=for-the-badge
-[license-url]: https://github.com/lacakira/internship-management-system/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/billowdev/internship-management-system.svg?style=for-the-badge
+[contributors-url]: https://github.com/billowdev/internship-management-system/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/billowdev/internship-management-system.svg?style=for-the-badge
+[forks-url]: https://github.com/billowdev/internship-management-system/network/members
+[stars-shield]: https://img.shields.io/github/stars/billowdev/internship-management-system.svg?style=for-the-badge
+[stars-url]: https://github.com/billowdev/internship-management-system/stargazers
+[issues-shield]: https://img.shields.io/github/issues/billowdev/internship-management-system.svg?style=for-the-badge
+[issues-url]: https://github.com/billowdev/internship-management-system/issues
+[license-shield]: https://img.shields.io/github/license/billowdev/internship-management-system.svg?style=for-the-badge
+[license-url]: https://github.com/billowdev/internship-management-system/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/lacakira
+[linkedin-url]: https://linkedin.com/in/akkarapon
 [product-screenshot]: images/screenshot.png

@@ -6,8 +6,8 @@ import { Provider } from "react-redux";
 import { configureStore } from "./redux/store";
 import services from "./infrastructure/services";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-const root = ReactDOM.createRoot(document.getElementById("root"));
 
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <Provider store={configureStore(services)}>

@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="flex justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
             <a
               rel="noopener noreferrer"
-              href="https://github.com/lacakp"
+              href="https://github.com/billowdev"
               target="_blank"
               title="GitHub"
               className="flex items-center justify-center w-10 h-10 rounded-full  hover:text-black"
@@ -39,12 +39,12 @@ const Footer = () => {
 
 			<a
               rel="noopener noreferrer"
-              href="https://lacakp.github.io/portfolio"
+              href="https://github.com/billowdev"
               target="_blank"
               title="GitHub"
               className="flex items-center justify-center w-10 h-10 rounded-full  hover:text-black"
             >
-             Lacakp
+             billowdev
             </a>
           </div>
          

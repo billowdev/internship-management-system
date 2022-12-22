@@ -18,6 +18,7 @@ const Signin = () => {
   const errRef = useRef();
   const handleLogin = async (e) => {
     try {
+      console.log(e)
       const response = await loginApi({ username, password });
       setUsername("");
       setPassword("");

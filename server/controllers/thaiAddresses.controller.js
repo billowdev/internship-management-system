@@ -3,7 +3,7 @@ const { Geographies, Districts, Provinces, SubDistricts } = require("../models/t
 exports.getGeographies = async (req, res) => {
 	try {
 		const resp = await Geographies.findAll();
-		if (resp.length != 0) {
+		if (resp.length !== 0) {
 			res.status(200).json({ success: true, msg: "get Geographies success", data: resp })
 		} else {
 			res.json({})
@@ -18,7 +18,7 @@ exports.getGeographies = async (req, res) => {
 exports.getProvinces = async (req, res) => {
 	try {
 		const resp = await Provinces.findAll();
-		if (resp.length != 0) {
+		if (resp.length !== 0) {
 			res.status(200).json({ success: true, msg: "get Provinces success", data: resp })
 		} else {
 			res.json({})
@@ -33,8 +33,22 @@ exports.getProvincesByGeographyId = async (req, res) => {
 	try {
 		console.log(req.params.geographyId)
 		const resp = await Provinces.findAll({where:{geography_id:req.params.geographyId}});
-		if (resp.length != 0) {
+		if (resp.length !== 0) {
 			res.status(200).json({ success: true, msg: "get Provinces By Geography Id success", data: resp })
+		} else {
+			res.json({})
+		}
+	} catch (err) {
+		console.log({ msg: "on thai address controller", error: err })
+		res.status(500).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
+exports.getDistricts = async (req, res) => {
+	try {
+		const resp = await Districts.findAll();
+		if (resp.length !== 0) {
+			res.status(200).json({ success: true, msg: "get districts success", data: resp })
 		} else {
 			res.json({})
 		}
@@ -47,7 +61,7 @@ exports.getProvincesByGeographyId = async (req, res) => {
 exports.getDistrictsByProvinceId = async (req, res) => {
 	try {
 		const resp = await Districts.findAll({where:{province_id:req.params.provinceId}});
-		if (resp.length != 0) {
+		if (resp.length !== 0) {
 			res.status(200).json({ success: true, msg: "get District By Province Id success", data: resp })
 		} else {
 			res.json({})
@@ -58,10 +72,25 @@ exports.getDistrictsByProvinceId = async (req, res) => {
 	}
 }
 
+exports.getSubDistricts = async (req, res) => {
+	try {
+		const resp = await SubDistricts.findAll();
+		if (resp.length !== 0) {
+			res.status(200).json({ success: true, msg: "get sub - districts success", data: resp })
+		} else {
+			res.json({})
+		}
+	} catch (err) {
+		console.log({ msg: "on thai address controller", error: err })
+		res.status(500).json({ success: false, msg: "something went wrong!" })
+	}
+}
+
+
 exports.getSubDistrictsByDistrictId = async (req, res) => {
 	try {
 		const resp = await SubDistricts.findAll({where:{district_id:req.params.districtId}});
-		if (resp.length != 0) {
+		if (resp.length !== 0) {
 			res.status(200).json({ success: true, msg: "get SubDistricts By district id success", data: resp })
 		} else {
 			res.status(400).json({})
@@ -75,7 +104,7 @@ exports.getSubDistrictsByDistrictId = async (req, res) => {
 exports.getSubDistrictsById = async (req, res) => {
 	try {
 		const resp = await SubDistricts.findAll({where:{id:req.params.id}});
-		if (resp.length != 0) {
+		if (resp.length !== 0) {
 			res.status(200).json({ success: true, msg: "get SubDistricts By id success", data: resp })
 		} else {
 			res.status(400).json({})

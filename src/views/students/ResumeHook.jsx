@@ -150,42 +150,42 @@ const Resumehook = () => {
 
   const fetchDistricts = async (option, provinceId) => {
     const resp = await thaiAddresses.getDistricts(provinceId);
-    if (option == "present") {
+    if (option === "present") {
       setPresentDistricts(resp.data);
     }
-    if (option == "hometown") {
+    if (option === "hometown") {
       // const resp = await thaiAddresses.getDistricts(provinceId);
       setDistricts(resp.data);
     }
-    if (option == "contactPerson") {
+    if (option === "contactPerson") {
       // const resp = await thaiAddresses.getDistricts(provinceId);
       setContactPersonDistricts(resp.data);
     }
   };
   const fetchSubDistricts = async (option, districtId) => {
     const resp = await thaiAddresses.getSubDistricts(districtId);
-    if (option == "present") {
+    if (option === "present") {
       setPresentSubDistricts(resp.data);
     }
-    if (option == "hometown") {
+    if (option === "hometown") {
       // const resp = await thaiAddresses.getSubDistricts(districtId);
       setSubDistricts(resp.data);
     }
-    if (option == "contactPerson") {
+    if (option === "contactPerson") {
       // const resp = await thaiAddresses.getSubDistricts(districtId);
       setContactPersonSubDistricts(resp.data);
     }
   };
   const fetchSubDistrictData = async (option, subDistrictId) => {
     const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
-    if (option == "present") {
+    if (option === "present") {
       setPresentPostCode(resp.data[0]?.zip_code);
     }
-    if (option == "hometown") {
+    if (option === "hometown") {
       // const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
       setHometownPostCode(resp.data[0]?.zip_code);
     }
-    if (option == "contactPerson") {
+    if (option === "contactPerson") {
       // const resp = await thaiAddresses.getSubDistrictById(subDistrictId);
       setContactPersonPostCode(resp.data[0]?.zip_code);
     }
